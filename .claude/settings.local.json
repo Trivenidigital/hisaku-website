@@ -6,7 +6,10 @@
       "Bash(git config:*)",
       "Bash(setopt +o nomatch)",
       "Read(//c/Users/USER/.gstack/projects/hisaku-website/**)",
-      "Bash(~/.claude/skills/gstack/bin/gstack-config set:*)"
+      "Bash(~/.claude/skills/gstack/bin/gstack-config set:*)",
+      "Bash(npm install *)",
+      "Bash(npm test *)",
+      "Bash(npm run *)"
     ]
   }
 }

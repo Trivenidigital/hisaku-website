@@ -1,65 +1,58 @@
-import Image from "next/image";
+import { getCaseStudies } from "@/lib/content/case-studies";
+import { getServices } from "@/lib/content/services";
 
-export default function Home() {
+/**
+ * Home page — foundation placeholder.
+ *
+ * The real home page (hero, featured work tiles, capabilities statement,
+ * testimonial, CTA) lands in a later step once brand identity + content are
+ * ready. This placeholder exists so the foundation wires up end-to-end:
+ * the content pipeline loads, next/font works, layout renders, no client JS.
+ */
+export default async function HomePage() {
+  const caseStudies = getCaseStudies();
+  const services = getServices();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main
+      id="main"
+      className="flex-1 max-w-3xl mx-auto px-6 py-24 flex flex-col gap-12"
+    >
+      <section>
+        <p
+          className="text-sm uppercase tracking-widest"
+          style={{ color: "var(--color-accent-primary)" }}
+        >
+          Hisaku
+        </p>
+        <h1
+          className="mt-6 text-5xl md:text-7xl font-bold tracking-tight leading-[1.02]"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          The work is the pitch.
+        </h1>
+        <p
+          className="mt-6 max-w-xl text-lg"
+          style={{ color: "var(--color-text-secondary)" }}
+        >
+          We don&apos;t sell slides. We show you what we&apos;ve built, and you
+          decide. Design, development, and AI marketing for startups and
+          growing companies.
+        </p>
+      </section>
+
+      <section aria-label="Foundation check">
+        <h2
+          className="text-xs uppercase tracking-widest mb-4"
+          style={{ color: "var(--color-text-secondary)" }}
+        >
+          Foundation check
+        </h2>
+        <ul className="text-sm space-y-1 font-mono">
+          <li>Case studies loaded: {caseStudies.length}</li>
+          <li>Services loaded: {services.length}</li>
+        </ul>
+      </section>
+    </main>
   );
 }

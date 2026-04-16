@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================================
+ * Hisaku design tokens
+ *
+ * Base: #0a0a0a near-black
+ * Primary accent: #e8ff47 electric lime (~16:1 on base, AAA)
+ * Secondary accent: #7c6af7 violet (~4.8:1 on base, AA for large text)
+ *
+ * Rules (from design doc):
+ * - Lime leads. Violet is rare (once or twice per page max).
+ * - Never lime on violet or violet on lime. Only on dark base.
+ * - Lime as ink (text, strokes) or as filled-button background with near-black ink.
+ * ============================================================================ */
+
+@theme {
+  --color-base: #0a0a0a;
+  --color-elevated: #1a1a1a;
+  --color-hairline: #222222;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-accent-primary: #e8ff47;
+  --color-accent-secondary: #7c6af7;
+
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global resets + base typography */
+html {
+  background: var(--color-base);
+  color: var(--color-text-primary);
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv11";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus visibility — non-negotiable. Applied globally, per design doc. */
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link — visible only on keyboard focus. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.75rem 1rem;
+  background: var(--color-accent-primary);
+  color: var(--color-base);
+  font-weight: 600;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  left: 0;
+  outline-offset: 0;
+}
+
+/* Reduced motion: no fade-ins, no view transitions, nothing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Scroll-linked fade-ins via CSS animation-timeline: view() — pure CSS,
+ * zero JS. Progressive enhancement: browsers without support render content
+ * immediately (the @supports block is the whole animation). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-on-scroll {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* View transitions — signature craft moment for work tile → case study hero morph.
+ *
+ * TransitionLink dynamically sets view-transition-name="work-<slug>" on the
+ * clicked tile image. The case study hero image has the matching name set
+ * statically. Browser animates between the two.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(work-*),
+  ::view-transition-new(work-*) {
+    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Utility: call this on a tile image when we want it to participate in the morph. */
+.morph-origin {
+  /* view-transition-name is set dynamically by <TransitionLink /> on click. */
+  will-change: transform;
 }
