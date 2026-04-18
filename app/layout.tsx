@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "@/components/Navbar";
+import { SiteFooter } from "@/components/SiteFooter";
 
 // Display face: Syne (variable, Google Fonts, free for commercial use).
 // Chosen for distinctive character vs the over-exposed Satoshi/Inter-Display stack.
@@ -25,11 +27,11 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://hisaku.com"
   ),
   title: {
-    default: "Hisaku — The work is the pitch.",
+    default: "Hisaku — We Build What Moves.",
     template: "%s · Hisaku",
   },
   description:
-    "Design, development, and AI marketing for startups and growing companies.",
+    "Design, development, and AI marketing for startups and growing companies. We don't sell slides. We show you what we've built, and you decide.",
   openGraph: {
     type: "website",
     siteName: "Hisaku",
@@ -57,7 +59,9 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
+        <Navbar />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

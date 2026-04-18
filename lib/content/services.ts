@@ -2,6 +2,9 @@ import { z } from "zod";
 import { loadContent, type LoadedContent } from "./load";
 import { serviceSlugEnum } from "./case-studies";
 
+// Re-export so consumers can import from either module.
+export { serviceSlugEnum };
+
 export const serviceFrontmatterSchema = z.object({
   title: z.string().min(1),
   slug: z.enum(serviceSlugEnum),

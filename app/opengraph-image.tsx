@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { OgLayout, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og/layout";
 
 // Route-level metadata Next.js picks up for the file convention.
-export const alt = "Hisaku — The work is the pitch.";
+export const alt = "Hisaku — We Build What Moves.";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
@@ -14,7 +14,7 @@ export default async function Image() {
   return new ImageResponse(
     (
       <OgLayout
-        title="The work is the pitch."
+        title="We Build What Moves."
         subtitle="Design, development, and AI marketing for startups and growing companies."
       />
     ),

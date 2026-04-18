@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="h2ig" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#h2ig)"/>
+  <text x="800" y="340" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#e8ff47" letter-spacing="0.2em">HELLO2INDIA</text>
+  <text x="800" y="460" text-anchor="middle" font-family="system-ui, sans-serif" font-size="88" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">Local SEO</text>
+  <text x="800" y="560" text-anchor="middle" font-family="system-ui, sans-serif" font-size="88" font-weight="800" fill="#ffffff" letter-spacing="-0.02em">for a neighbourhood store</text>
+  <text x="800" y="680" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#a0a0a0">Google Business Profile · on-site SEO · content</text>
+  <text x="800" y="940" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#666">Placeholder — replace with real screenshot</text>
+</svg>
