@@ -1,12 +1,13 @@
-"use client";
-
-import { ScrambleText } from "@/components/ui/ScrambleText";
-
 /**
- * ThatIsHisakuSection — deep teal (#0a3d2e). The identity moment
- * between work (white) and services (dark). Centered scramble
- * of "Hisaku" + a slower capability ticker beneath.
+ * ThatIsHisakuSection — deep teal (#0a3d2e).
+ *
+ * Defensive rewrite: static H2 for "HISAKU" (ScrambleText was producing
+ * invisible renders on the live deploy — the imperative DOM mutation
+ * + useInView pattern was not firing reliably in production). Hex
+ * colors used inline so the section is legible even if @theme variables
+ * haven't propagated. Simple marquee below for the capability ticker.
  */
+
 const TICKER = [
   "Web Design",
   "Development",
@@ -22,7 +23,7 @@ export function ThatIsHisakuSection() {
       aria-label="That's Hisaku"
       className="relative overflow-hidden flex flex-col justify-center"
       style={{
-        background: "var(--color-bg-teal)",
+        background: "#0a3d2e",
         minHeight: "100vh",
         paddingTop: "clamp(80px, 12vw, 140px)",
         paddingBottom: "clamp(80px, 12vw, 140px)",
@@ -34,33 +35,47 @@ export function ThatIsHisakuSection() {
         <p
           className="uppercase"
           style={{
-            fontFamily: "var(--font-body)",
+            fontFamily: "var(--font-sans, sans-serif)",
             fontWeight: 300,
             fontSize: 14,
-            letterSpacing: "0.2em",
-            color:
-              "color-mix(in srgb, var(--color-text-primary) 45%, transparent)",
+            letterSpacing: "0.15em",
+            color: "rgba(244,243,239,0.5)",
           }}
         >
           That&apos;s
         </p>
 
-        <ScrambleText
-          text="Hisaku"
-          as="h2"
-          trigger="inView"
-          duration={1200}
-          className="mt-6 leading-[0.95] tracking-tight block"
+        <h2
+          className="font-syne mt-6 leading-[0.95] tracking-tight block"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-syne, sans-serif)",
             fontWeight: 800,
-            fontSize: "clamp(72px, 14vw, 200px)",
-            color: "var(--color-text-primary)",
+            fontSize: "clamp(100px, 15vw, 200px)",
+            color: "#f4f3ef",
           }}
-        />
+        >
+          HISAKU
+        </h2>
+
+        <p
+          className="uppercase mt-10"
+          style={{
+            fontFamily: "var(--font-sans, sans-serif)",
+            fontWeight: 300,
+            fontSize: 14,
+            letterSpacing: "0.15em",
+            color: "rgba(244,243,239,0.4)",
+          }}
+        >
+          Web{" "}
+          <span style={{ color: "#e8ff47" }}>·</span> Design{" "}
+          <span style={{ color: "#e8ff47" }}>·</span> Development{" "}
+          <span style={{ color: "#e8ff47" }}>·</span> Marketing{" "}
+          <span style={{ color: "#e8ff47" }}>·</span> AI
+        </p>
       </div>
 
-      {/* Capability ticker — slower marquee */}
+      {/* Slower capability marquee below */}
       <div
         className="relative mt-16 overflow-hidden"
         style={{
@@ -70,25 +85,24 @@ export function ThatIsHisakuSection() {
         }}
         aria-hidden="true"
       >
-        <div className="marquee-track marquee-track--slow flex items-center h-full whitespace-nowrap w-max">
+        <div
+          className="marquee-track marquee-track--slow flex items-center h-full whitespace-nowrap w-max"
+          style={{ animation: "marqueeScroll 55s linear infinite" }}
+        >
           {items.map((item, i) => (
             <span
               key={i}
               className="inline-flex items-center px-6 uppercase"
               style={{
-                fontFamily: "var(--font-body)",
+                fontFamily: "var(--font-sans, sans-serif)",
                 fontWeight: 300,
                 fontSize: 12,
                 letterSpacing: "0.2em",
-                color:
-                  "color-mix(in srgb, var(--color-text-primary) 55%, transparent)",
+                color: "rgba(244,243,239,0.55)",
               }}
             >
               {item}
-              <span
-                className="ml-6"
-                style={{ color: "var(--color-accent-primary)" }}
-              >
+              <span className="ml-6" style={{ color: "#e8ff47" }}>
                 ·
               </span>
             </span>

@@ -42,7 +42,11 @@ export function FadeIn({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, margin: "-10% 0px -10% 0px" }}
+      // amount: 0.1 fires when just 10% of the element is visible — a
+      // much more forgiving trigger than the old negative margin, which
+      // silently failed on tall sections in some viewports and left
+      // children stuck at opacity: 0.
+      viewport={{ once, amount: 0.1 }}
       transition={{ delay, duration, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}

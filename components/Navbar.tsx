@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
 
 /**
@@ -74,14 +73,18 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="Hisaku home"
-          className="flex items-center gap-3 group"
+          className="flex items-center group"
         >
-          <Logo size={28} label="" />
           <span
-            className="text-base font-semibold tracking-[0.2em] uppercase"
-            style={{ fontFamily: "var(--font-display)" }}
+            style={{
+              fontFamily: "var(--font-syne, sans-serif)",
+              fontWeight: 800,
+              fontSize: "20px",
+              color: "#f4f3ef",
+              letterSpacing: "-0.02em",
+            }}
           >
-            Hisaku
+            HISAKU
           </span>
         </Link>
 

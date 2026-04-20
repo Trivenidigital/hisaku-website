@@ -1,12 +1,12 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 /**
- * TestimonialSection — dark bg, oversized decorative open-quote mark
- * at 15% lime in the top-left. Quote animates in (opacity + y:30→0)
- * when it enters the viewport.
+ * TestimonialSection — dark bg.
+ *
+ * Defensive rewrite: motion wrappers removed (they were producing
+ * invisible render on live because whileInView wasn't firing in some
+ * viewports). Content is now always visible. Hex colors inline so we
+ * don't depend on @theme variable resolution.
  */
+
 export function TestimonialSection() {
   return (
     <section
@@ -14,7 +14,7 @@ export function TestimonialSection() {
       aria-label="Testimonial"
       className="relative px-6 overflow-hidden"
       style={{
-        background: "var(--color-bg-dark)",
+        background: "#050507",
         paddingTop: "clamp(96px, 14vw, 160px)",
         paddingBottom: "clamp(96px, 14vw, 160px)",
       }}
@@ -23,64 +23,52 @@ export function TestimonialSection() {
         aria-hidden="true"
         className="absolute select-none pointer-events-none leading-none font-syne"
         style={{
-          top: "40px",
-          left: "60px",
+          top: 40,
+          left: 60,
+          fontFamily: "var(--font-syne, sans-serif)",
           fontWeight: 800,
           fontSize: "clamp(100px, 18vw, 200px)",
-          color: "var(--color-accent-primary)",
-          opacity: 0.12,
+          color: "#e8ff47",
+          opacity: 0.15,
         }}
       >
         &ldquo;
       </span>
 
-      <div className="relative max-w-3xl mx-auto">
-        <motion.blockquote
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+      <div className="relative mx-auto" style={{ maxWidth: 680 }}>
+        <blockquote>
           <p
-            className="text-center italic"
+            className="italic"
             style={{
-              fontFamily: "var(--font-body)",
+              fontFamily: "var(--font-sans, sans-serif)",
               fontWeight: 300,
-              fontSize: "clamp(20px, 2.8vw, 26px)",
-              lineHeight: 1.7,
-              color:
-                "color-mix(in srgb, var(--color-text-primary) 85%, transparent)",
+              fontSize: 26,
+              lineHeight: 1.75,
+              textAlign: "center",
+              color: "rgba(244,243,239,0.85)",
             }}
           >
             Hisaku understood our business from day one. They didn&apos;t just
             build a website — they understood what our customers needed to
             find us.
           </p>
-        </motion.blockquote>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 text-right"
+        </blockquote>
+        <p
           style={{
-            fontFamily: "var(--font-body)",
+            fontFamily: "var(--font-sans, sans-serif)",
             fontWeight: 400,
             fontSize: 14,
-            color:
-              "color-mix(in srgb, var(--color-text-primary) 45%, transparent)",
+            marginTop: 32,
+            textAlign: "right",
+            color: "rgba(244,243,239,0.45)",
           }}
         >
           — Owner, Hello2India{" "}
-          <span
-            aria-hidden="true"
-            style={{ color: "var(--color-accent-primary)" }}
-          >
+          <span aria-hidden="true" style={{ color: "#e8ff47" }}>
             ·
           </span>{" "}
           Herndon, Virginia
-        </motion.p>
+        </p>
       </div>
     </section>
   );

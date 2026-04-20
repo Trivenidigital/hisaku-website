@@ -31,7 +31,7 @@ export function LineReveal({
       style={{ originX: 0 }}
       initial={{ scaleX: 0 }}
       whileInView={{ scaleX: 1 }}
-      viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ delay, duration, ease: [0.22, 1, 0.36, 1] }}
     />
   );

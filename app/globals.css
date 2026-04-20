@@ -203,9 +203,14 @@ body {
  * animation is shared.
  * ============================================================================ */
 
+/* Background-size always applied so the gradient has real depth even
+ * when the animation is paused by reduced-motion. */
+.gradient-pulse {
+  background-size: 300% 300%;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .gradient-pulse {
-    background-size: 300% 300%;
     animation: gradientPulse 8s ease-in-out infinite;
   }
 }

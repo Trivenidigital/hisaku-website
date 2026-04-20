@@ -309,6 +309,9 @@ function WorkBlock({
             width: 420,
             minHeight: 320,
             background: visual.gradient,
+            // Inline backstops — the class alone was being overridden in
+            // some production builds, leaving the div black.
+            backgroundSize: "300% 300%",
           }}
         >
           {visual.arrow ? (

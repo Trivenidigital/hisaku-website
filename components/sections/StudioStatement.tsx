@@ -15,9 +15,10 @@ export function StudioStatement() {
       aria-label="Studio"
       className="text-center px-6"
       style={{
-        background: "var(--color-bg-white)",
-        paddingTop: "clamp(96px, 14vw, 160px)",
-        paddingBottom: "clamp(96px, 14vw, 160px)",
+        background: "#f4f3ef",
+        color: "#050507",
+        paddingTop: "clamp(120px, 14vw, 160px)",
+        paddingBottom: "clamp(120px, 14vw, 160px)",
       }}
     >
       <div className="max-w-4xl mx-auto">
