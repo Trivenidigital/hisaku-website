@@ -1,29 +1,30 @@
 @import "tailwindcss";
 
 /* ============================================================================
- * Hisaku design tokens
+ * Hisaku design tokens — updated during homepage redesign.
  *
- * Base: #0a0a0a near-black
- * Primary accent: #e8ff47 electric lime (~16:1 on base, AAA)
- * Secondary accent: #7c6af7 violet (~4.8:1 on base, AA for large text)
+ * Palette is inspired by terminal-industries.com: deeper near-black base,
+ * warm off-white text, electric lime accent used sparingly. Tokens updated
+ * at root so nav/footer/other pages absorb the new palette naturally.
  *
- * Rules (from design doc):
- * - Lime leads. Violet is rare (once or twice per page max).
- * - Never lime on violet or violet on lime. Only on dark base.
- * - Lime as ink (text, strokes) or as filled-button background with near-black ink.
+ * Rules:
+ * - Lime leads; violet stays as secondary for non-homepage surfaces.
+ * - No gradient fills, no drop shadows, no rounded corners on the
+ *   redesigned homepage sections (other pages retain their current radius).
+ * - Depth comes from typography scale, spacing, and the grain overlay.
  * ============================================================================ */
 
 @theme {
-  --color-base: #0a0a0a;
-  --color-elevated: #1a1a1a;
-  --color-hairline: #222222;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a0a0a0;
+  --color-base: #050507;
+  --color-elevated: #0d0d12;
+  --color-hairline: rgba(255, 255, 255, 0.07);
+  --color-text-primary: #f4f3ef;
+  --color-text-secondary: rgba(244, 243, 239, 0.45);
   --color-accent-primary: #e8ff47;
   --color-accent-secondary: #7c6af7;
 
   --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Global resets + base typography */
@@ -37,17 +38,16 @@ body {
   background: var(--color-base);
   color: var(--color-text-primary);
   font-family: var(--font-body);
-  font-feature-settings: "ss01", "cv11";
+  font-weight: 300;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus visibility — non-negotiable. Applied globally, per design doc. */
+/* Focus visibility — non-negotiable. */
 :focus-visible {
   outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 /* Skip link — visible only on keyboard focus. */
@@ -68,7 +68,7 @@ body {
   outline-offset: 0;
 }
 
-/* Reduced motion: no fade-ins, no view transitions, nothing. */
+/* Reduced motion: kill every animation/transition. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -79,9 +79,112 @@ body {
   }
 }
 
-/* Scroll-linked fade-ins via CSS animation-timeline: view() — pure CSS,
- * zero JS. Progressive enhancement: browsers without support render content
- * immediately (the @supports block is the whole animation). */
+/* ============================================================================
+ * Grain overlay — applied via ::before on the section that needs it.
+ * Any element with `data-grain` gets the texture at 3% opacity.
+ * Used on homepage sections per the design system rule.
+ * ============================================================================ */
+
+[data-grain] {
+  position: relative;
+  isolation: isolate; /* so ::before doesn't bleed z-index up */
+}
+
+[data-grain]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 0;
+  /* SVG fractalNoise — cheap, cached, no external asset request. */
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Keep the content above the grain overlay. */
+[data-grain] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================================
+ * Hero dot-grid — pure CSS drifting field.
+ *
+ * 1px lime dots on a 60px grid, slowly translating diagonally over 40s. No
+ * JS, no canvas. Gated behind prefers-reduced-motion.
+ * ============================================================================ */
+
+.hero-dotgrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(232, 255, 71, 0.15) 1px,
+    transparent 1.5px
+  );
+  background-size: 60px 60px;
+  background-position: 0 0;
+  mask-image: radial-gradient(ellipse at center, #000 45%, transparent 80%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    #000 45%,
+    transparent 80%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dotgrid {
+    animation: dotgrid-drift 40s linear infinite;
+  }
+}
+
+@keyframes dotgrid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 120px 120px; /* 2 cells diagonally */
+  }
+}
+
+/* ============================================================================
+ * Marquee — infinite left scroll. Duplicate children in JSX for seamless loop.
+ * ============================================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee-scroll 30s linear infinite;
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================================
+ * View transitions — signature craft moment for work tile → case study hero.
+ * ============================================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(work-*),
+  ::view-transition-new(work-*) {
+    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.morph-origin {
+  will-change: transform;
+}
+
+/* Utility used by legacy scroll-reveal sections on other pages. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .reveal-on-scroll {
@@ -101,24 +204,4 @@ body {
       transform: translateY(0);
     }
   }
-}
-
-/* View transitions — signature craft moment for work tile → case study hero morph.
- *
- * TransitionLink dynamically sets view-transition-name="work-<slug>" on the
- * clicked tile image. The case study hero image has the matching name set
- * statically. Browser animates between the two.
- */
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(work-*),
-  ::view-transition-new(work-*) {
-    animation-duration: 400ms;
-    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-}
-
-/* Utility: call this on a tile image when we want it to participate in the morph. */
-.morph-origin {
-  /* view-transition-name is set dynamically by <TransitionLink /> on click. */
-  will-change: transform;
 }

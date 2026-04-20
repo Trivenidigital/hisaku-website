@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Syne } from "next/font/google";
+import { DM_Sans, Syne } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { SiteFooter } from "@/components/SiteFooter";
 
-// Display face: Syne (variable, Google Fonts, free for commercial use).
-// Chosen for distinctive character vs the over-exposed Satoshi/Inter-Display stack.
+// Display face: Syne (Google Fonts, free).
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin", "latin-ext"],
@@ -13,11 +12,13 @@ const syne = Syne({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-// Body face: Inter Variable.
-const inter = Inter({
-  variable: "--font-inter",
+// Body face: DM Sans. Swapped from Inter during the homepage redesign
+// to match the terminal-industries-inspired visual direction.
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin", "latin-ext"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 // Root metadata. Per-route pages override title + description via their own exports.
@@ -52,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${inter.variable}`}
+      className={`${syne.variable} ${dmSans.variable}`}
       // color-scheme: dark set in CSS so first paint is branded, never white.
     >
       <body className="min-h-dvh flex flex-col">

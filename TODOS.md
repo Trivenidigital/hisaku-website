@@ -8,6 +8,14 @@
 - **Severity**: MEDIUM
 - **Depends on**: founder decision
 
+## Environment / Integrations
+
+### 2. WhatsApp number (NEXT_PUBLIC_WHATSAPP_NUMBER env var)
+- **What**: Set `NEXT_PUBLIC_WHATSAPP_NUMBER` in Vercel (and local `.env.local`) to the business WhatsApp number with country code and no symbols (e.g. `919876543210`).
+- **Why**: The homepage final CTA's "Or WhatsApp us directly" link is unreachable without it. Falls back to a mailto link gracefully, but WhatsApp is the intended CTA.
+- **Severity**: LOW (fallback exists)
+- **Depends on**: founder confirms the number to use
+
 ## Design System Follow-ups
 
 ### 2. Run /design-consultation
