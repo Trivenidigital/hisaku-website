@@ -6,20 +6,23 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 
 // Display face: Syne (Google Fonts, free).
+// next/font sets this CSS variable on <html>. We expose a separate
+// `--font-syne` token in globals.css @theme so Tailwind 4 generates a
+// `font-syne` utility class — hence the suffix on the source variable
+// to avoid a name collision with the @theme token.
 const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin", "latin-ext"],
+  variable: "--font-syne-src",
+  subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700", "800"],
 });
 
-// Body face: DM Sans. Swapped from Inter during the homepage redesign
-// to match the terminal-industries-inspired visual direction.
+// Body face: DM Sans.
 const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin", "latin-ext"],
+  variable: "--font-dm-sans-src",
+  subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500"],
 });
 
 // Root metadata. Per-route pages override title + description via their own exports.

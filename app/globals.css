@@ -36,8 +36,17 @@
   --color-accent-primary: #e8ff47;
   --color-accent-secondary: #7c6af7;
 
-  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  /* These generate `font-syne` and `font-sans` Tailwind utility classes.
+   * The `-src` suffixed variables are set by next/font on <html>; we
+   * alias them here with sans-serif fallback so the utility class also
+   * resolves before the font JSON loads. */
+  --font-syne: var(--font-syne-src), sans-serif;
+  --font-sans: var(--font-dm-sans-src), sans-serif;
+
+  /* Legacy aliases retained for any code still using them. Both resolve
+   * to the same fonts via the -src variables. */
+  --font-display: var(--font-syne-src), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans-src), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Default (dark) theme already set above. Light theme inverts text so
@@ -57,7 +66,7 @@ html {
 body {
   background: var(--color-bg-dark);
   color: var(--color-text-primary);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-weight: 300;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -146,6 +155,23 @@ body {
   }
   100% {
     background-position: 48px 48px;
+  }
+}
+
+/* Hero scroll indicator — bouncing arrow at bottom-center. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-scroll-indicator {
+    animation: heroBounce 2s ease-in-out infinite;
+  }
+}
+
+@keyframes heroBounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
   }
 }
 

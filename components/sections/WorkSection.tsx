@@ -117,7 +117,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
               fontWeight: 800,
               fontSize: "clamp(120px, 14vw, 180px)",
               color:
-                "color-mix(in srgb, var(--color-text-primary) 12%, transparent)",
+                "color-mix(in srgb, var(--color-text-primary) 10%, transparent)",
             }}
           >
             01

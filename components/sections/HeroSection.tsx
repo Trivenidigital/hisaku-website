@@ -4,22 +4,17 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 /**
- * HeroSection — full viewport. Dark bg with grain + drifting dot grid.
- * Headline pins to bottom-left. Small "Hyderabad · India" text rotates
- * 90deg in the top-right corner.
+ * HeroSection — full viewport, dark.
  *
- *   ┌──────────────────────────────────────────────────┐
- *   │                                      Hyderabad·  │ ← rotated
- *   │                                         India    │
- *   │  (dot grid drifts behind)                        │
- *   │                                                  │
- *   │                                                  │
- *   │  We Build                                        │ ← Syne 800
- *   │  What Moves.                                     │
- *   │                                                  │
- *   │  Marketing · Web · AI Automation                 │
- *   │  [See Our Work →]  [Start a Project]             │
- *   └──────────────────────────────────────────────────┘
+ * Layout (terminal-industries-style):
+ *   - section: position: relative, min-height 100dvh
+ *   - content block: position: absolute, bottom: 80px, left: 60px
+ *   - scroll indicator: position: absolute, bottom: 32px, left: 50%, translateX(-50%)
+ *   - rotated "Hyderabad · India" top-right
+ *
+ * The explicit bottom-left anchor is non-negotiable — pinning headline
+ * to the bottom is the terminal-industries signature. Left: 60px on
+ * desktop, clamps down to 24px on mobile.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -30,8 +25,12 @@ export function HeroSection() {
       data-theme="dark"
       data-grain
       aria-label="Hero"
-      className="relative min-h-[100dvh] overflow-hidden"
-      style={{ background: "var(--color-bg-dark)" }}
+      className="overflow-hidden"
+      style={{
+        position: "relative",
+        minHeight: "100dvh",
+        background: "var(--color-bg-dark)",
+      }}
     >
       <div className="hero-dotgrid" aria-hidden="true" />
 
@@ -43,13 +42,12 @@ export function HeroSection() {
         <p
           className="uppercase whitespace-nowrap"
           style={{
-            fontFamily: "var(--font-body)",
+            fontFamily: "var(--font-sans)",
             fontWeight: 300,
             fontSize: 11,
             letterSpacing: "0.2em",
             color: "color-mix(in srgb, var(--color-text-primary) 45%, transparent)",
             writingMode: "vertical-rl",
-            transform: "rotate(0deg)",
           }}
         >
           Hyderabad{" "}
@@ -57,16 +55,27 @@ export function HeroSection() {
         </p>
       </div>
 
-      {/* Bottom-left headline block */}
-      <div className="absolute inset-x-0 bottom-8 sm:bottom-14 md:bottom-20 px-6 md:pl-14 md:pr-10">
-        <div className="max-w-6xl mx-auto">
+      {/* Bottom-left headline block — explicit pixel anchor per design spec. */}
+      <div
+        className="px-6 sm:px-10 md:px-0"
+        style={{
+          position: "absolute",
+          // On mobile keep a safer offset; desktop uses the exact 80px/60px anchor.
+          bottom: "clamp(40px, 8vw, 80px)",
+          left: 0,
+          right: 0,
+        }}
+      >
+        <div
+          className="max-w-6xl mx-auto"
+          style={{ paddingLeft: "clamp(24px, 5vw, 60px)" }}
+        >
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0, duration: 0.9, ease: EASE }}
-            className="leading-[0.95] tracking-tight"
+            className="font-syne leading-[0.95] tracking-tight"
             style={{
-              fontFamily: "var(--font-display)",
               fontWeight: 800,
               fontSize: "clamp(44px, 8vw, 120px)",
               color: "var(--color-text-primary)",
@@ -78,27 +87,23 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.9, ease: EASE }}
-            className="leading-[0.95] tracking-tight"
+            className="font-syne leading-[0.95] tracking-tight"
             style={{
-              fontFamily: "var(--font-display)",
               fontWeight: 800,
               fontSize: "clamp(44px, 8vw, 120px)",
               color: "var(--color-text-primary)",
             }}
           >
             What{" "}
-            <span style={{ color: "var(--color-accent-primary)" }}>
-              Moves.
-            </span>
+            <span style={{ color: "var(--color-accent-primary)" }}>Moves.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.9, ease: EASE }}
-            className="mt-8"
+            className="font-sans mt-8"
             style={{
-              fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: 18,
               color:
@@ -119,10 +124,9 @@ export function HeroSection() {
           >
             <Link
               href="/work"
-              className="group inline-flex items-center self-start py-2 text-base"
+              className="font-sans group inline-flex items-center self-start py-2 text-base"
               data-cursor="hover"
               style={{
-                fontFamily: "var(--font-body)",
                 color: "var(--color-text-primary)",
                 borderBottom: "2px solid var(--color-accent-primary)",
               }}
@@ -137,10 +141,9 @@ export function HeroSection() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center self-start text-base transition-colors hover:bg-[color:var(--color-bg-white)]"
+              className="font-syne inline-flex items-center self-start text-base transition-colors hover:bg-[color:var(--color-bg-white)]"
               data-cursor="hover"
               style={{
-                fontFamily: "var(--font-display)",
                 fontWeight: 600,
                 background: "var(--color-accent-primary)",
                 color: "var(--color-bg-dark)",
@@ -151,6 +154,24 @@ export function HeroSection() {
             </Link>
           </motion.div>
         </div>
+      </div>
+
+      {/* Scroll indicator — bottom-center, bouncing arrow */}
+      <div
+        aria-hidden="true"
+        className="hero-scroll-indicator"
+        style={{
+          position: "absolute",
+          bottom: "32px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          color: "color-mix(in srgb, var(--color-text-primary) 55%, transparent)",
+          fontSize: "22px",
+          lineHeight: 1,
+          pointerEvents: "none",
+        }}
+      >
+        ↓
       </div>
     </section>
   );
