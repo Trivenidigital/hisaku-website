@@ -1,28 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { ScrambleText } from "@/components/ui/ScrambleText";
 
 /**
- * CtaSection — final conversion block.
+ * CtaSection — TEAL bg, bookends the identity moment from section 4.
  *
- *   ┌──────────────────────────────┐
- *   │                              │
- *   │       Ready to               │
- *   │       move?                  │  ← "move?" in lime
- *   │                              │
- *   │   [ Start a Project → ]      │  ← lime background button
- *   │                              │
- *   │   Or WhatsApp us directly →  │  ← mutedlink + WhatsApp glyph
- *   │                              │
- *   └──────────────────────────────┘
- *
- * WhatsApp number is driven by NEXT_PUBLIC_WHATSAPP_NUMBER env var. If
- * unset, the secondary CTA falls back to a mailto link so the surface is
- * never a dead button.
+ * "Ready to move?" with scramble text, "move?" in lime. Large lime
+ * sharp-cornered button. Secondary WhatsApp link (or email fallback
+ * when NEXT_PUBLIC_WHATSAPP_NUMBER is unset).
  */
 
 function buildWhatsAppUrl(): string | null {
   const raw = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
   if (!raw) return null;
-  // wa.me requires a number with country code, no + or spaces.
   const digits = raw.replace(/[^0-9]/g, "");
   if (!digits) return null;
   return `https://wa.me/${digits}`;
@@ -32,8 +23,8 @@ function WhatsAppGlyph() {
   return (
     <svg
       aria-hidden="true"
-      width="16"
-      height="16"
+      width="14"
+      height="14"
       viewBox="0 0 24 24"
       fill="currentColor"
       className="inline-block align-[-0.15em] ml-2"
@@ -45,36 +36,57 @@ function WhatsAppGlyph() {
 
 export function CtaSection() {
   const whatsApp = buildWhatsAppUrl();
+
   return (
     <section
+      data-theme="dark"
       aria-label="Call to action"
-      className="px-6 py-28 md:py-40 text-center"
-      style={{ background: "var(--color-base)" }}
+      className="relative text-center px-6 overflow-hidden"
+      style={{
+        background: "var(--color-bg-teal)",
+        paddingTop: "clamp(96px, 14vw, 160px)",
+        paddingBottom: "clamp(96px, 14vw, 160px)",
+      }}
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="teal-grid" aria-hidden="true" />
+
+      <div className="relative max-w-3xl mx-auto">
         <h2
           className="leading-[1.02] tracking-tight"
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 800,
-            fontSize: "clamp(56px, 10vw, 96px)",
+            fontSize: "clamp(52px, 9vw, 96px)",
             color: "var(--color-text-primary)",
           }}
         >
-          Ready to
-          <br />
-          <span style={{ color: "var(--color-accent-primary)" }}>move?</span>
+          <ScrambleText
+            text="Ready to"
+            as="span"
+            className="block"
+            duration={900}
+          />
+          <ScrambleText
+            text="move?"
+            as="span"
+            className="block"
+            duration={900}
+            delay={180}
+            style={{ color: "var(--color-accent-primary)" }}
+          />
         </h2>
 
         <div className="mt-12 flex justify-center">
           <Link
             href="/contact"
-            className="inline-flex items-center text-base transition-colors bg-[color:var(--color-accent-primary)] hover:bg-[color:var(--color-text-primary)]"
+            data-cursor="hover"
+            className="inline-flex items-center transition-colors hover:bg-[color:var(--color-bg-white)]"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
               fontSize: 18,
-              color: "var(--color-base)",
+              background: "var(--color-accent-primary)",
+              color: "var(--color-bg-teal)",
               padding: "20px 48px",
             }}
           >
@@ -90,14 +102,17 @@ export function CtaSection() {
             href={whatsApp}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center text-sm transition-colors hover:text-[color:var(--color-accent-primary)]"
+            data-cursor="hover"
+            className="mt-8 inline-flex items-center transition-colors hover:text-[color:var(--color-accent-primary)]"
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 300,
-              color: "var(--color-text-secondary)",
+              fontSize: 14,
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 55%, transparent)",
             }}
           >
-            Or WhatsApp us directly
+            Or WhatsApp us
             <WhatsAppGlyph />
             <span aria-hidden="true" className="ml-1">
               →
@@ -106,11 +121,14 @@ export function CtaSection() {
         ) : (
           <a
             href="mailto:hello@hisaku.com"
-            className="mt-8 inline-flex items-center text-sm transition-colors hover:text-[color:var(--color-accent-primary)]"
+            data-cursor="hover"
+            className="mt-8 inline-flex items-center transition-colors hover:text-[color:var(--color-accent-primary)]"
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 300,
-              color: "var(--color-text-secondary)",
+              fontSize: 14,
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 55%, transparent)",
             }}
           >
             Or email us directly

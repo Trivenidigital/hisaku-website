@@ -1,24 +1,28 @@
 import { getCaseStudies } from "@/lib/content/case-studies";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { MarqueeSection } from "@/components/sections/MarqueeSection";
 import { WorkSection } from "@/components/sections/WorkSection";
+import { ThatIsHisakuSection } from "@/components/sections/ThatIsHisakuSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StudioStatement } from "@/components/sections/StudioStatement";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
 import { CtaSection } from "@/components/sections/CtaSection";
 
 /**
- * Home page — terminal-industries-inspired redesign.
+ * Home page — terminal-industries-inspired rebuild.
  *
- * Section rhythm:
- *   1. Hero            — full viewport, staggered type, drifting dot grid, marquee
- *   2. Selected Work   — sticky counter + 3 scrolling case study blocks
- *   3. Services        — editorial list, CSS hover reveal
- *   4. Studio          — highlighted headline + inline stats (on elevated surface)
- *   5. Testimonial     — centered quote, oversized decorative mark
- *   6. CTA             — "Ready to move?" + lime button + WhatsApp link
+ * Background rhythm (the life of the page):
+ *   1. Hero           — dark   (dot grid + grain)
+ *   2. Marquee        — dark   (seamless continuation)
+ *   3. Selected Work  — WHITE  (stark flip; video placeholders)
+ *   4. That's Hisaku  — TEAL   (identity moment, scramble text)
+ *   5. Services       — dark   (line-draw rows)
+ *   6. Studio         — WHITE  (second contrast flip)
+ *   7. Testimonial    — dark
+ *   8. CTA            — TEAL   (bookends identity)
  *
- * Content comes from the MDX pipeline (case studies). Navbar + SiteFooter
- * wrap from the root layout — both untouched in this redesign per spec.
+ * Each section declares its theme via data-theme, which flips the
+ * --color-text-* variables so children don't need per-section styles.
  */
 export default function HomePage() {
   const caseStudies = getCaseStudies();
@@ -26,9 +30,11 @@ export default function HomePage() {
   return (
     <main id="main" className="flex-1">
       <HeroSection />
+      <MarqueeSection />
       {caseStudies.length > 0 ? (
         <WorkSection caseStudies={caseStudies.slice(0, 3)} />
       ) : null}
+      <ThatIsHisakuSection />
       <ServicesSection />
       <StudioStatement />
       <TestimonialSection />

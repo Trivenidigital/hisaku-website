@@ -2,84 +2,150 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import type { CaseStudy } from "@/lib/content/case-studies";
+import { ClipReveal } from "@/components/ui/ClipReveal";
+import { CountUp } from "@/components/ui/CountUp";
 
 /**
- * WorkSection — sticky counter left, scrolling case study blocks right.
+ * WorkSection — WHITE background, stark contrast flip from the hero.
  *
- *   ┌─────────────────────┬───────────────────────────────────┐
- *   │                     │  ── Product Development           │
- *   │  01                 │  Vizora                            │
- *   │  ─────────          │  2,500+  organisations worldwide   │
- *   │  CASE STUDIES       │  Built the full SaaS from design   │
- *   │  (sticky)           │  to shipped product in 12 weeks.   │
- *   │                     │  View Case Study →                 │
- *   │                     ├───────────────────────────────────│
- *   │                     │  (block 2, block 3, ...)           │
- *   └─────────────────────┴───────────────────────────────────┘
+ * Layout:
+ *   grid [280px | 1fr]  (mobile: stacked, no sticky counter)
+ *   ┌──────────────┬─────────────────────────────────────────┐
+ *   │   01         │  — PRODUCT DEVELOPMENT                  │
+ *   │  ─── (lime)  │  Vizora                                 │
+ *   │  3 Case…     │  2,500+  organisations worldwide        │
+ *   │  (sticky)    │  [gradient-pulse video placeholder]     │
+ *   │              ├─────────────────────────────────────────┤
+ *   │              │  Hello2India (block 2)                  │
+ *   │              │  ...                                    │
  *
- * As each block enters the viewport, the left counter updates to its index.
- * useInView (framer-motion) gates on scroll entering the middle band.
+ * Counter updates imperatively (cheaper than a context re-render cascade).
+ *
+ * Each block has a right-side "video" placeholder — an animated gradient
+ * that mimics a motion loop until the real footage is dropped in.
  */
 
 interface WorkSectionProps {
   caseStudies: CaseStudy[];
 }
 
-// Category label shown above each block. Derived from services list.
-const CATEGORY_LABEL: Record<string, string> = {
-  design: "Design",
-  development: "Product Development",
-  "digital-marketing": "Marketing & SEO",
-  "ai-marketing": "AI Automation",
+/** Per-slug visual data: category label + gradient colors for the placeholder. */
+const VISUAL: Record<
+  string,
+  { category: string; gradient: string }
+> = {
+  vizora: {
+    category: "— Product Development",
+    gradient:
+      "linear-gradient(135deg, #050507 0%, #0d3020 40%, #050507 100%)",
+  },
+  hello2india: {
+    category: "— Marketing & SEO",
+    gradient:
+      "linear-gradient(135deg, #1a0800 0%, #3d1500 40%, #1a0800 100%)",
+  },
+  "triveni-express": {
+    category: "— Web & Ordering",
+    gradient:
+      "linear-gradient(135deg, #0a1a00 0%, #1a3300 40%, #0a1a00 100%)",
+  },
 };
 
-function pickCategory(services: readonly string[]): string {
-  // If development is in the list, treat it as a product build.
-  if (services.includes("development")) return CATEGORY_LABEL.development;
-  if (services.includes("ai-marketing")) return CATEGORY_LABEL["ai-marketing"];
-  if (services.includes("digital-marketing"))
-    return CATEGORY_LABEL["digital-marketing"];
-  return CATEGORY_LABEL.design;
+/** Best-effort parse of the primary metric into a number + prefix/suffix
+ *  so CountUp can animate when sensible; otherwise renders verbatim. */
+function parseMetric(raw: string): {
+  to?: number;
+  prefix?: string;
+  suffix?: string;
+  fallbackText?: string;
+} {
+  // Keep things like "#1 Local", "Live", "12 wk", "SaaS" verbatim.
+  const match = raw.match(/^(\+?-?)(\d[\d,]*)(.*)$/);
+  if (!match) return { fallbackText: raw };
+  const [, sign, digits, rest] = match;
+  const parsed = parseInt(digits.replace(/,/g, ""), 10);
+  if (!Number.isFinite(parsed)) return { fallbackText: raw };
+  return {
+    to: parsed,
+    prefix: sign,
+    suffix: rest,
+  };
 }
 
-function shortDescription(cs: CaseStudy): string {
-  // Use the first sentence of the Challenge body (after "## Challenge\n\n").
-  const match = cs.body.match(/##\s+Challenge\s*\n+([^\n.]+\.)/);
-  if (match) return match[1];
-  return `${cs.frontmatter.client} · ${cs.frontmatter.timeline}`;
+function firstSentence(body: string): string {
+  const m = body.match(/##\s+Challenge\s*\n+([\s\S]*?)(?:\n##|\n\n|$)/);
+  const para = m ? m[1].trim() : "";
+  // First 2 sentences, trimmed.
+  const parts = para.split(/(?<=[.!?])\s+/);
+  return parts.slice(0, 2).join(" ");
 }
 
 export function WorkSection({ caseStudies }: WorkSectionProps) {
   return (
     <section
+      data-theme="light"
       aria-label="Selected work"
       className="relative"
-      style={{ background: "var(--color-base)" }}
+      style={{ background: "var(--color-bg-white)" }}
     >
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-8">
         <p
-          className="text-xs uppercase tracking-[0.3em]"
-          style={{ color: "var(--color-accent-primary)" }}
+          className="uppercase"
+          style={{
+            fontFamily: "var(--font-body)",
+            fontWeight: 300,
+            fontSize: 11,
+            letterSpacing: "0.2em",
+            color:
+              "color-mix(in srgb, var(--color-text-primary) 40%, transparent)",
+          }}
         >
           Selected Work
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 grid gap-10 md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-        {/* Left sticky counter */}
-        <StickyCounter total={caseStudies.length} />
+      <div className="max-w-6xl mx-auto px-6 grid gap-10 md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr]">
+        {/* Sticky counter — desktop only */}
+        <aside className="hidden md:block md:sticky md:top-32 self-start h-fit">
+          <p
+            id="work-counter"
+            className="leading-none tracking-tight"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 800,
+              fontSize: "clamp(120px, 14vw, 180px)",
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 12%, transparent)",
+            }}
+          >
+            01
+          </p>
+          <div
+            className="mt-6 h-px w-10"
+            style={{ background: "var(--color-accent-primary)" }}
+          />
+          <p
+            className="mt-4 uppercase"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 300,
+              fontSize: 11,
+              letterSpacing: "0.2em",
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
+            }}
+          >
+            {caseStudies.length} Case Stud
+            {caseStudies.length === 1 ? "y" : "ies"}
+          </p>
+        </aside>
 
-        {/* Right: case study blocks */}
+        {/* Blocks */}
         <div>
           {caseStudies.map((cs, i) => (
-            <WorkBlock
-              key={cs.frontmatter.slug}
-              caseStudy={cs}
-              index={i}
-              variant={i % 2 === 0 ? "base" : "elevated"}
-            />
+            <WorkBlock key={cs.frontmatter.slug} caseStudy={cs} index={i} />
           ))}
         </div>
       </div>
@@ -87,150 +153,156 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
   );
 }
 
-// Sticky counter — its text content is updated imperatively by the block
-// components as they enter the viewport (cheaper than lifting state up and
-// re-rendering the whole column on every scroll).
-function StickyCounter({ total }: { total: number }) {
-  return (
-    <aside className="md:sticky md:top-10 self-start h-fit hidden md:block">
-      <p
-        id="work-counter"
-        className="leading-none tracking-tight"
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 800,
-          fontSize: "clamp(120px, 12vw, 160px)",
-          color: "var(--color-text-secondary)",
-        }}
-      >
-        01
-      </p>
-      <div
-        className="mt-6 h-px w-16"
-        style={{ background: "var(--color-accent-primary)" }}
-      />
-      <p
-        className="mt-6 text-xs uppercase tracking-[0.3em]"
-        style={{ color: "var(--color-text-secondary)" }}
-      >
-        {total} Case Stud{total === 1 ? "y" : "ies"}
-      </p>
-    </aside>
-  );
-}
-
 function WorkBlock({
   caseStudy,
   index,
-  variant,
 }: {
   caseStudy: CaseStudy;
   index: number;
-  variant: "base" | "elevated";
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { margin: "-40% 0px -40% 0px", once: false });
+  const inView = useInView(ref, { margin: "-40% 0px -40% 0px" });
 
-  // When this block enters the middle band, update the DOM counter directly.
-  // useState + re-render on every scroll would be wasteful for a big section.
-  // Imperative DOM update is intentional here.
+  // Imperative counter sync — see parent comment.
   if (typeof document !== "undefined" && inView) {
     const el = document.getElementById("work-counter");
     if (el) el.textContent = String(index + 1).padStart(2, "0");
   }
 
-  const { slug, title, services, results } = caseStudy.frontmatter;
-  const category = pickCategory(services);
-  const primary = results[0];
-  const description = shortDescription(caseStudy);
+  const fm = caseStudy.frontmatter;
+  const visual = VISUAL[fm.slug] ?? {
+    category: "— Project",
+    gradient: "linear-gradient(135deg, #050507, #0d0d12, #050507)",
+  };
+  const primary = fm.results[0];
+  const parsed = primary ? parseMetric(primary.metric) : null;
+  const description = firstSentence(caseStudy.body);
 
   return (
     <div
       ref={ref}
-      className="min-h-[80vh] flex flex-col justify-center py-16 border-t"
-      style={{
-        background:
-          variant === "elevated"
-            ? "var(--color-elevated)"
-            : "var(--color-base)",
-        borderColor: "var(--color-accent-primary)",
-        // Inset padding so the alternating background sits inside the grid
-        marginInline: "-1.5rem",
-        paddingInline: "1.5rem",
-      }}
+      className="min-h-[80vh] flex flex-col justify-center py-20 border-t"
+      style={{ borderColor: "rgba(5,5,7,0.1)" }}
     >
       <p
-        className="text-xs uppercase tracking-[0.3em]"
-        style={{ color: "var(--color-accent-primary)" }}
-      >
-        — {category}
-      </p>
-      <h3
-        className="mt-4 text-4xl sm:text-5xl md:text-6xl leading-[1.02] tracking-tight"
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 700,
-          color: "var(--color-text-primary)",
-        }}
-      >
-        {title.split(" — ")[0]}
-      </h3>
-      {primary ? (
-        <div className="mt-8">
-          <p
-            className="leading-none tracking-tight"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 800,
-              fontSize: "clamp(56px, 8vw, 96px)",
-              color: "var(--color-accent-primary)",
-            }}
-          >
-            {primary.metric}
-          </p>
-          <p
-            className="mt-3 text-sm uppercase tracking-widest"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              color: "var(--color-text-secondary)",
-            }}
-          >
-            {primary.label}
-          </p>
-        </div>
-      ) : null}
-
-      <p
-        className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed"
+        className="uppercase"
         style={{
           fontFamily: "var(--font-body)",
           fontWeight: 300,
-          color: "var(--color-text-secondary)",
+          fontSize: 11,
+          letterSpacing: "0.15em",
+          color:
+            "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
         }}
       >
-        {description}
+        {visual.category}
       </p>
 
-      <div className="mt-10">
-        <Link
-          href={`/work/${slug}`}
-          className="group inline-flex items-center text-base transition-colors hover:text-[color:var(--color-accent-primary)]"
+      <ClipReveal className="mt-6">
+        <h3
+          className="leading-[1.02] tracking-tight"
           style={{
-            fontFamily: "var(--font-body)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
+            fontSize: "clamp(36px, 6vw, 80px)",
             color: "var(--color-text-primary)",
           }}
         >
-          <span className="group-hover:underline underline-offset-4">
-            View Case Study
-          </span>
-          <span
-            aria-hidden="true"
-            className="ml-2 transition-transform group-hover:translate-x-1"
+          {fm.title.split(" — ")[0]}
+        </h3>
+      </ClipReveal>
+
+      <div className="mt-8 grid md:grid-cols-[1fr_auto] gap-10 md:items-end">
+        <div>
+          {primary && parsed ? (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+                transition={{ duration: 0.6 }}
+              >
+                <span
+                  className="leading-none tracking-tight"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "clamp(56px, 10vw, 120px)",
+                    color: "var(--color-accent-primary)",
+                    display: "inline-block",
+                  }}
+                >
+                  <CountUp
+                    to={parsed.to}
+                    prefix={parsed.prefix}
+                    suffix={parsed.suffix}
+                    fallbackText={parsed.fallbackText}
+                  />
+                </span>
+              </motion.div>
+              <p
+                className="mt-3 text-sm uppercase"
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 300,
+                  letterSpacing: "0.15em",
+                  color:
+                    "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
+                }}
+              >
+                {primary.label}
+              </p>
+            </>
+          ) : null}
+
+          <p
+            className="mt-8 max-w-md"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 300,
+              fontSize: 18,
+              lineHeight: 1.6,
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 70%, transparent)",
+            }}
           >
-            →
-          </span>
-        </Link>
+            {description}
+          </p>
+
+          <div className="mt-8">
+            <Link
+              href={`/work/${fm.slug}`}
+              data-cursor="hover"
+              className="group inline-flex items-center transition-colors hover:text-[color:var(--color-accent-primary)]"
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                color: "var(--color-text-primary)",
+                borderBottom: "1px solid currentColor",
+                paddingBottom: 2,
+              }}
+            >
+              <span>View Case Study</span>
+              <span
+                aria-hidden="true"
+                className="ml-2 transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Video placeholder — gradient-pulse at 400x300. Replace with <video> when footage lands. */}
+        <div
+          aria-hidden="true"
+          className="gradient-pulse hidden md:block"
+          style={{
+            width: 400,
+            height: 300,
+            background: visual.gradient,
+          }}
+        />
       </div>
     </div>
   );

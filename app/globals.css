@@ -1,25 +1,38 @@
 @import "tailwindcss";
 
 /* ============================================================================
- * Hisaku design tokens — updated during homepage redesign.
+ * Hisaku design tokens — terminal-industries-inspired rebuild.
  *
- * Palette is inspired by terminal-industries.com: deeper near-black base,
- * warm off-white text, electric lime accent used sparingly. Tokens updated
- * at root so nav/footer/other pages absorb the new palette naturally.
+ * Four section backgrounds alternate across the homepage to give the site
+ * rhythm. Child components read `--color-text-primary` / `--color-text-
+ * secondary`, which flip based on a section's [data-theme] attribute —
+ * dark-theme sections keep the default warm off-white; light-theme
+ * sections invert to dark. No component needs to know what background
+ * it's sitting on.
  *
- * Rules:
- * - Lime leads; violet stays as secondary for non-homepage surfaces.
- * - No gradient fills, no drop shadows, no rounded corners on the
- *   redesigned homepage sections (other pages retain their current radius).
- * - Depth comes from typography scale, spacing, and the grain overlay.
+ * Usage on a section:
+ *   <section data-theme="dark">   dark bg, light text (default)
+ *   <section data-theme="light">  light bg, dark text (inverted)
+ *
  * ============================================================================ */
 
 @theme {
+  /* Background tokens */
+  --color-bg-dark: #050507;
+  --color-bg-mid: #0d0d12;
+  --color-bg-white: #f4f3ef;
+  --color-bg-teal: #0a3d2e;
+
+  /* Legacy names kept for existing pages (work/services/about/contact). */
   --color-base: #050507;
   --color-elevated: #0d0d12;
   --color-hairline: rgba(255, 255, 255, 0.07);
+
+  /* Text — flipped per section via [data-theme] */
   --color-text-primary: #f4f3ef;
   --color-text-secondary: rgba(244, 243, 239, 0.45);
+
+  /* Accent is constant across all backgrounds. */
   --color-accent-primary: #e8ff47;
   --color-accent-secondary: #7c6af7;
 
@@ -27,15 +40,22 @@
   --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Global resets + base typography */
+/* Default (dark) theme already set above. Light theme inverts text so
+ * components using var(--color-text-*) automatically adapt on white bg. */
+[data-theme="light"] {
+  --color-text-primary: #050507;
+  --color-text-secondary: rgba(5, 5, 7, 0.55);
+  --color-hairline: rgba(5, 5, 7, 0.1);
+}
+
 html {
-  background: var(--color-base);
+  background: var(--color-bg-dark);
   color: var(--color-text-primary);
   color-scheme: dark;
 }
 
 body {
-  background: var(--color-base);
+  background: var(--color-bg-dark);
   color: var(--color-text-primary);
   font-family: var(--font-body);
   font-weight: 300;
@@ -44,20 +64,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus visibility — non-negotiable. */
 :focus-visible {
   outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
 }
 
-/* Skip link — visible only on keyboard focus. */
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
   padding: 0.75rem 1rem;
   background: var(--color-accent-primary);
-  color: var(--color-base);
+  color: var(--color-bg-dark);
   font-weight: 600;
   z-index: 100;
   text-decoration: none;
@@ -68,7 +86,133 @@ body {
   outline-offset: 0;
 }
 
-/* Reduced motion: kill every animation/transition. */
+/* ============================================================================
+ * Grain overlay — [data-grain] sections get a subtle SVG fractalNoise
+ * texture at 3.5% opacity.
+ * ============================================================================ */
+
+[data-grain] {
+  position: relative;
+  isolation: isolate;
+}
+
+[data-grain]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[data-grain] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================================
+ * Hero dot grid — 48px lattice drifting diagonally at 60s.
+ * ============================================================================ */
+
+.hero-dotgrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(232, 255, 71, 0.25) 1px,
+    transparent 1.3px
+  );
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, #000 50%, transparent 85%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    #000 50%,
+    transparent 85%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dotgrid {
+    animation: dotGridDrift 60s linear infinite;
+  }
+}
+
+@keyframes dotGridDrift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 48px 48px;
+  }
+}
+
+/* ============================================================================
+ * Marquee — seamless 40s infinite scroll. Content is duplicated in JSX.
+ * ============================================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marqueeScroll 40s linear infinite;
+  }
+  .marquee-track--slow {
+    animation-duration: 55s;
+  }
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================================
+ * Gradient pulse — animated placeholder for "video" tiles on the work
+ * section. Each project supplies its own gradient via inline style; the
+ * animation is shared.
+ * ============================================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-pulse {
+    background-size: 300% 300%;
+    animation: gradientPulse 8s ease-in-out infinite;
+  }
+}
+
+@keyframes gradientPulse {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================================================
+ * Teal grid overlay — very subtle line grid on the "That's Hisaku" and
+ * CTA teal sections. Uses linear gradients to avoid a second asset.
+ * ============================================================================ */
+
+.teal-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ============================================================================
+ * Reduced motion: neutralize every animation/transition.
+ * ============================================================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -80,96 +224,63 @@ body {
 }
 
 /* ============================================================================
- * Grain overlay — applied via ::before on the section that needs it.
- * Any element with `data-grain` gets the texture at 3% opacity.
- * Used on homepage sections per the design system rule.
+ * Custom cursor (desktop-only, pointer: fine). 8px lime dot + 40px follower.
+ * The follower uses mix-blend-mode: difference so it self-inverts over
+ * any section color — works on dark, white, and teal without per-section
+ * tweaks. Hidden in reduced-motion and on touch devices.
  * ============================================================================ */
 
-[data-grain] {
-  position: relative;
-  isolation: isolate; /* so ::before doesn't bleed z-index up */
-}
-
-[data-grain]::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.03;
-  z-index: 0;
-  /* SVG fractalNoise — cheap, cached, no external asset request. */
-  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Keep the content above the grain overlay. */
-[data-grain] > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* ============================================================================
- * Hero dot-grid — pure CSS drifting field.
- *
- * 1px lime dots on a 60px grid, slowly translating diagonally over 40s. No
- * JS, no canvas. Gated behind prefers-reduced-motion.
- * ============================================================================ */
-
-.hero-dotgrid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: radial-gradient(
-    circle,
-    rgba(232, 255, 71, 0.15) 1px,
-    transparent 1.5px
-  );
-  background-size: 60px 60px;
-  background-position: 0 0;
-  mask-image: radial-gradient(ellipse at center, #000 45%, transparent 80%);
-  -webkit-mask-image: radial-gradient(
-    ellipse at center,
-    #000 45%,
-    transparent 80%
-  );
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-dotgrid {
-    animation: dotgrid-drift 40s linear infinite;
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
+  .cursor-follower,
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform;
   }
-}
 
-@keyframes dotgrid-drift {
-  from {
-    background-position: 0 0;
+  .cursor-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
   }
-  to {
-    background-position: 120px 120px; /* 2 cells diagonally */
+
+  .cursor-follower {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-bg-white);
+    border-radius: 50%;
+    mix-blend-mode: difference;
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  }
+
+  .cursor-follower[data-active="true"] {
+    width: 64px;
+    height: 64px;
+    border-color: var(--color-accent-primary);
+  }
+
+  /* Hide the native cursor only when the custom one is active. Cursor
+   * component toggles [data-cursor-ready] on <html>. */
+  html[data-cursor-ready="true"],
+  html[data-cursor-ready="true"] * {
+    cursor: none !important;
+  }
+  html[data-cursor-ready="true"] a,
+  html[data-cursor-ready="true"] button,
+  html[data-cursor-ready="true"] input,
+  html[data-cursor-ready="true"] textarea,
+  html[data-cursor-ready="true"] select {
+    cursor: none !important;
   }
 }
 
 /* ============================================================================
- * Marquee — infinite left scroll. Duplicate children in JSX for seamless loop.
- * ============================================================================ */
-
-@media (prefers-reduced-motion: no-preference) {
-  .marquee-track {
-    animation: marquee-scroll 30s linear infinite;
-  }
-}
-
-@keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* ============================================================================
- * View transitions — signature craft moment for work tile → case study hero.
+ * View-transitions retained for case study tile → hero morph.
  * ============================================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -180,11 +291,7 @@ body {
   }
 }
 
-.morph-origin {
-  will-change: transform;
-}
-
-/* Utility used by legacy scroll-reveal sections on other pages. */
+/* Legacy scroll-reveal used on other pages. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .reveal-on-scroll {

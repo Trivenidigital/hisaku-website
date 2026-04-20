@@ -1,21 +1,10 @@
 import Link from "next/link";
+import { LineReveal } from "@/components/ui/LineReveal";
 
 /**
- * ServicesSection — editorial list. Four rows, CSS hover reveal.
- *
- *   ── WHAT WE DO
- *   ┌──────────────────────────────────────────────────────────┐
- *   │ 01  Web Design         Beautiful. Precise. Memorable.  → │
- *   ├──────────────────────────────────────────────────────────┤
- *   │ 02  Web Development    Fast. Scalable. Yours.          → │
- *   ├──────────────────────────────────────────────────────────┤
- *   │ 03  Marketing & SEO    Found. Clicked. Converted.      → │
- *   ├──────────────────────────────────────────────────────────┤
- *   │ 04  AI Automation      Automated. Intelligent...       → │
- *   └──────────────────────────────────────────────────────────┘
- *
- * Hover: row background becomes elevated surface, description fades in,
- * arrow appears. All CSS, no JS.
+ * ServicesSection — dark bg, four rows separated by a line that draws
+ * left-to-right on scroll. CSS-only hover reveal (tagline fade + arrow
+ * + row bg swap to #0d0d12).
  */
 
 const SERVICES = [
@@ -23,115 +12,134 @@ const SERVICES = [
     slug: "design",
     number: "01",
     name: "Web Design",
-    description: "Beautiful. Precise. Memorable.",
+    tagline: "Beautiful. Precise. Memorable.",
   },
   {
     slug: "development",
     number: "02",
-    name: "Web Development",
-    description: "Fast. Scalable. Yours.",
+    name: "Development",
+    tagline: "Fast. Scalable. Yours.",
   },
   {
     slug: "digital-marketing",
     number: "03",
-    name: "Marketing & SEO",
-    description: "Found. Clicked. Converted.",
+    name: "Marketing",
+    tagline: "Found. Clicked. Converted.",
   },
   {
     slug: "ai-marketing",
     number: "04",
     name: "AI Automation",
-    description: "Automated. Intelligent. Unstoppable.",
+    tagline: "Automated. Intelligent. Unstoppable.",
   },
 ] as const;
 
 export function ServicesSection() {
   return (
     <section
+      data-theme="dark"
       aria-label="What we do"
-      className="relative py-24 md:py-32"
-      style={{ background: "var(--color-base)" }}
+      className="py-24 md:py-32"
+      style={{ background: "var(--color-bg-dark)" }}
     >
       <div className="max-w-6xl mx-auto px-6">
         <p
-          className="text-xs uppercase tracking-[0.3em] mb-12"
-          style={{ color: "var(--color-accent-primary)" }}
+          className="uppercase mb-14"
+          style={{
+            fontFamily: "var(--font-body)",
+            fontWeight: 300,
+            fontSize: 11,
+            letterSpacing: "0.2em",
+            color:
+              "color-mix(in srgb, var(--color-text-primary) 30%, transparent)",
+          }}
         >
           What We Do
         </p>
 
         <ul className="flex flex-col">
-          {SERVICES.map((service) => (
-            <li
-              key={service.slug}
-              className="border-t"
-              style={{ borderColor: "var(--color-hairline)" }}
-            >
+          {SERVICES.map((service, i) => (
+            <li key={service.slug}>
+              {/* Line that draws on scroll. First row uses a subtle
+                  hairline; subsequent rows use the lime accent to make
+                  the draw visible. */}
+              <LineReveal
+                className={`h-px ${i === 0 ? "bg-[rgba(255,255,255,0.06)]" : "bg-[color:var(--color-accent-primary)]"}`}
+                duration={1}
+              />
               <Link
                 href={`/services/${service.slug}`}
-                className="group grid grid-cols-[auto_1fr_auto] items-center gap-6 md:gap-10 py-8 px-0 md:px-6 transition-colors duration-300 ease-out hover:bg-[color:var(--color-elevated)]"
-                style={{
-                  fontFamily: "var(--font-body)",
-                }}
+                data-cursor="hover"
+                className="group grid grid-cols-[48px_1fr_auto] items-center gap-4 md:gap-8 py-7 md:py-8 px-0 md:px-6 transition-colors duration-300 ease-out hover:bg-[color:var(--color-bg-mid)]"
               >
                 <span
-                  className="text-sm tabular-nums"
+                  className="tabular-nums"
                   style={{
+                    fontFamily: "var(--font-body)",
                     fontWeight: 300,
-                    color: "var(--color-text-secondary)",
+                    fontSize: 13,
+                    color:
+                      "color-mix(in srgb, var(--color-text-primary) 25%, transparent)",
                   }}
                 >
                   {service.number}
                 </span>
 
-                <span className="flex items-baseline gap-4 min-w-0">
+                <span
+                  className="leading-[1.1] tracking-tight transition-colors group-hover:text-[color:var(--color-accent-primary)]"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "clamp(28px, 5vw, 72px)",
+                    color: "var(--color-text-primary)",
+                  }}
+                >
+                  {service.name}
+                </span>
+
+                <span className="flex items-center gap-4">
                   <span
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight"
+                    aria-hidden="true"
+                    className="hidden md:inline opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      color: "var(--color-text-primary)",
+                      fontFamily: "var(--font-body)",
+                      fontWeight: 300,
+                      fontSize: 16,
+                      color:
+                        "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
                     }}
                   >
-                    {service.name}
+                    {service.tagline}
                   </span>
                   <span
                     aria-hidden="true"
-                    className="hidden md:inline opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-base"
-                    style={{
-                      fontWeight: 300,
-                      color: "var(--color-text-secondary)",
-                    }}
+                    className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-2xl"
+                    style={{ color: "var(--color-accent-primary)" }}
                   >
-                    {service.description}
+                    →
                   </span>
                 </span>
-
-                <span
-                  aria-hidden="true"
-                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-2xl"
-                  style={{ color: "var(--color-accent-primary)" }}
-                >
-                  →
-                </span>
               </Link>
-              {/* Mobile: show description below, since hover doesn't exist on touch */}
+
+              {/* Mobile tagline */}
               <p
-                className="md:hidden pb-6 text-sm"
+                className="md:hidden pb-6 pl-12"
                 style={{
                   fontFamily: "var(--font-body)",
                   fontWeight: 300,
-                  color: "var(--color-text-secondary)",
+                  fontSize: 13,
+                  color:
+                    "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
                 }}
               >
-                {service.description}
+                {service.tagline}
               </p>
             </li>
           ))}
-          <li
-            className="border-t"
-            style={{ borderColor: "var(--color-hairline)" }}
-          />
+          {/* Closing hairline */}
+          <li>
+            <LineReveal className="h-px bg-[rgba(255,255,255,0.06)]" />
+          </li>
         </ul>
       </div>
     </section>

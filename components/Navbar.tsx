@@ -1,16 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
 
 /**
- * Main navigation.
+ * Navbar — transparent at top, dark blurred bar after 80px scroll.
+ * Hides on scroll down past 120px, reveals on scroll up.
  *
- * Desktop (≥ md):  Brand mark left, links inline right.
- * Mobile (< md):   Brand mark left, hamburger button right (client component
- *                  that opens a full-screen overlay).
- *
- * Both render — CSS hides/shows based on viewport. The MobileNav client
- * component is the only piece that ships JS to the browser.
+ * The dark blurred bar + mix-blend-mode text means the nav works over
+ * any section color including the white work/studio sections.
  */
 const LINKS = [
   { href: "/work", label: "Work" },
@@ -20,11 +20,56 @@ const LINKS = [
 ] as const;
 
 export function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrolled(y > 80);
+        if (y > 120 && y > lastY) {
+          setHidden(true);
+        } else if (y < lastY) {
+          setHidden(false);
+        }
+        lastY = y;
+        ticking = false;
+      });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-30 backdrop-blur-md bg-[rgba(10,10,10,0.7)] border-b border-[color:var(--color-hairline)]">
+    <header
+      className="fixed top-0 left-0 right-0 z-30 transition-transform duration-300 ease-out"
+      style={{
+        transform: hidden ? "translateY(-100%)" : "translateY(0)",
+        background: scrolled ? "rgba(5,5,7,0.72)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
+        borderBottom: scrolled
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid transparent",
+      }}
+    >
       <nav
         aria-label="Primary"
         className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
+        style={{
+          // mix-blend-mode: difference inverts the nav text against
+          // whatever is immediately behind — useful when the nav is
+          // transparent and a white section has scrolled under it.
+          mixBlendMode: scrolled ? "normal" : "difference",
+          color: scrolled ? "var(--color-bg-white)" : "#fff",
+        }}
       >
         <Link
           href="/"
@@ -40,13 +85,12 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-8 text-sm">
           {LINKS.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-[color:var(--color-text-secondary)] hover:text-[color:var(--color-text-primary)] transition-colors"
+                className="opacity-70 hover:opacity-100 transition-opacity"
               >
                 {link.label}
               </Link>
@@ -54,7 +98,6 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile: hamburger + overlay. Client component. */}
         <div className="md:hidden">
           <MobileNav links={LINKS} />
         </div>

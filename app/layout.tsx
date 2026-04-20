@@ -3,6 +3,7 @@ import { DM_Sans, Syne } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { SiteFooter } from "@/components/SiteFooter";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 
 // Display face: Syne (Google Fonts, free).
 const syne = Syne({
@@ -60,6 +61,7 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
+        <CustomCursor />
         <Navbar />
         {children}
         <SiteFooter />

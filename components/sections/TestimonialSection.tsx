@@ -1,56 +1,72 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 /**
- * TestimonialSection — quote with oversized decorative open-quote mark.
- *
- * No card, no box, no border. The decorative " sits top-left at 200px,
- * lime at 20% opacity, pointer-events disabled so it doesn't intercept
- * selection. Quote and attribution sit in a centered block above it.
+ * TestimonialSection — dark bg, oversized decorative open-quote mark
+ * at 15% lime in the top-left. Quote animates in (opacity + y:30→0)
+ * when it enters the viewport.
  */
 export function TestimonialSection() {
   return (
     <section
+      data-theme="dark"
       aria-label="Testimonial"
-      className="relative py-24 md:py-32 px-6 overflow-hidden"
-      style={{ background: "var(--color-base)" }}
+      className="relative px-6 py-24 md:py-36 overflow-hidden"
+      style={{ background: "var(--color-bg-dark)" }}
     >
-      {/* Oversized decorative open-quote */}
       <span
         aria-hidden="true"
         className="absolute select-none pointer-events-none leading-none"
         style={{
-          top: "3rem",
+          top: "2.5rem",
           left: "1rem",
           fontFamily: "var(--font-display)",
           fontWeight: 800,
-          fontSize: "clamp(120px, 16vw, 200px)",
+          fontSize: "clamp(100px, 16vw, 160px)",
           color: "var(--color-accent-primary)",
-          opacity: 0.2,
+          opacity: 0.15,
         }}
       >
         &ldquo;
       </span>
 
       <div className="relative max-w-3xl mx-auto">
-        <blockquote>
+        <motion.blockquote
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
           <p
-            className="text-center italic leading-[1.4]"
+            className="text-center italic"
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 300,
-              fontSize: "clamp(20px, 2.8vw, 28px)",
-              color: "var(--color-text-primary)",
+              fontSize: "clamp(20px, 2.8vw, 26px)",
+              lineHeight: 1.7,
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 85%, transparent)",
             }}
           >
             Hisaku understood our business from day one. They didn&apos;t just
             build a website — they understood what our customers needed to
             find us.
           </p>
-        </blockquote>
-        <p
-          className="mt-10 text-right text-sm"
+        </motion.blockquote>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-10 text-right"
           style={{
             fontFamily: "var(--font-body)",
-            fontWeight: 300,
-            color: "var(--color-text-secondary)",
+            fontWeight: 400,
+            fontSize: 14,
+            color:
+              "color-mix(in srgb, var(--color-text-primary) 45%, transparent)",
           }}
         >
           — Owner, Hello2India{" "}
@@ -61,7 +77,7 @@ export function TestimonialSection() {
             ·
           </span>{" "}
           Herndon, Virginia
-        </p>
+        </motion.p>
       </div>
     </section>
   );
