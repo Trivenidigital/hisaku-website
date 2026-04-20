@@ -181,7 +181,7 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   .marquee-track {
-    animation: marqueeScroll 40s linear infinite;
+    animation: marqueeScroll 35s linear infinite;
   }
   .marquee-track--slow {
     animation-duration: 55s;

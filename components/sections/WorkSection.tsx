@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 import type { CaseStudy } from "@/lib/content/case-studies";
 import { ClipReveal } from "@/components/ui/ClipReveal";
 import { CountUp } from "@/components/ui/CountUp";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 /**
  * WorkSection — WHITE background, stark contrast flip from the hero.
@@ -34,22 +35,23 @@ interface WorkSectionProps {
 /** Per-slug visual data: category label + gradient colors for the placeholder. */
 const VISUAL: Record<
   string,
-  { category: string; gradient: string }
+  { category: string; gradient: string; arrow?: boolean }
 > = {
   vizora: {
     category: "— Product Development",
-    gradient:
-      "linear-gradient(135deg, #050507 0%, #0d3020 40%, #050507 100%)",
+    // Tech-dark mesh.
+    gradient: "linear-gradient(135deg, #060d0a 0%, #0d2518 50%, #060d0a 100%)",
+    arrow: true,
   },
   hello2india: {
     category: "— Marketing & SEO",
-    gradient:
-      "linear-gradient(135deg, #1a0800 0%, #3d1500 40%, #1a0800 100%)",
+    // Warm amber market feel.
+    gradient: "linear-gradient(135deg, #120800 0%, #2d1400 50%, #120800 100%)",
   },
   "triveni-express": {
     category: "— Web & Ordering",
-    gradient:
-      "linear-gradient(135deg, #0a1a00 0%, #1a3300 40%, #0a1a00 100%)",
+    // Restaurant/food green.
+    gradient: "linear-gradient(135deg, #060d08 0%, #0d2010 50%, #060d08 100%)",
   },
 };
 
@@ -91,19 +93,21 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
       style={{ background: "var(--color-bg-white)" }}
     >
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-8">
-        <p
-          className="uppercase"
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.2em",
-            color:
-              "color-mix(in srgb, var(--color-text-primary) 40%, transparent)",
-          }}
-        >
-          Selected Work
-        </p>
+        <FadeIn>
+          <p
+            className="uppercase"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 300,
+              fontSize: 11,
+              letterSpacing: "0.2em",
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 40%, transparent)",
+            }}
+          >
+            Selected Work
+          </p>
+        </FadeIn>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 grid gap-10 md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr]">
@@ -184,19 +188,21 @@ function WorkBlock({
       className="min-h-[80vh] flex flex-col justify-center py-20 border-t"
       style={{ borderColor: "rgba(5,5,7,0.1)" }}
     >
-      <p
-        className="uppercase"
-        style={{
-          fontFamily: "var(--font-body)",
-          fontWeight: 300,
-          fontSize: 11,
-          letterSpacing: "0.15em",
-          color:
-            "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
-        }}
-      >
-        {visual.category}
-      </p>
+      <FadeIn>
+        <p
+          className="uppercase"
+          style={{
+            fontFamily: "var(--font-body)",
+            fontWeight: 300,
+            fontSize: 11,
+            letterSpacing: "0.15em",
+            color:
+              "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
+          }}
+        >
+          {visual.category}
+        </p>
+      </FadeIn>
 
       <ClipReveal className="mt-6">
         <h3
@@ -293,16 +299,32 @@ function WorkBlock({
           </div>
         </div>
 
-        {/* Video placeholder — gradient-pulse at 400x300. Replace with <video> when footage lands. */}
+        {/* Video placeholder — animated gradient until real footage lands.
+         * min-height 320px, width 100% of its grid cell, pulses via
+         * .gradient-pulse. Vizora gets an oversized lime arrow inside. */}
         <div
           aria-hidden="true"
-          className="gradient-pulse hidden md:block"
+          className="gradient-pulse hidden md:flex items-center justify-center"
           style={{
-            width: 400,
-            height: 300,
+            width: 420,
+            minHeight: 320,
             background: visual.gradient,
           }}
-        />
+        >
+          {visual.arrow ? (
+            <span
+              className="font-syne leading-none"
+              style={{
+                fontWeight: 800,
+                fontSize: 48,
+                color: "var(--color-accent-primary)",
+                opacity: 0.2,
+              }}
+            >
+              →
+            </span>
+          ) : null}
+        </div>
       </div>
     </div>
   );

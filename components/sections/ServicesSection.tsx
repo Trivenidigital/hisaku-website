@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { LineReveal } from "@/components/ui/LineReveal";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 /**
  * ServicesSection — dark bg, four rows separated by a line that draws
@@ -43,34 +46,36 @@ export function ServicesSection() {
       style={{ background: "var(--color-bg-dark)" }}
     >
       <div className="max-w-6xl mx-auto px-6">
-        <p
-          className="uppercase mb-14"
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.2em",
-            color:
-              "color-mix(in srgb, var(--color-text-primary) 30%, transparent)",
-          }}
-        >
-          What We Do
-        </p>
+        <FadeIn>
+          <p
+            className="uppercase mb-14"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 300,
+              fontSize: 11,
+              letterSpacing: "0.2em",
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 30%, transparent)",
+            }}
+          >
+            What We Do
+          </p>
+        </FadeIn>
 
         <ul className="flex flex-col">
           {SERVICES.map((service, i) => (
             <li key={service.slug}>
-              {/* Line that draws on scroll. First row uses a subtle
-                  hairline; subsequent rows use the lime accent to make
-                  the draw visible. */}
+              {/* Line draws left-to-right on scroll, staggered 80ms per row
+                  so the whole list unfurls as you enter the section. */}
               <LineReveal
                 className={`h-px ${i === 0 ? "bg-[rgba(255,255,255,0.06)]" : "bg-[color:var(--color-accent-primary)]"}`}
-                duration={1}
+                duration={0.8}
+                delay={i * 0.08}
               />
               <Link
                 href={`/services/${service.slug}`}
                 data-cursor="hover"
-                className="group grid grid-cols-[48px_1fr_auto] items-center gap-4 md:gap-8 py-7 md:py-8 px-0 md:px-6 transition-colors duration-300 ease-out hover:bg-[color:var(--color-bg-mid)]"
+                className="group grid grid-cols-[48px_1fr_auto] items-center gap-4 md:gap-8 py-7 md:py-8 px-0 md:px-6 transition-colors duration-300 ease-out hover:bg-[color:var(--color-bg-mid)] cursor-pointer"
               >
                 <span
                   className="tabular-nums"
@@ -136,9 +141,13 @@ export function ServicesSection() {
               </p>
             </li>
           ))}
-          {/* Closing hairline */}
+          {/* Closing hairline — staggered after the last row. */}
           <li>
-            <LineReveal className="h-px bg-[rgba(255,255,255,0.06)]" />
+            <LineReveal
+              className="h-px bg-[rgba(255,255,255,0.06)]"
+              duration={0.8}
+              delay={SERVICES.length * 0.08}
+            />
           </li>
         </ul>
       </div>

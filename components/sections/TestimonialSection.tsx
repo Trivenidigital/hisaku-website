@@ -12,20 +12,23 @@ export function TestimonialSection() {
     <section
       data-theme="dark"
       aria-label="Testimonial"
-      className="relative px-6 py-24 md:py-36 overflow-hidden"
-      style={{ background: "var(--color-bg-dark)" }}
+      className="relative px-6 overflow-hidden"
+      style={{
+        background: "var(--color-bg-dark)",
+        paddingTop: "clamp(96px, 14vw, 160px)",
+        paddingBottom: "clamp(96px, 14vw, 160px)",
+      }}
     >
       <span
         aria-hidden="true"
-        className="absolute select-none pointer-events-none leading-none"
+        className="absolute select-none pointer-events-none leading-none font-syne"
         style={{
-          top: "2.5rem",
-          left: "1rem",
-          fontFamily: "var(--font-display)",
+          top: "40px",
+          left: "60px",
           fontWeight: 800,
-          fontSize: "clamp(100px, 16vw, 160px)",
+          fontSize: "clamp(100px, 18vw, 200px)",
           color: "var(--color-accent-primary)",
-          opacity: 0.15,
+          opacity: 0.12,
         }}
       >
         &ldquo;

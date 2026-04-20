@@ -20,8 +20,13 @@ export function ThatIsHisakuSection() {
     <section
       data-theme="dark"
       aria-label="That's Hisaku"
-      className="relative py-32 md:py-44 overflow-hidden"
-      style={{ background: "var(--color-bg-teal)" }}
+      className="relative overflow-hidden flex flex-col justify-center"
+      style={{
+        background: "var(--color-bg-teal)",
+        minHeight: "100vh",
+        paddingTop: "clamp(80px, 12vw, 140px)",
+        paddingBottom: "clamp(80px, 12vw, 140px)",
+      }}
     >
       <div className="teal-grid" aria-hidden="true" />
 

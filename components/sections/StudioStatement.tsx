@@ -1,6 +1,7 @@
 "use client";
 
 import { ClipReveal } from "@/components/ui/ClipReveal";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 /**
  * StudioStatement — WHITE bg. Second contrast flip after services (dark).
@@ -50,34 +51,36 @@ export function StudioStatement() {
           </ClipReveal>
         </h2>
 
-        <p
-          className="mt-12 md:mt-16"
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 300,
-            fontSize: 15,
-            color:
-              "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
-          }}
-        >
-          3 countries{" "}
-          <span
-            aria-hidden="true"
-            className="mx-3"
-            style={{ color: "var(--color-accent-primary)" }}
+        <FadeIn delay={0.35}>
+          <p
+            className="mt-12 md:mt-16"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 300,
+              fontSize: 15,
+              color:
+                "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
+            }}
           >
-            ·
-          </span>{" "}
-          8 clients{" "}
-          <span
-            aria-hidden="true"
-            className="mx-3"
-            style={{ color: "var(--color-accent-primary)" }}
-          >
-            ·
-          </span>{" "}
-          0 missed deadlines
-        </p>
+            3 countries{" "}
+            <span
+              aria-hidden="true"
+              className="mx-3"
+              style={{ color: "var(--color-accent-primary)" }}
+            >
+              ·
+            </span>{" "}
+            8 clients{" "}
+            <span
+              aria-hidden="true"
+              className="mx-3"
+              style={{ color: "var(--color-accent-primary)" }}
+            >
+              ·
+            </span>{" "}
+            0 missed deadlines
+          </p>
+        </FadeIn>
       </div>
     </section>
   );

@@ -26,7 +26,7 @@ export function MarqueeSection() {
       className="relative overflow-hidden"
       style={{
         background: "var(--color-bg-dark)",
-        height: 60,
+        height: 56,
         borderTop: "1px solid rgba(255,255,255,0.08)",
         borderBottom: "1px solid rgba(255,255,255,0.08)",
       }}
@@ -40,7 +40,7 @@ export function MarqueeSection() {
               fontFamily: "var(--font-body)",
               fontWeight: 300,
               fontSize: 11,
-              letterSpacing: "0.2em",
+              letterSpacing: "0.18em",
               color:
                 "color-mix(in srgb, var(--color-text-primary) 55%, transparent)",
             }}
