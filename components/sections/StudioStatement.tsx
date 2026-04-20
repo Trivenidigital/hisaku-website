@@ -15,7 +15,7 @@ export function StudioStatement() {
       aria-label="Studio"
       className="text-center px-6"
       style={{
-        background: "#f4f3ef",
+        backgroundColor: "#f4f3ef",
         color: "#050507",
         paddingTop: "clamp(120px, 14vw, 160px)",
         paddingBottom: "clamp(120px, 14vw, 160px)",

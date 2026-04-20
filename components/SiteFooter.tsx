@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Logo } from "./Logo";
 
 /**
  * Site footer. Server-rendered.
@@ -14,13 +13,17 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-[color:var(--color-hairline)]">
       <div className="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-[1fr_auto_auto_auto]">
         <div className="flex flex-col gap-3">
-          <Link href="/" aria-label="Hisaku home" className="inline-flex items-center gap-3">
-            <Logo size={28} label="" />
+          <Link href="/" aria-label="Hisaku home" className="inline-flex items-center">
             <span
-              className="text-base font-semibold tracking-[0.2em] uppercase"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{
+                fontFamily: "var(--font-syne, sans-serif)",
+                fontWeight: 800,
+                fontSize: "18px",
+                color: "#f4f3ef",
+                letterSpacing: "-0.02em",
+              }}
             >
-              Hisaku
+              HISAKU
             </span>
           </Link>
           <p

@@ -14,7 +14,8 @@ export function TestimonialSection() {
       aria-label="Testimonial"
       className="relative px-6 overflow-hidden"
       style={{
-        background: "#050507",
+        backgroundColor: "#050507",
+        color: "#f4f3ef",
         paddingTop: "clamp(96px, 14vw, 160px)",
         paddingBottom: "clamp(96px, 14vw, 160px)",
       }}

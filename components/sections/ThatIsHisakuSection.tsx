@@ -23,7 +23,8 @@ export function ThatIsHisakuSection() {
       aria-label="That's Hisaku"
       className="relative overflow-hidden flex flex-col justify-center"
       style={{
-        background: "#0a3d2e",
+        backgroundColor: "#0a3d2e",
+        color: "#f4f3ef",
         minHeight: "100vh",
         paddingTop: "clamp(80px, 12vw, 140px)",
         paddingBottom: "clamp(80px, 12vw, 140px)",
