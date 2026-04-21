@@ -128,7 +128,7 @@ export function Navbar() {
         {/* Right CTA — desktop only */}
         <Link
           href="/contact"
-          className="hidden md:inline-flex"
+          className="hidden md:inline-flex shimmer-btn"
           style={{
             alignItems: "center",
             backgroundColor: "#e8ff47",

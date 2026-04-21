@@ -1,15 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { SpringCounter } from "@/components/ui/SpringCounter";
 
 /**
  * AboutStrip — 2-column about + stats row with fadeUp on scroll.
+ * Stats use SpringCounter so 0 → target has spring physics (bouncy).
  */
 
-const STATS = [
-  { value: "8", label: "clients" },
-  { value: "3", label: "countries" },
-  { value: "0", label: "missed deadlines" },
+const STATS: { value: number; label: string }[] = [
+  { value: 8, label: "clients" },
+  { value: 3, label: "countries" },
+  { value: 0, label: "missed deadlines" },
 ];
 
 const fadeUp = {
@@ -105,7 +107,7 @@ export function AboutStrip() {
                     lineHeight: 1,
                   }}
                 >
-                  {s.value}
+                  <SpringCounter to={s.value} />
                 </dt>
                 <dd
                   style={{

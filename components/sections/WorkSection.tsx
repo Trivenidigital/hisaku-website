@@ -112,7 +112,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
   const primary = fm.results[0];
 
   return (
-    <motion.div variants={cardVariant}>
+    <motion.div variants={cardVariant} className="conic-glow" style={{ borderRadius: 12 }}>
       <Link
         href={`/work/${fm.slug}`}
         onMouseEnter={() => setHover(true)}
@@ -120,13 +120,14 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
         style={{
           display: "block",
           backgroundColor: "#111111",
-          border: `1px solid ${hover ? "rgba(232,255,71,0.3)" : "rgba(255,255,255,0.06)"}`,
+          border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: 12,
           overflow: "hidden",
           textDecoration: "none",
           transition: "all 300ms ease",
           transform: hover ? "translateY(-6px)" : "translateY(0)",
           boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
+          position: "relative",
         }}
       >
         {/* Video thumbnail */}

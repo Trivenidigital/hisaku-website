@@ -197,6 +197,119 @@ body {
   }
 }
 
+/* ============================================================================
+ * Shimmer button — a bright band sweeps across on a 3s loop.
+ *
+ * Drop-in: add `shimmer-btn` alongside whatever styles the button has.
+ * The ::before pseudo-element is absolutely positioned inside an
+ * overflow:hidden wrapper and translates from -100% to 200% of the
+ * button width.
+ * ============================================================================ */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.shimmer-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer-btn::before {
+    animation: shimmerSweep 3s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    left: -60%;
+  }
+  60%,
+  100% {
+    left: 160%;
+  }
+}
+
+/* ============================================================================
+ * Conic-gradient hover glow — traces a rotating lime beam around the
+ * card border on hover. Uses the @property --angle trick so the
+ * conic-gradient can actually animate.
+ *
+ * Usage: wrap a card in a div with class "conic-glow". The card
+ * itself should have a solid dark bg and sit inside that wrapper.
+ * ============================================================================ */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.conic-glow {
+  position: relative;
+}
+
+.conic-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0deg,
+    rgba(232, 255, 71, 0.6) 90deg,
+    transparent 180deg,
+    rgba(232, 255, 71, 0.3) 270deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 280ms ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .conic-glow:hover::before {
+    opacity: 1;
+    animation: rotateAngle 3s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conic-glow:hover::before {
+    opacity: 1;
+  }
+}
+
+@keyframes rotateAngle {
+  to {
+    --angle: 360deg;
+  }
+}
+
 /* Legacy teal-grid. */
 .teal-grid {
   position: absolute;

@@ -64,6 +64,7 @@ export function CtaSection() {
         </p>
         <Link
           href="/contact"
+          className="shimmer-btn"
           style={{
             display: "inline-flex",
             alignItems: "center",

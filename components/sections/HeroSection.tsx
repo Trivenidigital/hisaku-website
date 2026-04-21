@@ -2,35 +2,44 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 /**
- * HeroSection — centered premium layout.
+ * HeroSection — centered premium layout with:
+ *   - Video background + dark overlay
+ *   - Mouse-following spotlight (radial gradient, pointer-based x/y)
+ *   - Floating badge (subtle 2s y-bob)
+ *   - Shimmer button on "Start a Project →"
+ *   - Scroll indicator
  *
- *   ┌──────────────────────────────────────────────┐
- *   │                                              │
- *   │        [ ✦ Web · Dev · AI Automation ]       │
- *   │                                              │
- *   │        We build digital                      │
- *   │        experiences that move.                │
- *   │                                              │
- *   │   A Hyderabad studio building websites…      │
- *   │                                              │
- *   │        [See Our Work]  [Start a Project →]   │
- *   │                                              │
- *   │                  scroll ↓                    │
- *   └──────────────────────────────────────────────┘
- *
- * Video bg at 0.35 opacity with a dark 0.7 overlay on top. Content
- * pinned to ~45% from top so the eye lands in the upper-middle
- * comfort zone, not floating in dead space.
+ * Spotlight is driven imperatively (ref + requestAnimationFrame) to
+ * avoid a setState every mousemove — cheap and smooth.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function HeroSection() {
+  const spotlightRef = useRef<HTMLDivElement>(null);
+
+  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const el = spotlightRef.current;
+    if (!el) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    // Radial gradient centered on cursor, size 40vw, soft falloff.
+    el.style.background = `radial-gradient(600px circle at ${x}px ${y}px, rgba(232,255,71,0.10), transparent 40%)`;
+  }
+
+  function onMouseLeave() {
+    if (spotlightRef.current) spotlightRef.current.style.background = "transparent";
+  }
+
   return (
     <section
       aria-label="Hero"
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
       style={{
         position: "relative",
         minHeight: "100vh",
@@ -67,6 +76,18 @@ export function HeroSection() {
           zIndex: 1,
         }}
       />
+      {/* Spotlight layer — repainted imperatively on every mousemove */}
+      <div
+        ref={spotlightRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 2,
+          pointerEvents: "none",
+          transition: "background 200ms ease",
+        }}
+      />
 
       {/* Content — centered, anchored at ~45% from top */}
       <div
@@ -79,29 +100,41 @@ export function HeroSection() {
           maxWidth: 900,
           padding: "0 24px",
           textAlign: "center",
-          zIndex: 2,
+          zIndex: 3,
         }}
       >
-        {/* Small badge */}
+        {/* Floating badge — opacity fade-in then gentle y-bob forever */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
           style={{
             display: "inline-flex",
-            alignItems: "center",
-            border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: 20,
-            padding: "6px 16px",
-            fontWeight: 400,
-            fontSize: 12,
-            letterSpacing: "0.05em",
-            color: "rgba(255,255,255,0.6)",
             marginBottom: 32,
           }}
         >
-          <span style={{ color: "#e8ff47", marginRight: 8 }}>✦</span>
-          Web Design · Development · AI Automation
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 20,
+              padding: "6px 16px",
+              fontWeight: 400,
+              fontSize: 12,
+              letterSpacing: "0.05em",
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
+            <span style={{ color: "#e8ff47", marginRight: 8 }}>✦</span>
+            Web Design · Development · AI Automation
+          </motion.div>
         </motion.div>
 
         {/* Headline */}
@@ -180,6 +213,7 @@ export function HeroSection() {
           </Link>
           <Link
             href="/contact"
+            className="shimmer-btn"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -220,7 +254,7 @@ export function HeroSection() {
           flexDirection: "column",
           alignItems: "center",
           gap: 10,
-          zIndex: 2,
+          zIndex: 3,
           pointerEvents: "none",
         }}
       >
