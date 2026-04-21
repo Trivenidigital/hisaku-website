@@ -1,21 +1,31 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 /**
- * TestimonialSection — clean 5-star centered testimonial.
+ * TestimonialSection — 5-star centered with fadeUp on scroll.
  */
 export function TestimonialSection() {
   return (
     <section
       aria-label="Testimonial"
-      style={{
-        backgroundColor: "#111111",
-        padding: "100px 48px",
-      }}
+      style={{ backgroundColor: "#111111", padding: "100px 48px" }}
     >
-      <div
-        style={{
-          maxWidth: 800,
-          margin: "0 auto",
-          textAlign: "center",
-        }}
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}
       >
         <p
           aria-label="5 out of 5 stars"
@@ -29,12 +39,7 @@ export function TestimonialSection() {
           ★★★★★
         </p>
 
-        <blockquote
-          style={{
-            margin: "24px 0",
-            padding: 0,
-          }}
-        >
+        <blockquote style={{ margin: "24px 0", padding: 0 }}>
           <p
             style={{
               fontWeight: 400,
@@ -61,7 +66,7 @@ export function TestimonialSection() {
         >
           — Owner, Hello2India · Herndon, Virginia
         </p>
-      </div>
+      </motion.div>
     </section>
   );
 }

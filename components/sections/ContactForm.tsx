@@ -3,6 +3,55 @@
 import { useState } from "react";
 
 /**
+ * ContactSide — small rotating dashed circle + Hyderabad coordinates.
+ * Export alongside the form so the contact page can render it on the
+ * left column without introducing another file.
+ */
+export function ContactSideMark() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 16,
+      }}
+    >
+      <svg
+        width="72"
+        height="72"
+        viewBox="0 0 72 72"
+        style={{ animation: "spin 24s linear infinite" }}
+      >
+        <circle
+          cx="36"
+          cy="36"
+          r="34"
+          fill="none"
+          stroke="rgba(232,255,71,0.35)"
+          strokeWidth="1"
+          strokeDasharray="4 6"
+        />
+        <circle cx="36" cy="36" r="3" fill="#e8ff47" />
+      </svg>
+      <p
+        style={{
+          fontFamily: "ui-monospace, 'SF Mono', Menlo, monospace",
+          fontSize: 12,
+          letterSpacing: "0.1em",
+          color: "rgba(255,255,255,0.4)",
+          margin: 0,
+        }}
+      >
+        17.3850° N · 78.4867° E
+      </p>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+}
+
+/**
  * ContactForm — minimal inquiry form.
  *
  * No <form> tag per spec — uses div + button so the submit flow is
@@ -34,10 +83,10 @@ const fieldStyle = {
   borderBottom: "1px solid rgba(255,255,255,0.12)",
   background: "transparent",
   padding: "16px 0",
-  fontFamily: "var(--font-sans, sans-serif)",
-  fontWeight: 300,
+  fontFamily: "var(--font-jakarta, sans-serif)",
+  fontWeight: 400,
   fontSize: 16,
-  color: "#f4f3ef",
+  color: "#ffffff",
   outline: "none",
   transition: "border-color 200ms ease",
 } as const;
@@ -130,28 +179,34 @@ export function ContactForm() {
         type="button"
         onClick={submit}
         disabled={sent}
-        data-cursor="hover"
         style={{
           marginTop: 40,
           width: "100%",
           padding: "18px 48px",
           border: "none",
-          backgroundColor: sent ? "#f4f3ef" : "#e8ff47",
-          color: "#050507",
-          fontFamily: "var(--font-sans, sans-serif)",
+          borderRadius: 6,
+          backgroundColor: sent ? "#ffffff" : "#e8ff47",
+          color: "#0a0a0a",
+          fontFamily: "var(--font-jakarta, sans-serif)",
           fontWeight: 600,
           fontSize: 15,
           letterSpacing: "0.05em",
           textTransform: "uppercase",
           cursor: "pointer",
-          transition: "background-color 200ms ease",
+          transition: "all 200ms ease",
         }}
-        onMouseEnter={(e) =>
-          !sent && (e.currentTarget.style.backgroundColor = "#f4f3ef")
-        }
-        onMouseLeave={(e) =>
-          !sent && (e.currentTarget.style.backgroundColor = "#e8ff47")
-        }
+        onMouseEnter={(e) => {
+          if (sent) return;
+          e.currentTarget.style.backgroundColor = "#ffffff";
+          e.currentTarget.style.transform = "scale(1.02)";
+          e.currentTarget.style.filter = "brightness(1.05)";
+        }}
+        onMouseLeave={(e) => {
+          if (sent) return;
+          e.currentTarget.style.backgroundColor = "#e8ff47";
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.filter = "none";
+        }}
       >
         {sent ? "Opening mail client…" : "Send Message →"}
       </button>
@@ -159,16 +214,30 @@ export function ContactForm() {
       <p
         style={{
           marginTop: 16,
-          fontFamily: "var(--font-sans, sans-serif)",
+          textAlign: "center",
+          fontFamily: "var(--font-jakarta, sans-serif)",
+          fontWeight: 400,
+          fontSize: 13,
+          color: "rgba(255,255,255,0.4)",
+        }}
+      >
+        We typically respond within 24 hours.
+      </p>
+
+      <p
+        style={{
+          marginTop: 12,
+          textAlign: "center",
+          fontFamily: "var(--font-jakarta, sans-serif)",
           fontSize: 12,
-          color: "rgba(244,243,239,0.35)",
+          color: "rgba(255,255,255,0.3)",
         }}
       >
         Prefer email? Write directly to{" "}
         <a
           href="mailto:hello@hisaku.com"
           style={{
-            color: "rgba(244,243,239,0.55)",
+            color: "rgba(255,255,255,0.55)",
             textDecoration: "underline",
             textUnderlineOffset: 3,
           }}

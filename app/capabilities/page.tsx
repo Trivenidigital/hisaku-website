@@ -101,7 +101,7 @@ export default function CapabilitiesPage() {
       >
         <p
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 300,
             fontSize: 11,
             letterSpacing: "0.15em",
@@ -114,7 +114,7 @@ export default function CapabilitiesPage() {
         </p>
         <h1
           style={{
-            fontFamily: "var(--font-syne, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 800,
             fontSize: "clamp(64px, 9vw, 120px)",
             letterSpacing: "-0.04em",
@@ -150,7 +150,7 @@ export default function CapabilitiesPage() {
         <div style={{ position: "relative", zIndex: 2 }}>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 800,
               fontSize: "clamp(64px, 10vw, 120px)",
               letterSpacing: "-0.04em",
@@ -172,7 +172,7 @@ export default function CapabilitiesPage() {
               backgroundColor: "#e8ff47",
               color: "#0a3d2e",
               padding: "20px 56px",
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 600,
               fontSize: 18,
             }}
@@ -228,7 +228,7 @@ function CapabilitySection({
       >
         <p
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 300,
             fontSize: 13,
             letterSpacing: "0.15em",
@@ -241,7 +241,7 @@ function CapabilitySection({
         </p>
         <h2
           style={{
-            fontFamily: "var(--font-syne, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 800,
             fontSize: "clamp(48px, 6vw, 80px)",
             letterSpacing: "-0.03em",
@@ -254,7 +254,7 @@ function CapabilitySection({
         </h2>
         <p
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 300,
             fontSize: 18,
             lineHeight: 1.75,
@@ -270,7 +270,7 @@ function CapabilitySection({
             <li
               key={b}
               style={{
-                fontFamily: "var(--font-sans, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 300,
                 fontSize: 15,
                 color: muted,
@@ -302,7 +302,7 @@ function CapabilitySection({
             display: "inline-flex",
             alignItems: "center",
             alignSelf: "flex-start",
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 400,
             fontSize: 15,
             color: text,

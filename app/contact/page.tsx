@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContactForm } from "@/components/sections/ContactForm";
+import { ContactForm, ContactSideMark } from "@/components/sections/ContactForm";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -48,7 +48,7 @@ export default function ContactPage() {
         >
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 300,
               fontSize: 11,
               letterSpacing: "0.15em",
@@ -61,7 +61,7 @@ export default function ContactPage() {
           </p>
           <h1
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 800,
               fontSize: "clamp(48px, 6vw, 80px)",
               letterSpacing: "-0.04em",
@@ -80,7 +80,7 @@ export default function ContactPage() {
               href={`mailto:${FALLBACK_EMAIL}`}
               data-cursor="hover"
               style={{
-                fontFamily: "var(--font-sans, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 300,
                 fontSize: 18,
                 color: "#f4f3ef",
@@ -92,7 +92,7 @@ export default function ContactPage() {
             </a>
             <p
               style={{
-                fontFamily: "var(--font-sans, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 300,
                 fontSize: 14,
                 color: "rgba(244,243,239,0.45)",
@@ -114,7 +114,7 @@ export default function ContactPage() {
                 backgroundColor: "#e8ff47",
                 color: "#050507",
                 padding: "14px 32px",
-                fontFamily: "var(--font-sans, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 600,
                 fontSize: 14,
                 textDecoration: "none",
@@ -127,6 +127,10 @@ export default function ContactPage() {
             </a>
           </div>
 
+          <div style={{ marginTop: 56 }}>
+            <ContactSideMark />
+          </div>
+
           <div style={{ marginTop: 48, display: "flex", gap: 24 }}>
             <a
               href="https://linkedin.com/"
@@ -134,7 +138,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               data-cursor="hover"
               style={{
-                fontFamily: "var(--font-sans, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 300,
                 fontSize: 14,
                 color: "rgba(244,243,239,0.6)",
@@ -150,7 +154,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               data-cursor="hover"
               style={{
-                fontFamily: "var(--font-sans, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 300,
                 fontSize: 14,
                 color: "rgba(244,243,239,0.6)",

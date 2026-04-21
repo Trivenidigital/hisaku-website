@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/metadata";
+import { ValueCard } from "@/components/sections/ValueCard";
 
 export const metadata: Metadata = buildMetadata({
   title: "About",
@@ -59,7 +60,7 @@ export default function AboutPage() {
       >
         <p
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 300,
             fontSize: 11,
             letterSpacing: "0.15em",
@@ -72,7 +73,7 @@ export default function AboutPage() {
         </p>
         <h1
           style={{
-            fontFamily: "var(--font-syne, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 800,
             fontSize: "clamp(64px, 9vw, 120px)",
             letterSpacing: "-0.04em",
@@ -96,7 +97,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 800,
               fontSize: "clamp(36px, 5vw, 60px)",
               letterSpacing: "-0.03em",
@@ -110,113 +111,77 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Section 3 — Values as 3 large rows (dark) */}
+      {/* Section 3 — Values as cards (dark) */}
       <section
-        data-theme="dark"
         style={{
-          backgroundColor: "#050507",
-          color: "#f4f3ef",
-          padding: "120px 0",
+          backgroundColor: "#0a0a0a",
+          color: "#ffffff",
+          padding: "120px 48px",
         }}
       >
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 60px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
-              fontWeight: 300,
-              fontSize: 11,
-              letterSpacing: "0.2em",
+              fontWeight: 500,
+              fontSize: 13,
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "rgba(244,243,239,0.3)",
-              marginBottom: 56,
+              color: "#e8ff47",
+              margin: "0 0 48px",
             }}
           >
             How We Work
           </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 24,
+            }}
+          >
+            {VALUES.map((v) => (
+              <ValueCard
+                key={v.number}
+                number={v.number}
+                title={v.title}
+                body={v.body}
+              />
+            ))}
+          </div>
         </div>
-        <ul
-          style={{
-            listStyle: "none",
-            margin: 0,
-            padding: 0,
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
-          {VALUES.map((v) => (
-            <li
-              key={v.number}
-              style={{
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-                padding: "48px 60px",
-              }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "60px 1fr 1fr",
-                  alignItems: "start",
-                  gap: 40,
-                  maxWidth: 1280,
-                  margin: "0 auto",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-sans, sans-serif)",
-                    fontWeight: 300,
-                    fontSize: 13,
-                    color: "rgba(244,243,239,0.25)",
-                  }}
-                >
-                  {v.number}
-                </span>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-syne, sans-serif)",
-                    fontWeight: 700,
-                    fontSize: "clamp(32px, 5vw, 64px)",
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1,
-                    color: "#f4f3ef",
-                  }}
-                >
-                  {v.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-sans, sans-serif)",
-                    fontWeight: 300,
-                    fontSize: 16,
-                    lineHeight: 1.7,
-                    color: "rgba(244,243,239,0.6)",
-                  }}
-                >
-                  {v.body}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
       </section>
 
       {/* Section 4 — Location strip (white) */}
       <section
         data-theme="light"
         style={{
-          backgroundColor: "#f4f3ef",
-          color: "#050507",
+          backgroundColor: "#f8f6f0",
+          color: "#0a0a0a",
           padding: "160px 60px",
           textAlign: "center",
         }}
       >
+        <p
+          style={{
+            fontWeight: 500,
+            fontSize: 12,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "rgba(10,10,10,0.45)",
+            fontFamily:
+              "ui-monospace, 'SF Mono', Menlo, monospace",
+            margin: "0 0 16px",
+          }}
+        >
+          17.3850° N · 78.4867° E
+        </p>
         <h2
           style={{
-            fontFamily: "var(--font-syne, sans-serif)",
-            fontWeight: 800,
+            fontWeight: 700,
             fontSize: "clamp(36px, 5vw, 64px)",
-            letterSpacing: "-0.03em",
-            lineHeight: 1.05,
-            color: "#050507",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.1,
+            color: "#0a0a0a",
             maxWidth: 900,
             margin: "0 auto",
           }}
@@ -243,7 +208,7 @@ export default function AboutPage() {
         <div style={{ position: "relative", zIndex: 2 }}>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 800,
               fontSize: "clamp(64px, 10vw, 120px)",
               letterSpacing: "-0.04em",
@@ -265,7 +230,7 @@ export default function AboutPage() {
               backgroundColor: "#e8ff47",
               color: "#0a3d2e",
               padding: "20px 56px",
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 600,
               fontSize: 18,
             }}

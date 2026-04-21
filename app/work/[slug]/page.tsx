@@ -16,7 +16,7 @@ function renderParagraphs(source: string, muted: boolean) {
     <p
       key={i}
       style={{
-        fontFamily: "var(--font-sans, sans-serif)",
+        fontFamily: "var(--font-jakarta, sans-serif)",
         fontWeight: 300,
         fontSize: 18,
         lineHeight: 1.75,
@@ -156,7 +156,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             href="/work"
             data-cursor="hover"
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 300,
               fontSize: 14,
               color: "rgba(244,243,239,0.6)",
@@ -168,7 +168,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </Link>
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 300,
               fontSize: 11,
               letterSpacing: "0.15em",
@@ -181,7 +181,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </p>
           <h1
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 800,
               fontSize: "clamp(72px, 12vw, 160px)",
               letterSpacing: "-0.04em",
@@ -195,7 +195,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             <p
               style={{
                 marginTop: 40,
-                fontFamily: "var(--font-syne, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 800,
                 fontSize: "clamp(48px, 8vw, 96px)",
                 letterSpacing: "-0.04em",
@@ -206,7 +206,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               {primary.metric}
               <span
                 style={{
-                  fontFamily: "var(--font-sans, sans-serif)",
+                  fontFamily: "var(--font-jakarta, sans-serif)",
                   fontWeight: 300,
                   fontSize: 14,
                   letterSpacing: "0.15em",
@@ -225,7 +225,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               display: "grid",
               gridTemplateColumns: "auto 1fr",
               gap: "12px 24px",
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontSize: 14,
               color: "rgba(244,243,239,0.8)",
               maxWidth: 560,
@@ -253,7 +253,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 300,
               fontSize: 11,
               letterSpacing: "0.15em",
@@ -266,7 +266,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </p>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 700,
               fontSize: "clamp(36px, 5vw, 64px)",
               letterSpacing: "-0.03em",
@@ -283,7 +283,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               : (
                 <p
                   style={{
-                    fontFamily: "var(--font-sans, sans-serif)",
+                    fontFamily: "var(--font-jakarta, sans-serif)",
                     fontWeight: 300,
                     fontSize: 18,
                     lineHeight: 1.75,
@@ -309,7 +309,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 300,
               fontSize: 11,
               letterSpacing: "0.15em",
@@ -322,7 +322,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </p>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 700,
               fontSize: "clamp(36px, 5vw, 64px)",
               letterSpacing: "-0.03em",
@@ -339,7 +339,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               : (
                 <p
                   style={{
-                    fontFamily: "var(--font-sans, sans-serif)",
+                    fontFamily: "var(--font-jakarta, sans-serif)",
                     fontWeight: 300,
                     fontSize: 18,
                     lineHeight: 1.75,
@@ -365,7 +365,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 300,
               fontSize: 11,
               letterSpacing: "0.15em",
@@ -378,7 +378,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </p>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 700,
               fontSize: "clamp(36px, 5vw, 64px)",
               letterSpacing: "-0.03em",
@@ -414,7 +414,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               >
                 <div
                   style={{
-                    fontFamily: "var(--font-syne, sans-serif)",
+                    fontFamily: "var(--font-jakarta, sans-serif)",
                     fontWeight: 800,
                     fontSize: 64,
                     letterSpacing: "-0.04em",
@@ -428,7 +428,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <div
                   style={{
                     marginTop: 16,
-                    fontFamily: "var(--font-sans, sans-serif)",
+                    fontFamily: "var(--font-jakarta, sans-serif)",
                     fontWeight: 300,
                     fontSize: 13,
                     letterSpacing: "0.12em",
@@ -468,7 +468,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             href="/work"
             data-cursor="hover"
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
+              fontFamily: "var(--font-jakarta, sans-serif)",
               fontWeight: 400,
               fontSize: 14,
               color: "rgba(244,243,239,0.6)",
@@ -481,7 +481,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               href={`/work/${next.frontmatter.slug}`}
               data-cursor="hover"
               style={{
-                fontFamily: "var(--font-syne, sans-serif)",
+                fontFamily: "var(--font-jakarta, sans-serif)",
                 fontWeight: 700,
                 fontSize: "clamp(32px, 4vw, 48px)",
                 letterSpacing: "-0.03em",

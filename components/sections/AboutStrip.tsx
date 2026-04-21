@@ -1,14 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 /**
- * AboutStrip — 2-column about section with inline stats.
- *
- *   ─ ABOUT
- *   ┌───────────────────────┬───────────────────────────────┐
- *   │ A 2-person studio.    │ We are Srini and a small      │
- *   │ Thinking like an      │ team of collaborators in      │
- *   │ agency.               │ Hyderabad. We work with…      │
- *   │                       │                               │
- *   │                       │  8 clients · 3 countries …   │
- *   └───────────────────────┴───────────────────────────────┘
+ * AboutStrip — 2-column about + stats row with fadeUp on scroll.
  */
 
 const STATS = [
@@ -17,16 +12,26 @@ const STATS = [
   { value: "0", label: "missed deadlines" },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 export function AboutStrip() {
   return (
     <section
       aria-label="About"
-      style={{
-        backgroundColor: "#0a0a0a",
-        padding: "120px 48px",
-      }}
+      style={{ backgroundColor: "#0a0a0a", padding: "120px 48px" }}
     >
-      <div
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
         style={{
           maxWidth: 1200,
           margin: "0 auto",
@@ -116,7 +121,7 @@ export function AboutStrip() {
             ))}
           </dl>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

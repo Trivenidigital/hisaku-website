@@ -5,12 +5,15 @@ import { useState } from "react";
 import type { CaseStudy } from "@/lib/content/case-studies";
 
 /**
- * WorkRows — full-width video rows for the /work index.
+ * WorkRows — full-width hover-reveal video rows for the /work index.
  *
- * Each row is 60vh tall with its project video playing underneath. A
- * dark overlay sits on top at 0.5 opacity; hover drops it to 0.35 and
- * raises the video to 0.65. A "View Case Study →" pill slides up from
- * the bottom on hover.
+ * Each row (60vh tall):
+ *   - Video bg at 0.4 opacity, 0.65 on hover
+ *   - Dark overlay 0.5 → 0.35 on hover
+ *   - Thin lime left border appears on hover (3px)
+ *   - Project name huge on the left
+ *   - Metric bottom-right in lime
+ *   - "View Case Study →" slides up from bottom on hover
  */
 
 interface WorkRowsProps {
@@ -33,12 +36,7 @@ export function WorkRows({ caseStudies }: WorkRowsProps) {
   return (
     <div>
       {caseStudies.map((cs, i) => (
-        <Row
-          key={cs.frontmatter.slug}
-          caseStudy={cs}
-          index={i}
-          isLast={i === caseStudies.length - 1}
-        />
+        <Row key={cs.frontmatter.slug} caseStudy={cs} index={i} />
       ))}
     </div>
   );
@@ -47,11 +45,9 @@ export function WorkRows({ caseStudies }: WorkRowsProps) {
 function Row({
   caseStudy,
   index,
-  isLast,
 }: {
   caseStudy: CaseStudy;
   index: number;
-  isLast: boolean;
 }) {
   const [hover, setHover] = useState(false);
   const fm = caseStudy.frontmatter;
@@ -62,7 +58,6 @@ function Row({
   return (
     <Link
       href={`/work/${fm.slug}`}
-      data-cursor="hover"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
@@ -71,14 +66,9 @@ function Row({
         height: "60vh",
         minHeight: 480,
         overflow: "hidden",
-        borderBottom: isLast
-          ? hover
-            ? "1px solid #e8ff47"
-            : "1px solid rgba(255,255,255,0.07)"
-          : hover
-            ? "1px solid #e8ff47"
-            : "1px solid rgba(255,255,255,0.07)",
-        transition: "border-color 300ms ease",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+        borderLeft: hover ? "3px solid #e8ff47" : "3px solid transparent",
+        transition: "border-left-color 300ms ease",
       }}
     >
       {/* Video background */}
@@ -109,12 +99,12 @@ function Row({
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: hover ? "rgba(5,5,7,0.35)" : "rgba(5,5,7,0.5)",
+          backgroundColor: hover ? "rgba(10,10,10,0.35)" : "rgba(10,10,10,0.5)",
           transition: "background-color 400ms ease",
         }}
       />
 
-      {/* Content */}
+      {/* Left-aligned content */}
       <div
         style={{
           position: "absolute",
@@ -130,63 +120,85 @@ function Row({
         <div>
           <p
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
-              fontWeight: 300,
+              fontWeight: 500,
               fontSize: 13,
               color: "#e8ff47",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               marginBottom: 16,
+              margin: "0 0 16px",
             }}
           >
             {String(index + 1).padStart(2, "0")} — {category}
           </p>
           <h2
             style={{
-              fontFamily: "var(--font-syne, sans-serif)",
               fontWeight: 800,
-              fontSize: "clamp(48px, 7vw, 96px)",
-              letterSpacing: "-0.04em",
+              fontSize: "clamp(56px, 8vw, 96px)",
+              letterSpacing: "-0.02em",
               lineHeight: 0.95,
-              color: "#f4f3ef",
+              color: "#ffffff",
+              margin: 0,
             }}
           >
             {fm.title.split(" — ")[0]}
           </h2>
-          {primary ? (
-            <p
-              style={{
-                marginTop: 16,
-                fontFamily: "var(--font-sans, sans-serif)",
-                fontWeight: 300,
-                fontSize: 14,
-                color: "rgba(244,243,239,0.7)",
-              }}
-            >
-              <span style={{ color: "#e8ff47" }}>{primary.metric}</span>{" "}
-              <span style={{ color: "rgba(244,243,239,0.5)" }}>
-                · {primary.label}
-              </span>
-            </p>
-          ) : null}
         </div>
 
-        {/* Hover reveal: "View Case Study →" slides up */}
-        <span
-          aria-hidden="true"
+        {/* Bottom-right: big lime metric + "View Case Study →" slide-up */}
+        <div
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
-            fontWeight: 400,
-            fontSize: 14,
-            color: "#e8ff47",
-            whiteSpace: "nowrap",
-            opacity: hover ? 1 : 0,
-            transform: hover ? "translateY(0)" : "translateY(16px)",
-            transition: "opacity 300ms ease, transform 300ms ease",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            gap: 16,
+            textAlign: "right",
+            minWidth: 220,
           }}
         >
-          View Case Study →
-        </span>
+          {primary ? (
+            <div>
+              <p
+                style={{
+                  fontWeight: 700,
+                  fontSize: 48,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
+                  color: "#e8ff47",
+                  margin: 0,
+                }}
+              >
+                {primary.metric}
+              </p>
+              <p
+                style={{
+                  fontWeight: 400,
+                  fontSize: 12,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.55)",
+                  margin: "8px 0 0",
+                }}
+              >
+                {primary.label}
+              </p>
+            </div>
+          ) : null}
+          <span
+            aria-hidden="true"
+            style={{
+              fontWeight: 400,
+              fontSize: 14,
+              color: "#e8ff47",
+              whiteSpace: "nowrap",
+              opacity: hover ? 1 : 0,
+              transform: hover ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 300ms ease, transform 300ms ease",
+            }}
+          >
+            View Case Study →
+          </span>
+        </div>
       </div>
     </Link>
   );

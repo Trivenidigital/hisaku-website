@@ -1,22 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import type { CaseStudy } from "@/lib/content/case-studies";
 
 /**
- * WorkSection — premium 3-column card grid.
+ * WorkSection — 3-column card grid with staggered reveal.
  *
- *   ── SELECTED WORK
- *   ┌──────────┬──────────┬──────────┐
- *   │ [video]  │ [video]  │ [video]  │
- *   │          │          │          │
- *   │ PRODUCT  │ SEO      │ WEB      │
- *   │ Vizora   │ Hello2…  │ Triveni  │
- *   │ 2,500+   │ 3X       │ Live     │
- *   │ desc.    │ desc.    │ desc.    │
- *   │ →        │ →        │ →        │
- *   └──────────┴──────────┴──────────┘
+ * Container uses staggerChildren so each card slides/fades in one
+ * after the other as they enter the viewport. Hover lifts the card
+ * 6px and adds a soft shadow.
  */
 
 interface WorkSectionProps {
@@ -31,10 +25,7 @@ const VIDEO: Record<string, string> = {
 
 const CARD_DATA: Record<
   string,
-  {
-    category: string;
-    description: string;
-  }
+  { category: string; description: string }
 > = {
   vizora: {
     category: "Product Development",
@@ -53,6 +44,22 @@ const CARD_DATA: Record<
   },
 };
 
+const container = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 export function WorkSection({ caseStudies }: WorkSectionProps) {
   return (
     <section
@@ -62,13 +69,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
         padding: "120px 0",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 48px",
-        }}
-      >
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
         <p
           style={{
             fontWeight: 600,
@@ -77,12 +78,17 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
             textTransform: "uppercase",
             color: "#e8ff47",
             marginBottom: 64,
+            margin: "0 0 64px",
           }}
         >
           Selected Work
         </p>
 
-        <div
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
@@ -92,7 +98,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
           {caseStudies.slice(0, 3).map((cs) => (
             <WorkCard key={cs.frontmatter.slug} caseStudy={cs} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -106,126 +112,131 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
   const primary = fm.results[0];
 
   return (
-    <Link
-      href={`/work/${fm.slug}`}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        display: "block",
-        backgroundColor: "#111111",
-        border: `1px solid ${hover ? "rgba(232,255,71,0.3)" : "rgba(255,255,255,0.06)"}`,
-        borderRadius: 12,
-        overflow: "hidden",
-        textDecoration: "none",
-        transition: "all 300ms ease",
-      }}
-    >
-      {/* Video thumbnail */}
-      <div
+    <motion.div variants={cardVariant}>
+      <Link
+        href={`/work/${fm.slug}`}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         style={{
-          height: 240,
+          display: "block",
+          backgroundColor: "#111111",
+          border: `1px solid ${hover ? "rgba(232,255,71,0.3)" : "rgba(255,255,255,0.06)"}`,
+          borderRadius: 12,
           overflow: "hidden",
-          position: "relative",
-          backgroundColor: "#0a0a0a",
+          textDecoration: "none",
+          transition: "all 300ms ease",
+          transform: hover ? "translateY(-6px)" : "translateY(0)",
+          boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
         }}
       >
-        {video ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          >
-            <source src={video} type="video/mp4" />
-          </video>
-        ) : null}
-      </div>
-
-      {/* Card body */}
-      <div style={{ padding: 24 }}>
-        <p
+        {/* Video thumbnail */}
+        <div
           style={{
-            fontWeight: 400,
-            fontSize: 11,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: "#e8ff47",
-            margin: 0,
+            height: 240,
+            overflow: "hidden",
+            position: "relative",
+            backgroundColor: "#0a0a0a",
           }}
         >
-          {meta?.category ?? "Project"}
-        </p>
-
-        <h3
-          style={{
-            fontWeight: 700,
-            fontSize: 24,
-            color: "#ffffff",
-            margin: "8px 0 12px",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          {fm.title.split(" — ")[0]}
-        </h3>
-
-        {primary ? (
-          <p
-            style={{
-              fontWeight: 700,
-              fontSize: 36,
-              color: "#e8ff47",
-              margin: "0 0 12px",
-              letterSpacing: "-0.02em",
-              lineHeight: 1,
-            }}
-          >
-            {primary.metric}
-            <span
+          {video ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden="true"
               style={{
-                fontSize: 12,
-                fontWeight: 400,
-                color: "rgba(255,255,255,0.4)",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                marginLeft: 12,
-                verticalAlign: "middle",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
               }}
             >
-              {primary.label}
-            </span>
+              <source src={video} type="video/mp4" />
+            </video>
+          ) : null}
+        </div>
+
+        {/* Card body */}
+        <div style={{ padding: 24 }}>
+          <p
+            style={{
+              fontWeight: 400,
+              fontSize: 11,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#e8ff47",
+              margin: 0,
+            }}
+          >
+            {meta?.category ?? "Project"}
           </p>
-        ) : null}
 
-        <p
-          style={{
-            fontWeight: 400,
-            fontSize: 14,
-            color: "rgba(255,255,255,0.55)",
-            lineHeight: 1.6,
-            margin: 0,
-          }}
-        >
-          {meta?.description ?? fm.client}
-        </p>
+          <h3
+            style={{
+              fontWeight: 700,
+              fontSize: 24,
+              color: "#ffffff",
+              margin: "8px 0 12px",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {fm.title.split(" — ")[0]}
+          </h3>
 
-        <p
-          style={{
-            margin: "16px 0 0",
-            fontWeight: 500,
-            fontSize: 13,
-            color: hover ? "#e8ff47" : "rgba(255,255,255,0.4)",
-            transition: "color 200ms ease",
-          }}
-        >
-          View Case Study →
-        </p>
-      </div>
-    </Link>
+          {primary ? (
+            <p
+              style={{
+                fontWeight: 700,
+                fontSize: 36,
+                color: "#e8ff47",
+                margin: "0 0 12px",
+                letterSpacing: "-0.02em",
+                lineHeight: 1,
+              }}
+            >
+              {primary.metric}
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 400,
+                  color: "rgba(255,255,255,0.4)",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  marginLeft: 12,
+                  verticalAlign: "middle",
+                }}
+              >
+                {primary.label}
+              </span>
+            </p>
+          ) : null}
+
+          <p
+            style={{
+              fontWeight: 400,
+              fontSize: 14,
+              color: "rgba(255,255,255,0.55)",
+              lineHeight: 1.6,
+              margin: 0,
+            }}
+          >
+            {meta?.description ?? fm.client}
+          </p>
+
+          <p
+            style={{
+              margin: "16px 0 0",
+              fontWeight: 500,
+              fontSize: 13,
+              color: hover ? "#e8ff47" : "rgba(255,255,255,0.4)",
+              transition: "color 200ms ease",
+            }}
+          >
+            View Case Study →
+          </p>
+        </div>
+      </Link>
+    </motion.div>
   );
 }

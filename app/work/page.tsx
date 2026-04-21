@@ -36,7 +36,7 @@ export default function WorkIndexPage() {
       >
         <p
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 300,
             fontSize: 11,
             letterSpacing: "0.2em",
@@ -49,7 +49,7 @@ export default function WorkIndexPage() {
         </p>
         <h1
           style={{
-            fontFamily: "var(--font-syne, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 800,
             fontSize: "clamp(48px, 7vw, 96px)",
             letterSpacing: "-0.04em",
@@ -62,7 +62,7 @@ export default function WorkIndexPage() {
         <p
           style={{
             marginTop: 24,
-            fontFamily: "var(--font-sans, sans-serif)",
+            fontFamily: "var(--font-jakarta, sans-serif)",
             fontWeight: 300,
             fontSize: 14,
             color: "rgba(244,243,239,0.45)",

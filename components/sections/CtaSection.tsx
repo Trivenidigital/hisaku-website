@@ -1,21 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
 
 /**
- * CtaSection — rounded bordered card with a dark green gradient and
- * a thin lime edge. Centered content, single primary CTA.
+ * CtaSection — gradient card with "Ready to build / something great?"
+ * where "something great?" is lime. fadeUp on scroll.
  */
 export function CtaSection() {
   return (
     <section
       aria-label="Call to action"
-      style={{
-        backgroundColor: "#0a0a0a",
-        padding: "0 48px 120px",
-      }}
+      style={{ backgroundColor: "#0a0a0a", padding: "0 48px 120px" }}
     >
-      <div
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
         style={{
           maxWidth: 1200,
           margin: "0 auto",
@@ -33,12 +44,13 @@ export function CtaSection() {
             letterSpacing: "-0.02em",
             lineHeight: 1.1,
             color: "#ffffff",
-            margin: "0 0 20px",
+            margin: "0 0 40px",
+            textAlign: "center",
           }}
         >
           Ready to build
           <br />
-          something great?
+          <span style={{ color: "#e8ff47" }}>something great?</span>
         </h2>
         <p
           style={{
@@ -62,18 +74,20 @@ export function CtaSection() {
             fontWeight: 600,
             fontSize: 15,
             textDecoration: "none",
-            transition: "background-color 200ms ease",
+            transition: "all 200ms ease",
           }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#ffffff")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "#e8ff47")
-          }
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "#ffffff";
+            e.currentTarget.style.transform = "scale(1.02)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "#e8ff47";
+            e.currentTarget.style.transform = "scale(1)";
+          }}
         >
           Start a Project →
         </Link>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MobileNav } from "./MobileNav";
 
@@ -21,7 +22,14 @@ const NAV_LINKS = [
 ] as const;
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+
+  // Active link match — /work/xyz should still highlight the "Work" nav item.
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   useEffect(() => {
     function onScroll() {
@@ -88,26 +96,33 @@ export function Navbar() {
             alignItems: "center",
           }}
         >
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                style={{
-                  fontWeight: 400,
-                  fontSize: 14,
-                  color: "rgba(255,255,255,0.7)",
-                  textDecoration: "none",
-                  transition: "color 200ms ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "rgba(255,255,255,0.7)")
-                }
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link.href);
+            const baseColor = active ? "#e8ff47" : "rgba(255,255,255,0.7)";
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  style={{
+                    fontWeight: active ? 500 : 400,
+                    fontSize: 14,
+                    color: baseColor,
+                    textDecoration: "none",
+                    transition: "color 200ms ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) e.currentTarget.style.color = "#ffffff";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) e.currentTarget.style.color = baseColor;
+                  }}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {/* Right CTA — desktop only */}
