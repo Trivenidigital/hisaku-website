@@ -7,27 +7,7 @@ import {
   getNextCaseStudy,
 } from "@/lib/content/case-studies";
 import { buildMetadata } from "@/lib/metadata";
-
-/** Render a section's body as <p> elements, splitting on blank lines. */
-function renderParagraphs(source: string, muted: boolean) {
-  const paragraphs = source.split(/\n\s*\n/).filter((p) => p.trim());
-  const color = muted ? "rgba(5,5,7,0.8)" : "rgba(244,243,239,0.85)";
-  return paragraphs.map((p, i) => (
-    <p
-      key={i}
-      style={{
-        fontFamily: "var(--font-jakarta, sans-serif)",
-        fontWeight: 300,
-        fontSize: 18,
-        lineHeight: 1.75,
-        color,
-        marginBottom: i === paragraphs.length - 1 ? 0 : 24,
-      }}
-    >
-      {p.trim()}
-    </p>
-  ));
-}
+import { colors, fonts } from "@/lib/design";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -60,15 +40,65 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
+/** Render a source string as <p> elements split on blank lines. */
+function renderParagraphs(source: string, color: string) {
+  const paras = source.split(/\n\s*\n/).filter((p) => p.trim());
+  if (paras.length === 0) {
+    return (
+      <p
+        style={{
+          fontFamily: fonts.body,
+          fontWeight: 400,
+          fontSize: 17,
+          lineHeight: 1.7,
+          color,
+        }}
+      >
+        Details coming soon.
+      </p>
+    );
+  }
+  return paras.map((p, i) => (
+    <p
+      key={i}
+      style={{
+        fontFamily: fonts.body,
+        fontWeight: 400,
+        fontSize: 17,
+        lineHeight: 1.7,
+        color,
+        marginBottom: i === paras.length - 1 ? 0 : 20,
+      }}
+    >
+      {p.trim()}
+    </p>
+  ));
+}
+
+function parseBody(body: string) {
+  const sections: Record<string, string> = {
+    challenge: "",
+    approach: "",
+    outcome: "",
+  };
+  const matches = body.matchAll(
+    /##\s+(Challenge|Approach|Outcome)\s*\n+([\s\S]*?)(?=\n##|$)/g
+  );
+  for (const m of matches) {
+    const key = m[1].toLowerCase();
+    sections[key] = m[2].trim();
+  }
+  return sections;
+}
+
 /**
- * Case study detail — hero + alternating dark/white sections.
+ * Case study detail page.
  *
- * Section rhythm:
- *   Hero (dark + video bg + metric)
- *   Challenge (white)
- *   What We Built (dark)
- *   Results (white) — 3 stat boxes
- *   Next case study + back link (dark)
+ * Section flow:
+ *   1. Hero  — video bg + client name + metric + back link
+ *   2. Challenge    — surface bg, narrative paragraphs
+ *   3. Solution     — base bg, narrative paragraphs
+ *   4. Results      — surface bg + 3 stat boxes (up to 5) + next case
  */
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
@@ -80,8 +110,6 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const video = VIDEO[fm.slug];
   const category = CATEGORY[fm.slug] ?? "Project";
   const primary = fm.results[0];
-
-  // Parse body into Challenge / Approach / Outcome sections.
   const sections = parseBody(cs.body);
 
   const ld = {
@@ -95,19 +123,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
   };
 
   return (
-    <main id="main">
+    <main id="main" style={{ backgroundColor: colors.bg }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
       />
 
-      {/* Hero — full viewport with video bg */}
+      {/* Hero */}
       <section
-        data-theme="dark"
         style={{
           position: "relative",
-          minHeight: "100vh",
-          backgroundColor: "#050507",
+          minHeight: "80vh",
+          backgroundColor: colors.bg,
           overflow: "hidden",
         }}
       >
@@ -124,7 +151,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              opacity: 0.45,
+              opacity: 0.3,
               zIndex: 0,
             }}
           >
@@ -136,30 +163,31 @@ export default async function CaseStudyPage({ params }: PageProps) {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundColor: "rgba(5,5,7,0.55)",
+            backgroundColor: "rgba(5,5,7,0.7)",
             zIndex: 1,
           }}
         />
 
-        {/* Content anchored bottom-left */}
         <div
           style={{
-            position: "absolute",
-            bottom: 80,
-            left: 60,
-            right: 60,
+            position: "relative",
             zIndex: 2,
+            paddingTop: 160,
+            paddingBottom: 80,
+            paddingLeft: 48,
+            paddingRight: 48,
             maxWidth: 1200,
+            margin: "0 auto",
           }}
         >
           <Link
             href="/work"
-            data-cursor="hover"
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 300,
+              fontFamily: fonts.body,
+              fontWeight: 400,
               fontSize: 14,
-              color: "rgba(244,243,239,0.6)",
+              color: "rgba(255,255,255,0.5)",
+              textDecoration: "none",
               display: "inline-block",
               marginBottom: 32,
             }}
@@ -168,25 +196,26 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </Link>
           <p
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 300,
-              fontSize: 11,
+              fontFamily: fonts.body,
+              fontWeight: 500,
+              fontSize: 12,
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              color: "#e8ff47",
-              marginBottom: 24,
+              color: colors.accent,
+              margin: "0 0 24px",
             }}
           >
             Case Study — {category}
           </p>
           <h1
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
+              fontFamily: fonts.display,
               fontWeight: 800,
-              fontSize: "clamp(72px, 12vw, 160px)",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.88,
-              color: "#f4f3ef",
+              fontSize: "clamp(64px, 9vw, 120px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.02,
+              color: colors.white,
+              margin: 0,
             }}
           >
             {fm.title.split(" — ")[0]}
@@ -194,25 +223,26 @@ export default async function CaseStudyPage({ params }: PageProps) {
           {primary ? (
             <p
               style={{
-                marginTop: 40,
-                fontFamily: "var(--font-jakarta, sans-serif)",
+                marginTop: 32,
+                fontFamily: fonts.display,
                 fontWeight: 800,
-                fontSize: "clamp(48px, 8vw, 96px)",
-                letterSpacing: "-0.04em",
-                lineHeight: 0.9,
-                color: "#e8ff47",
+                fontSize: "clamp(40px, 6vw, 72px)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1,
+                color: colors.accent,
               }}
             >
               {primary.metric}
               <span
                 style={{
-                  fontFamily: "var(--font-jakarta, sans-serif)",
-                  fontWeight: 300,
-                  fontSize: 14,
+                  fontFamily: fonts.body,
+                  fontWeight: 400,
+                  fontSize: 13,
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
-                  color: "rgba(244,243,239,0.55)",
-                  marginLeft: 24,
+                  color: "rgba(255,255,255,0.55)",
+                  marginLeft: 20,
+                  verticalAlign: "middle",
                 }}
               >
                 {primary.label}
@@ -225,215 +255,119 @@ export default async function CaseStudyPage({ params }: PageProps) {
               display: "grid",
               gridTemplateColumns: "auto 1fr",
               gap: "12px 24px",
-              fontFamily: "var(--font-jakarta, sans-serif)",
+              fontFamily: fonts.body,
               fontSize: 14,
-              color: "rgba(244,243,239,0.8)",
+              color: "rgba(255,255,255,0.8)",
               maxWidth: 560,
             }}
           >
-            <dt style={{ color: "rgba(244,243,239,0.45)" }}>Client</dt>
-            <dd>{fm.client}</dd>
-            <dt style={{ color: "rgba(244,243,239,0.45)" }}>Timeline</dt>
-            <dd>{fm.timeline}</dd>
-            <dt style={{ color: "rgba(244,243,239,0.45)" }}>Services</dt>
-            <dd>{fm.services.join(" · ")}</dd>
+            <dt style={{ color: "rgba(255,255,255,0.45)" }}>Client</dt>
+            <dd style={{ margin: 0 }}>{fm.client}</dd>
+            <dt style={{ color: "rgba(255,255,255,0.45)" }}>Timeline</dt>
+            <dd style={{ margin: 0 }}>{fm.timeline}</dd>
+            <dt style={{ color: "rgba(255,255,255,0.45)" }}>Services</dt>
+            <dd style={{ margin: 0 }}>{fm.services.join(" · ")}</dd>
           </dl>
         </div>
       </section>
 
-      {/* Challenge (white) */}
-      <section
-        data-theme="light"
-        style={{
-          backgroundColor: "#f4f3ef",
-          color: "#050507",
-          padding: "120px 60px",
-        }}
+      {/* Challenge */}
+      <ContentSection
+        label="— The Challenge"
+        heading="What we were asked to solve."
+        bodyColor="rgba(255,255,255,0.75)"
+        backgroundColor={colors.surface}
       >
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 300,
-              fontSize: 11,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "rgba(5,5,7,0.45)",
-              marginBottom: 24,
-            }}
-          >
-            — The Challenge
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 700,
-              fontSize: "clamp(36px, 5vw, 64px)",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.95,
-              color: "#050507",
-              marginBottom: 32,
-            }}
-          >
-            What we were asked to solve.
-          </h2>
-          <div>
-            {sections.challenge
-              ? renderParagraphs(sections.challenge, true)
-              : (
-                <p
-                  style={{
-                    fontFamily: "var(--font-jakarta, sans-serif)",
-                    fontWeight: 300,
-                    fontSize: 18,
-                    lineHeight: 1.75,
-                    color: "rgba(5,5,7,0.6)",
-                  }}
-                >
-                  Content coming soon.
-                </p>
-              )}
-          </div>
-        </div>
-      </section>
+        {renderParagraphs(sections.challenge, "rgba(255,255,255,0.75)")}
+      </ContentSection>
 
-      {/* What We Built (dark) */}
-      <section
-        data-theme="dark"
-        style={{
-          backgroundColor: "#050507",
-          color: "#f4f3ef",
-          padding: "120px 60px",
-        }}
+      {/* Solution */}
+      <ContentSection
+        label="— The Solution"
+        heading="What we built."
+        bodyColor="rgba(255,255,255,0.75)"
+        backgroundColor={colors.bg}
       >
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 300,
-              fontSize: 11,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "rgba(244,243,239,0.45)",
-              marginBottom: 24,
-            }}
-          >
-            — What We Built
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 700,
-              fontSize: "clamp(36px, 5vw, 64px)",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.95,
-              color: "#f4f3ef",
-              marginBottom: 32,
-            }}
-          >
-            Our approach, in detail.
-          </h2>
-          <div>
-            {sections.approach
-              ? renderParagraphs(sections.approach, false)
-              : (
-                <p
-                  style={{
-                    fontFamily: "var(--font-jakarta, sans-serif)",
-                    fontWeight: 300,
-                    fontSize: 18,
-                    lineHeight: 1.75,
-                    color: "rgba(244,243,239,0.55)",
-                  }}
-                >
-                  Details of the build coming shortly.
-                </p>
-              )}
-          </div>
-        </div>
-      </section>
+        {renderParagraphs(sections.approach, "rgba(255,255,255,0.75)")}
+      </ContentSection>
 
-      {/* Results (white) — 3 stat boxes */}
+      {/* Results */}
       <section
-        data-theme="light"
         style={{
-          backgroundColor: "#f4f3ef",
-          color: "#050507",
-          padding: "120px 60px",
+          backgroundColor: colors.surface,
+          padding: "80px 48px",
         }}
       >
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 300,
-              fontSize: 11,
+              fontFamily: fonts.body,
+              fontWeight: 500,
+              fontSize: 12,
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              color: "rgba(5,5,7,0.45)",
-              marginBottom: 24,
+              color: "rgba(255,255,255,0.45)",
+              margin: "0 0 24px",
             }}
           >
-            — The Outcome
+            — Results
           </p>
           <h2
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
+              fontFamily: fonts.display,
               fontWeight: 700,
-              fontSize: "clamp(36px, 5vw, 64px)",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.95,
-              color: "#050507",
-              marginBottom: 48,
+              fontSize: 32,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.2,
+              color: colors.white,
+              margin: "0 0 32px",
             }}
           >
             What shipped, and what changed.
           </h2>
-          <div style={{ marginBottom: 64 }}>
-            {sections.outcome
-              ? renderParagraphs(sections.outcome, true)
-              : null}
-          </div>
-
-          {/* Stat boxes */}
+          {sections.outcome ? (
+            <div style={{ maxWidth: 800, marginBottom: 48 }}>
+              {renderParagraphs(sections.outcome, "rgba(255,255,255,0.75)")}
+            </div>
+          ) : null}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: `repeat(${Math.min(fm.results.length, 3)}, 1fr)`,
-              gap: 0,
-              marginTop: 32,
+              gridTemplateColumns: `repeat(auto-fit, minmax(220px, 1fr))`,
+              gap: 24,
             }}
           >
-            {fm.results.slice(0, 3).map((r) => (
+            {fm.results.slice(0, 5).map((r) => (
               <div
                 key={`${r.metric}-${r.label}`}
                 style={{
-                  border: "1px solid rgba(5,5,7,0.1)",
-                  padding: "48px 32px",
+                  backgroundColor: colors.bg,
+                  border: `1px solid ${colors.border}`,
+                  borderRadius: 12,
+                  padding: 32,
                 }}
               >
                 <div
                   style={{
-                    fontFamily: "var(--font-jakarta, sans-serif)",
+                    fontFamily: fonts.display,
                     fontWeight: 800,
-                    fontSize: 64,
-                    letterSpacing: "-0.04em",
-                    lineHeight: 0.9,
-                    color: "#e8ff47",
-                    WebkitTextStroke: "1px rgba(5,5,7,0.1)",
+                    fontSize: 56,
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                    color: colors.accent,
                   }}
                 >
                   {r.metric}
                 </div>
                 <div
                   style={{
-                    marginTop: 16,
-                    fontFamily: "var(--font-jakarta, sans-serif)",
-                    fontWeight: 300,
+                    marginTop: 12,
+                    fontFamily: fonts.body,
+                    fontWeight: 400,
                     fontSize: 13,
-                    letterSpacing: "0.12em",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "rgba(5,5,7,0.5)",
+                    color: "rgba(255,255,255,0.5)",
                   }}
                 >
                   {r.label}
@@ -446,12 +380,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
       {/* Next + back */}
       <section
-        data-theme="dark"
-        style={{
-          backgroundColor: "#050507",
-          color: "#f4f3ef",
-          padding: "120px 60px",
-        }}
+        style={{ backgroundColor: colors.bg, padding: "80px 48px 120px" }}
       >
         <div
           style={{
@@ -466,12 +395,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
         >
           <Link
             href="/work"
-            data-cursor="hover"
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
+              fontFamily: fonts.body,
               fontWeight: 400,
               fontSize: 14,
-              color: "rgba(244,243,239,0.6)",
+              color: "rgba(255,255,255,0.5)",
+              textDecoration: "none",
             }}
           >
             ← Back to Work
@@ -479,13 +408,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
           {next && next.frontmatter.slug !== slug ? (
             <Link
               href={`/work/${next.frontmatter.slug}`}
-              data-cursor="hover"
               style={{
-                fontFamily: "var(--font-jakarta, sans-serif)",
+                fontFamily: fonts.display,
                 fontWeight: 700,
-                fontSize: "clamp(32px, 4vw, 48px)",
-                letterSpacing: "-0.03em",
-                color: "#f4f3ef",
+                fontSize: "clamp(28px, 4vw, 44px)",
+                letterSpacing: "-0.02em",
+                color: colors.white,
+                textDecoration: "none",
               }}
             >
               Next: {next.frontmatter.title.split(" — ")[0]} →
@@ -497,19 +426,50 @@ export default async function CaseStudyPage({ params }: PageProps) {
   );
 }
 
-/** Parse MDX body into Challenge / Approach / Outcome paragraphs. */
-function parseBody(body: string): {
-  challenge: string;
-  approach: string;
-  outcome: string;
-} {
-  const sections = { challenge: "", approach: "", outcome: "" };
-  const matches = body.matchAll(
-    /##\s+(Challenge|Approach|Outcome)\s*\n+([\s\S]*?)(?=\n##|$)/g
+function ContentSection({
+  label,
+  heading,
+  backgroundColor,
+  bodyColor,
+  children,
+}: {
+  label: string;
+  heading: string;
+  backgroundColor: string;
+  bodyColor: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section style={{ backgroundColor, padding: "80px 48px" }}>
+      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+        <p
+          style={{
+            fontFamily: fonts.body,
+            fontWeight: 500,
+            fontSize: 12,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.45)",
+            margin: "0 0 24px",
+          }}
+        >
+          {label}
+        </p>
+        <h2
+          style={{
+            fontFamily: fonts.display,
+            fontWeight: 700,
+            fontSize: 32,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+            color: colors.white,
+            margin: "0 0 32px",
+          }}
+        >
+          {heading}
+        </h2>
+        <div style={{ color: bodyColor }}>{children}</div>
+      </div>
+    </section>
   );
-  for (const m of matches) {
-    const key = m[1].toLowerCase() as keyof typeof sections;
-    sections[key] = m[2].trim();
-  }
-  return sections;
 }

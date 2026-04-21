@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/metadata";
+import { colors, fonts } from "@/lib/design";
+import PageHero from "@/components/layout/PageHero";
+import { CtaSection } from "@/components/sections/CtaSection";
 
 export const metadata: Metadata = buildMetadata({
   title: "Capabilities",
@@ -9,21 +12,13 @@ export const metadata: Metadata = buildMetadata({
   canonicalPath: "/capabilities",
 });
 
-/**
- * Capabilities landing page.
- *
- * Layout:
- *   Hero (50vh, dark, centered)
- *   4 alternating split sections — text left, visual right
- */
-
 interface Capability {
   number: string;
   slug: string;
   name: string;
   description: string;
   bullets: string[];
-  /** Gradient for the visual side — dark or warm depending on theme. */
+  /** 3-stop gradient for the visual side — colors distinct per discipline. */
   gradient: string;
 }
 
@@ -39,7 +34,8 @@ const CAPABILITIES: Capability[] = [
       "Mobile-first responsive layouts",
       "Performance-optimized delivery",
     ],
-    gradient: "linear-gradient(135deg, #060d0a 0%, #0d2518 50%, #060d0a 100%)",
+    // Greens
+    gradient: "linear-gradient(135deg, #0a1a0a 0%, #0d2518 50%, #0a1a0a 100%)",
   },
   {
     number: "02",
@@ -51,7 +47,8 @@ const CAPABILITIES: Capability[] = [
       "Custom CMS integrations",
       "API and third-party connections",
     ],
-    gradient: "linear-gradient(135deg, #0d1818 0%, #1a3030 50%, #0d1818 100%)",
+    // Blues
+    gradient: "linear-gradient(135deg, #0a0d1a 0%, #0d1025 50%, #0a0d1a 100%)",
   },
   {
     number: "03",
@@ -63,7 +60,8 @@ const CAPABILITIES: Capability[] = [
       "Google Business Profile optimization",
       "Content that ranks and converts",
     ],
-    gradient: "linear-gradient(135deg, #120800 0%, #2d1400 50%, #120800 100%)",
+    // Purples
+    gradient: "linear-gradient(135deg, #0f0a1a 0%, #1a0d28 50%, #0f0a1a 100%)",
   },
   {
     number: "04",
@@ -75,152 +73,55 @@ const CAPABILITIES: Capability[] = [
       "AI-powered content workflows",
       "Custom agent development",
     ],
-    gradient: "linear-gradient(135deg, #0a0020 0%, #1a0040 50%, #0a0020 100%)",
+    // Teals
+    gradient: "linear-gradient(135deg, #0a1518 0%, #0d2020 50%, #0a1518 100%)",
   },
 ];
 
 export default function CapabilitiesPage() {
   return (
-    <main id="main" style={{ backgroundColor: "#050507" }}>
-      {/* Hero */}
-      <section
-        data-theme="dark"
-        style={{
-          backgroundColor: "#050507",
-          minHeight: "50vh",
-          paddingTop: 160,
-          paddingBottom: 80,
-          paddingLeft: 60,
-          paddingRight: 60,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "var(--font-jakarta, sans-serif)",
-            fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: "#e8ff47",
-            marginBottom: 24,
-          }}
-        >
-          Capabilities
-        </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-jakarta, sans-serif)",
-            fontWeight: 800,
-            fontSize: "clamp(64px, 9vw, 120px)",
-            letterSpacing: "-0.04em",
-            lineHeight: 0.9,
-            color: "#f4f3ef",
-          }}
-        >
-          What We Build.
-        </h1>
-      </section>
+    <main id="main" style={{ backgroundColor: colors.bg }}>
+      <PageHero
+        label="Capabilities"
+        title="What We Build."
+        accentWord="Build."
+      />
 
-      {/* 4 capability sections, alternating dark / white */}
-      {CAPABILITIES.map((cap, i) => {
-        const isLight = i % 2 === 1;
-        return (
-          <CapabilitySection key={cap.slug} capability={cap} isLight={isLight} />
-        );
-      })}
+      {CAPABILITIES.map((cap, i) => (
+        <CapabilitySection key={cap.slug} capability={cap} index={i} />
+      ))}
 
-      {/* Final CTA (teal) */}
-      <section
-        data-theme="dark"
-        style={{
-          backgroundColor: "#0a3d2e",
-          color: "#f4f3ef",
-          padding: "160px 60px",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div className="teal-grid" aria-hidden="true" />
-        <div style={{ position: "relative", zIndex: 2 }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 800,
-              fontSize: "clamp(64px, 10vw, 120px)",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.88,
-              color: "#f4f3ef",
-              marginBottom: 56,
-            }}
-          >
-            Got a project
-            <br />
-            <span style={{ color: "#e8ff47" }}>in mind?</span>
-          </h2>
-          <Link
-            href="/contact"
-            data-cursor="hover"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              backgroundColor: "#e8ff47",
-              color: "#0a3d2e",
-              padding: "20px 56px",
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 600,
-              fontSize: 18,
-            }}
-          >
-            Start a Project
-            <span aria-hidden="true" style={{ marginLeft: 12 }}>
-              →
-            </span>
-          </Link>
-        </div>
-      </section>
+      <CtaSection />
     </main>
   );
 }
 
 function CapabilitySection({
   capability,
-  isLight,
+  index,
 }: {
   capability: Capability;
-  isLight: boolean;
+  index: number;
 }) {
-  const bg = isLight ? "#f4f3ef" : "#050507";
-  const text = isLight ? "#050507" : "#f4f3ef";
-  const muted = isLight ? "rgba(5,5,7,0.6)" : "rgba(244,243,239,0.6)";
-  const visualBg = isLight
-    ? "linear-gradient(135deg, #050507 0%, #0d0d12 50%, #050507 100%)"
-    : capability.gradient;
-
+  // Alternate layout: even index = text left, odd = text right
+  const reverse = index % 2 === 1;
   return (
     <section
-      data-theme={isLight ? "light" : "dark"}
       style={{
-        backgroundColor: bg,
-        color: text,
-        minHeight: "80vh",
+        backgroundColor: colors.bg,
+        minHeight: "70vh",
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
         alignItems: "stretch",
-        borderTop: isLight
-          ? "1px solid rgba(5,5,7,0.1)"
-          : "1px solid rgba(255,255,255,0.06)",
+        borderTop: `1px solid ${colors.border}`,
+        direction: reverse ? "rtl" : "ltr",
       }}
     >
-      {/* Left — text */}
+      {/* Text side */}
       <div
         style={{
-          padding: "120px 60px",
+          direction: "ltr",
+          padding: "80px 48px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -228,38 +129,38 @@ function CapabilitySection({
       >
         <p
           style={{
-            fontFamily: "var(--font-jakarta, sans-serif)",
-            fontWeight: 300,
+            fontFamily: fonts.body,
+            fontWeight: 500,
             fontSize: 13,
+            color: colors.accent,
             letterSpacing: "0.15em",
             textTransform: "uppercase",
-            color: "#e8ff47",
-            marginBottom: 24,
+            margin: "0 0 24px",
           }}
         >
           {capability.number}
         </p>
         <h2
           style={{
-            fontFamily: "var(--font-jakarta, sans-serif)",
+            fontFamily: fonts.display,
             fontWeight: 800,
-            fontSize: "clamp(48px, 6vw, 80px)",
-            letterSpacing: "-0.03em",
-            lineHeight: 0.95,
-            color: text,
-            marginBottom: 32,
+            fontSize: "clamp(40px, 5vw, 64px)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.05,
+            color: colors.white,
+            margin: "0 0 24px",
           }}
         >
           {capability.name}
         </h2>
         <p
           style={{
-            fontFamily: "var(--font-jakarta, sans-serif)",
-            fontWeight: 300,
-            fontSize: 18,
+            fontFamily: fonts.body,
+            fontWeight: 400,
+            fontSize: 17,
             lineHeight: 1.75,
-            color: muted,
-            marginBottom: 32,
+            color: colors.muted2,
+            margin: "0 0 32px",
             maxWidth: 480,
           }}
         >
@@ -270,10 +171,10 @@ function CapabilitySection({
             <li
               key={b}
               style={{
-                fontFamily: "var(--font-jakarta, sans-serif)",
-                fontWeight: 300,
+                fontFamily: fonts.body,
+                fontWeight: 400,
                 fontSize: 15,
-                color: muted,
+                color: colors.muted2,
                 paddingLeft: 28,
                 position: "relative",
                 marginBottom: 12,
@@ -285,7 +186,8 @@ function CapabilitySection({
                 style={{
                   position: "absolute",
                   left: 0,
-                  color: "#e8ff47",
+                  color: colors.accent,
+                  fontWeight: 600,
                 }}
               >
                 →
@@ -295,34 +197,29 @@ function CapabilitySection({
           ))}
         </ul>
         <Link
-          href={`/services/${capability.slug}`}
-          data-cursor="hover"
+          href="/contact"
           style={{
-            marginTop: 40,
-            display: "inline-flex",
-            alignItems: "center",
+            marginTop: 32,
+            display: "inline-block",
             alignSelf: "flex-start",
-            fontFamily: "var(--font-jakarta, sans-serif)",
-            fontWeight: 400,
+            fontFamily: fonts.body,
+            fontWeight: 500,
             fontSize: 15,
-            color: text,
-            borderBottom: `1px solid ${text}`,
-            paddingBottom: 2,
+            color: colors.accent,
+            textDecoration: "none",
           }}
         >
-          Start a Project
-          <span aria-hidden="true" style={{ marginLeft: 8 }}>
-            →
-          </span>
+          Start a Project →
         </Link>
       </div>
 
-      {/* Right — gradient visual */}
+      {/* Visual side */}
       <div
         aria-hidden="true"
         className="gradient-pulse"
         style={{
-          background: visualBg,
+          direction: "ltr",
+          background: capability.gradient,
           minHeight: "60vh",
         }}
       />

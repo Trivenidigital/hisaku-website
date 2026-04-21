@@ -1,46 +1,48 @@
 import type { Metadata } from "next";
 import { ContactForm, ContactSideMark } from "@/components/sections/ContactForm";
 import { buildMetadata } from "@/lib/metadata";
+import { colors, fonts } from "@/lib/design";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
   description:
-    "Start a project with Hisaku. Email hello@hisaku.com, message us on WhatsApp, or send a note below.",
+    "Start a project with Hisaku. Email hello@hisaku.com, message us on WhatsApp, or fill the form.",
   canonicalPath: "/contact",
 });
 
 const FALLBACK_EMAIL = "hello@hisaku.com";
 
-/**
- * Contact page — 50/50 split.
- *
- * Left (sticky on desktop): big headline, email, location, WhatsApp button.
- * Right: contact form on elevated surface.
- */
+function buildWhatsAppUrl(): string | null {
+  const raw = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+  if (!raw) return null;
+  const digits = raw.replace(/[^0-9]/g, "");
+  return digits ? `https://wa.me/${digits}` : null;
+}
+
 export default function ContactPage() {
   const whatsApp = buildWhatsAppUrl();
   return (
     <main
       id="main"
       style={{
-        backgroundColor: "#050507",
-        color: "#f4f3ef",
+        backgroundColor: colors.bg,
+        color: colors.white,
         minHeight: "100vh",
       }}
     >
       <div
-        data-theme="dark"
+        className="contact-split"
         style={{
           display: "grid",
           gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
           minHeight: "100vh",
         }}
-        className="contact-split"
       >
-        {/* Left side — intro + contact details */}
+        {/* Left — intro + contact + dashed mark */}
         <section
           style={{
-            padding: "160px 60px 80px",
+            backgroundColor: colors.bg,
+            padding: "120px 48px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -48,26 +50,26 @@ export default function ContactPage() {
         >
           <p
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
-              fontWeight: 300,
-              fontSize: 11,
+              fontFamily: fonts.body,
+              fontWeight: 500,
+              fontSize: 12,
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              color: "#e8ff47",
-              marginBottom: 24,
+              color: colors.accent,
+              margin: "0 0 24px",
             }}
           >
             Start a Project
           </p>
           <h1
             style={{
-              fontFamily: "var(--font-jakarta, sans-serif)",
+              fontFamily: fonts.display,
               fontWeight: 800,
-              fontSize: "clamp(48px, 6vw, 80px)",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.92,
-              color: "#f4f3ef",
-              marginBottom: 40,
+              fontSize: "clamp(36px, 5vw, 64px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1,
+              color: colors.white,
+              margin: "0 0 40px",
             }}
           >
             Let&apos;s build
@@ -75,15 +77,16 @@ export default function ContactPage() {
             something.
           </h1>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: 16 }}
+          >
             <a
               href={`mailto:${FALLBACK_EMAIL}`}
-              data-cursor="hover"
               style={{
-                fontFamily: "var(--font-jakarta, sans-serif)",
-                fontWeight: 300,
+                fontFamily: fonts.body,
+                fontWeight: 400,
                 fontSize: 18,
-                color: "#f4f3ef",
+                color: colors.white,
                 textDecoration: "none",
                 transition: "color 200ms ease",
               }}
@@ -92,10 +95,11 @@ export default function ContactPage() {
             </a>
             <p
               style={{
-                fontFamily: "var(--font-jakarta, sans-serif)",
-                fontWeight: 300,
+                fontFamily: fonts.body,
+                fontWeight: 400,
                 fontSize: 14,
-                color: "rgba(244,243,239,0.45)",
+                color: colors.muted,
+                margin: 0,
               }}
             >
               Hyderabad, India
@@ -107,70 +111,69 @@ export default function ContactPage() {
               href={whatsApp ?? `mailto:${FALLBACK_EMAIL}`}
               target={whatsApp ? "_blank" : undefined}
               rel={whatsApp ? "noopener noreferrer" : undefined}
-              data-cursor="hover"
+              className="shimmer-btn"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                backgroundColor: "#e8ff47",
-                color: "#050507",
-                padding: "14px 32px",
-                fontFamily: "var(--font-jakarta, sans-serif)",
+                backgroundColor: colors.accent,
+                color: colors.bg,
+                padding: "12px 28px",
+                borderRadius: 6,
+                fontFamily: fonts.body,
                 fontWeight: 600,
                 fontSize: 14,
                 textDecoration: "none",
               }}
             >
               {whatsApp ? "WhatsApp us" : "Email us"}
-              <span aria-hidden="true" style={{ marginLeft: 12 }}>
+              <span aria-hidden="true" style={{ marginLeft: 10 }}>
                 →
               </span>
             </a>
           </div>
 
-          <div style={{ marginTop: 56 }}>
-            <ContactSideMark />
-          </div>
-
-          <div style={{ marginTop: 48, display: "flex", gap: 24 }}>
+          <div style={{ marginTop: 48, display: "flex", gap: 20 }}>
             <a
               href="https://linkedin.com/"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor="hover"
               style={{
-                fontFamily: "var(--font-jakarta, sans-serif)",
-                fontWeight: 300,
+                fontFamily: fonts.body,
+                fontWeight: 400,
                 fontSize: 14,
-                color: "rgba(244,243,239,0.6)",
+                color: colors.muted,
                 textDecoration: "none",
               }}
             >
               LinkedIn
             </a>
-            <span style={{ color: "#e8ff47" }}>·</span>
+            <span style={{ color: colors.accent }}>·</span>
             <a
               href="https://twitter.com/"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor="hover"
               style={{
-                fontFamily: "var(--font-jakarta, sans-serif)",
-                fontWeight: 300,
+                fontFamily: fonts.body,
+                fontWeight: 400,
                 fontSize: 14,
-                color: "rgba(244,243,239,0.6)",
+                color: colors.muted,
                 textDecoration: "none",
               }}
             >
               Twitter / X
             </a>
           </div>
+
+          <div style={{ marginTop: 56 }}>
+            <ContactSideMark />
+          </div>
         </section>
 
-        {/* Right side — form on elevated surface */}
+        {/* Right — form on elevated surface */}
         <section
           style={{
-            backgroundColor: "#0d0d12",
-            padding: "160px 60px 80px",
+            backgroundColor: colors.surface,
+            padding: "120px 48px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -181,11 +184,4 @@ export default function ContactPage() {
       </div>
     </main>
   );
-}
-
-function buildWhatsAppUrl(): string | null {
-  const raw = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
-  if (!raw) return null;
-  const digits = raw.replace(/[^0-9]/g, "");
-  return digits ? `https://wa.me/${digits}` : null;
 }

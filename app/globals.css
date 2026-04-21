@@ -231,17 +231,38 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   .shimmer-btn::before {
-    animation: shimmerSweep 3s ease-in-out infinite;
+    animation: shimmer 3s ease-in-out infinite;
   }
 }
 
-@keyframes shimmerSweep {
+@keyframes shimmer {
   0% {
     left: -60%;
   }
   60%,
   100% {
     left: 160%;
+  }
+}
+
+/* Float — subtle 6px y-bob for badges / pills / small marks. */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Spin — continuous rotation for loaders / dashed circles. */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
