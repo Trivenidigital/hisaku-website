@@ -1,124 +1,76 @@
 @import "tailwindcss";
 
 /* ============================================================================
- * Hisaku design system — complete spec.
+ * Hisaku design system — premium agency reset.
  *
- * Four section backgrounds alternate across the site to give it rhythm.
- * Colors, typography, motion tokens, and global behaviors all centralized
- * here. Component-level inline styles override per element.
+ * Single font (Plus Jakarta Sans), clean colors, soft corners (6-12px).
+ * No brutalist rules. No forced border-radius: 0. No grain. No custom
+ * cursor. One lime accent per section, used intentionally.
+ *
+ * Legacy font tokens (--font-syne, --font-sans, --font-display, --font-body)
+ * are aliased to Jakarta so older pages that still reference them render
+ * cleanly without edits.
  * ============================================================================ */
 
 @theme {
-  /* Background tokens — also exposed as plain hex on individual sections
-   * so they survive even if @theme variable resolution fails. */
-  --color-bg-dark: #050507;
-  --color-bg-mid: #0d0d12;
-  --color-bg-white: #f4f3ef;
-  --color-bg-teal: #0a3d2e;
+  /* Backgrounds */
+  --color-bg-dark: #0a0a0a;
+  --color-bg-surface: #111111;
+  --color-bg-white: #ffffff;
+  --color-bg-cream: #f8f6f0;
 
-  /* Legacy aliases (kept so existing pages/components don't break). */
-  --color-base: #050507;
-  --color-elevated: #0d0d12;
-  --color-hairline: rgba(255, 255, 255, 0.07);
+  /* Legacy aliases (kept so older page styles don't break). */
+  --color-base: #0a0a0a;
+  --color-elevated: #111111;
+  --color-bg-mid: #111111;
+  --color-bg-teal: #0a1a0a;
+  --color-hairline: rgba(255, 255, 255, 0.08);
 
-  /* Text tokens — flipped per section via [data-theme]. */
-  --color-text-primary: #f4f3ef;
-  --color-text-secondary: rgba(244, 243, 239, 0.45);
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.5);
 
-  /* Accent is constant across all backgrounds. */
+  /* Accent */
   --color-accent-primary: #e8ff47;
   --color-accent-secondary: #7c6af7;
 
-  /* Font stacks generated as `font-syne` and `font-sans` utilities. */
-  --font-syne: var(--font-syne-src), sans-serif;
-  --font-sans: var(--font-dm-sans-src), sans-serif;
-
-  /* Legacy display/body aliases. */
-  --font-display: var(--font-syne-src), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-dm-sans-src), ui-sans-serif, system-ui, sans-serif;
+  /* Fonts — everything routes to Plus Jakarta Sans. */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-syne: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-syne-src: var(--font-jakarta);
+  --font-dm-sans-src: var(--font-jakarta);
 }
 
-/* Light theme inversion — declarative per section. */
+/* Light theme inversion for sections that opt in. */
 [data-theme="light"] {
-  --color-text-primary: #050507;
-  --color-text-secondary: rgba(5, 5, 7, 0.55);
-  --color-hairline: rgba(5, 5, 7, 0.1);
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: rgba(10, 10, 10, 0.55);
+  --color-hairline: rgba(10, 10, 10, 0.1);
 }
 
 html {
-  background: var(--color-bg-dark);
-  color: var(--color-text-primary);
+  background: #0a0a0a;
+  color: #ffffff;
   color-scheme: dark;
   scroll-behavior: smooth;
 }
 
-/* Custom cursor: native cursor hidden. */
-@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
-  html[data-cursor-ready="true"],
-  html[data-cursor-ready="true"] *,
-  html[data-cursor-ready="true"] a,
-  html[data-cursor-ready="true"] button,
-  html[data-cursor-ready="true"] input,
-  html[data-cursor-ready="true"] textarea,
-  html[data-cursor-ready="true"] select {
-    cursor: none !important;
-  }
-}
-
 body {
-  background-color: #050507;
-  color: #f4f3ef;
-  font-family: var(--font-sans);
-  font-weight: 300;
+  background-color: #0a0a0a;
+  color: #ffffff;
+  font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
-/* Site-wide grain overlay — fixed, above everything but the cursor. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9990; /* below cursor (9998), above content */
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Zero border-radius everywhere — sharp corners are the rule. */
-* {
-  border-radius: 0 !important;
-  box-sizing: border-box;
-}
-
-/* Text selection — lime on dark. */
 ::selection {
   background: #e8ff47;
-  color: #050507;
-}
-
-/* Custom scrollbar — thin lime. */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #050507;
-}
-::-webkit-scrollbar-thumb {
-  background: #e8ff47;
-}
-
-/* Display face defaults for every h1/h2/h3 globally. */
-h1,
-h2,
-h3 {
-  font-family: var(--font-syne);
-  letter-spacing: -0.03em;
-  line-height: 0.95;
+  color: #0a0a0a;
 }
 
 :focus-visible {
@@ -132,17 +84,18 @@ h3 {
   top: 0;
   padding: 0.75rem 1rem;
   background: #e8ff47;
-  color: #050507;
+  color: #0a0a0a;
   font-weight: 600;
   z-index: 9997;
   text-decoration: none;
+  border-radius: 6px;
 }
 .skip-link:focus-visible {
   left: 0;
   outline-offset: 0;
 }
 
-/* Reduced-motion: kill all motion. */
+/* Reduced motion: neutralize animations/transitions. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -154,50 +107,14 @@ h3 {
 }
 
 /* ============================================================================
- * Hero dot-grid — 52px lattice drifting diagonally at 60s.
+ * Keyframes retained for section-level animations (marquee, gradient pulse,
+ * scroll indicator bounce). The dot-grid keyframe is kept for any legacy
+ * surface that still references it.
  * ============================================================================ */
-.hero-dotgrid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(232, 255, 71, 0.18) 1px,
-    transparent 1.3px
-  );
-  background-size: 52px 52px;
-  mask-image: radial-gradient(ellipse at center, #000 50%, transparent 85%);
-  -webkit-mask-image: radial-gradient(
-    ellipse at center,
-    #000 50%,
-    transparent 85%
-  );
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .hero-dotgrid {
-    animation: dotGridDrift 60s linear infinite;
-  }
-}
-
-@keyframes dotGridDrift {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 52px 52px;
-  }
-}
-
-/* ============================================================================
- * Marquee — seamless infinite scroll.
- * ============================================================================ */
 @media (prefers-reduced-motion: no-preference) {
   .marquee-track {
     animation: marqueeScroll 35s linear infinite;
-  }
-  .marquee-track--slow {
-    animation-duration: 55s;
   }
 }
 
@@ -210,9 +127,6 @@ h3 {
   }
 }
 
-/* ============================================================================
- * Gradient pulse — animated backgrounds for decorative panels.
- * ============================================================================ */
 .gradient-pulse {
   background-size: 300% 300%;
 }
@@ -233,12 +147,9 @@ h3 {
   }
 }
 
-/* ============================================================================
- * Hero scroll indicator — bouncing arrow.
- * ============================================================================ */
 @media (prefers-reduced-motion: no-preference) {
   .hero-scroll-indicator {
-    animation: heroBounce 2s ease-in-out infinite;
+    animation: heroBounce 2.4s ease-in-out infinite;
   }
 }
 
@@ -248,13 +159,45 @@ h3 {
     transform: translateX(-50%) translateY(0);
   }
   50% {
-    transform: translateX(-50%) translateY(8px);
+    transform: translateX(-50%) translateY(6px);
   }
 }
 
-/* ============================================================================
- * Teal grid overlay — subtle 80px line grid for teal sections.
- * ============================================================================ */
+/* Legacy dot-grid — kept for any older surface still using it. */
+.hero-dotgrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(232, 255, 71, 0.12) 1px,
+    transparent 1.3px
+  );
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse at center, #000 50%, transparent 85%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    #000 50%,
+    transparent 85%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dotgrid {
+    animation: dotGridDrift 60s linear infinite;
+  }
+}
+
+@keyframes dotGridDrift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 52px 52px;
+  }
+}
+
+/* Legacy teal-grid. */
 .teal-grid {
   position: absolute;
   inset: 0;
@@ -263,72 +206,4 @@ h3 {
     linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 80px 80px;
-}
-
-/* ============================================================================
- * Custom cursor (pointer:fine + non-reduced-motion).
- * ============================================================================ */
-@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
-  .cursor-follower,
-  .cursor-dot {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate3d(-50%, -50%, 0);
-    will-change: transform;
-  }
-
-  .cursor-dot {
-    width: 8px;
-    height: 8px;
-    background: #e8ff47;
-    mix-blend-mode: difference;
-  }
-
-  .cursor-follower {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(232, 255, 71, 0.4);
-    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
-  }
-
-  .cursor-follower[data-active="true"] {
-    width: 60px;
-    height: 60px;
-    border-color: #e8ff47;
-  }
-}
-
-/* ============================================================================
- * View transitions (signature craft moment for work → case-study hero).
- * ============================================================================ */
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(work-*),
-  ::view-transition-new(work-*) {
-    animation-duration: 400ms;
-    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-}
-
-/* Legacy scroll-reveal for pages that still use it. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal-on-scroll {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 60%;
-    }
-  }
-  @keyframes reveal {
-    from {
-      opacity: 0;
-      transform: translateY(1.5rem);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 }

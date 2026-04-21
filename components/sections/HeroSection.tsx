@@ -4,17 +4,25 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 /**
- * HeroSection — full viewport, dark.
+ * HeroSection — centered premium layout.
  *
- * Layout (terminal-industries-style):
- *   - section: position: relative, min-height 100dvh
- *   - content block: position: absolute, bottom: 80px, left: 60px
- *   - scroll indicator: position: absolute, bottom: 32px, left: 50%, translateX(-50%)
- *   - rotated "Hyderabad · India" top-right
+ *   ┌──────────────────────────────────────────────┐
+ *   │                                              │
+ *   │        [ ✦ Web · Dev · AI Automation ]       │
+ *   │                                              │
+ *   │        We build digital                      │
+ *   │        experiences that move.                │
+ *   │                                              │
+ *   │   A Hyderabad studio building websites…      │
+ *   │                                              │
+ *   │        [See Our Work]  [Start a Project →]   │
+ *   │                                              │
+ *   │                  scroll ↓                    │
+ *   └──────────────────────────────────────────────┘
  *
- * The explicit bottom-left anchor is non-negotiable — pinning headline
- * to the bottom is the terminal-industries signature. Left: 60px on
- * desktop, clamps down to 24px on mobile.
+ * Video bg at 0.35 opacity with a dark 0.7 overlay on top. Content
+ * pinned to ~45% from top so the eye lands in the upper-middle
+ * comfort zone, not floating in dead space.
  */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -22,20 +30,15 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function HeroSection() {
   return (
     <section
-      data-theme="dark"
-      data-grain
       aria-label="Hero"
-      className="overflow-hidden"
       style={{
         position: "relative",
-        minHeight: "100dvh",
-        backgroundColor: "#050507",
+        minHeight: "100vh",
+        backgroundColor: "#0a0a0a",
+        overflow: "hidden",
       }}
     >
-      {/* Video background — dark fluid smoke. Muted + playsInline so it
-       * plays everywhere, including iOS. objectFit: cover to fill the
-       * viewport without letterboxing. zIndex 0 pins it behind the dim
-       * overlay and all foreground content. */}
+      {/* Video background */}
       <video
         autoPlay
         muted
@@ -44,178 +47,201 @@ export function HeroSection() {
         aria-hidden="true"
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
+          inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          opacity: 0.35,
           zIndex: 0,
         }}
       >
         <source src="/videos/hero-bg.mp4" type="video/mp4" />
       </video>
-      {/* Dim overlay so headline stays legible against whatever the video shows. */}
+      {/* Dark overlay */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(5,5,7,0.58)",
+          backgroundColor: "rgba(10,10,10,0.7)",
           zIndex: 1,
         }}
       />
-      {/* Dot-grid now sits above the overlay so it still reads as atmosphere. */}
-      <div
-        className="hero-dotgrid"
-        aria-hidden="true"
-        style={{ zIndex: 1 }}
-      />
 
-      {/* Top-right rotated location text */}
+      {/* Content — centered, anchored at ~45% from top */}
       <div
-        className="absolute top-24 right-6 md:right-10 select-none"
-        style={{ zIndex: 2 }}
-        aria-hidden="true"
-      >
-        <p
-          className="uppercase whitespace-nowrap"
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontWeight: 300,
-            fontSize: 11,
-            letterSpacing: "0.2em",
-            color: "color-mix(in srgb, var(--color-text-primary) 45%, transparent)",
-            writingMode: "vertical-rl",
-          }}
-        >
-          Hyderabad{" "}
-          <span style={{ color: "var(--color-accent-primary)" }}>·</span> India
-        </p>
-      </div>
-
-      {/* Bottom-left headline block — explicit pixel anchor per design spec. */}
-      <div
-        className="px-6 sm:px-10 md:px-0"
         style={{
           position: "absolute",
-          // On mobile keep a safer offset; desktop uses the exact 80px/60px anchor.
-          bottom: "clamp(40px, 8vw, 80px)",
-          left: 0,
-          right: 0,
+          top: "45%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100%",
+          maxWidth: 900,
+          padding: "0 24px",
+          textAlign: "center",
           zIndex: 2,
         }}
       >
-        <div
-          className="max-w-6xl mx-auto"
-          style={{ paddingLeft: "clamp(24px, 5vw, 60px)" }}
+        {/* Small badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: EASE }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 20,
+            padding: "6px 16px",
+            fontWeight: 400,
+            fontSize: 12,
+            letterSpacing: "0.05em",
+            color: "rgba(255,255,255,0.6)",
+            marginBottom: 32,
+          }}
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0, duration: 0.9, ease: EASE }}
-            className="font-syne"
-            style={{
-              fontWeight: 800,
-              fontSize: "clamp(72px, 10vw, 140px)",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.88,
-              color: "#f4f3ef",
-            }}
-          >
-            We Build
-          </motion.h1>
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.9, ease: EASE }}
-            className="font-syne"
-            style={{
-              fontWeight: 800,
-              fontSize: "clamp(72px, 10vw, 140px)",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.88,
-              color: "#f4f3ef",
-            }}
-          >
-            What{" "}
-            <span style={{ color: "#e8ff47" }}>Moves.</span>
-          </motion.h1>
+          <span style={{ color: "#e8ff47", marginRight: 8 }}>✦</span>
+          Web Design · Development · AI Automation
+        </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.9, ease: EASE }}
-            className="font-sans mt-8"
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
+          style={{
+            fontWeight: 700,
+            fontSize: "clamp(52px, 7vw, 96px)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.05,
+            color: "#ffffff",
+            margin: 0,
+          }}
+        >
+          We build digital
+          <br />
+          experiences that{" "}
+          <span style={{ color: "#e8ff47" }}>move.</span>
+        </motion.h1>
+
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.35 }}
+          style={{
+            fontWeight: 400,
+            fontSize: 18,
+            lineHeight: 1.7,
+            color: "rgba(255,255,255,0.55)",
+            maxWidth: 560,
+            margin: "24px auto 0",
+          }}
+        >
+          A Hyderabad studio building websites, marketing systems, and AI
+          automation for businesses that want to grow.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.5 }}
+          style={{
+            marginTop: 40,
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 16,
+            justifyContent: "center",
+          }}
+        >
+          <Link
+            href="/work"
             style={{
-              fontWeight: 300,
-              fontSize: 18,
-              color:
-                "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
+              display: "inline-flex",
+              alignItems: "center",
+              backgroundColor: "#e8ff47",
+              color: "#0a0a0a",
+              padding: "14px 28px",
+              borderRadius: 6,
+              fontWeight: 600,
+              fontSize: 15,
+              textDecoration: "none",
+              transition: "background-color 200ms ease",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = "#ffffff")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = "#e8ff47")
+            }
+          >
+            See Our Work
+          </Link>
+          <Link
+            href="/contact"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              backgroundColor: "transparent",
+              border: "1px solid rgba(255,255,255,0.25)",
+              color: "#ffffff",
+              padding: "14px 28px",
+              borderRadius: 6,
+              fontWeight: 500,
+              fontSize: 15,
+              textDecoration: "none",
+              transition: "border-color 200ms ease, color 200ms ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "#e8ff47";
+              e.currentTarget.style.color = "#e8ff47";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+              e.currentTarget.style.color = "#ffffff";
             }}
           >
-            Marketing{" "}
-            <span style={{ color: "var(--color-accent-primary)" }}>·</span> Web{" "}
-            <span style={{ color: "var(--color-accent-primary)" }}>·</span> AI
-            Automation
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.9, ease: EASE }}
-            className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6"
-          >
-            <Link
-              href="/work"
-              className="font-sans group inline-flex items-center self-start py-2 text-base"
-              data-cursor="hover"
-              style={{
-                color: "var(--color-text-primary)",
-                borderBottom: "2px solid var(--color-accent-primary)",
-              }}
-            >
-              <span>See Our Work</span>
-              <span
-                aria-hidden="true"
-                className="ml-2 transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </Link>
-            <Link
-              href="/contact"
-              className="font-syne inline-flex items-center self-start text-base transition-colors hover:bg-[color:var(--color-bg-white)]"
-              data-cursor="hover"
-              style={{
-                fontWeight: 600,
-                background: "var(--color-accent-primary)",
-                color: "var(--color-bg-dark)",
-                padding: "16px 36px",
-              }}
-            >
-              Start a Project
-            </Link>
-          </motion.div>
-        </div>
+            Start a Project →
+          </Link>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator — bottom-center, bouncing arrow */}
+      {/* Scroll indicator */}
       <div
         aria-hidden="true"
         className="hero-scroll-indicator"
         style={{
           position: "absolute",
-          bottom: "32px",
+          bottom: 40,
           left: "50%",
           transform: "translateX(-50%)",
-          color: "rgba(244,243,239,0.55)",
-          fontSize: "22px",
-          lineHeight: 1,
-          pointerEvents: "none",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 10,
           zIndex: 2,
+          pointerEvents: "none",
         }}
       >
-        ↓
+        <span
+          style={{
+            fontWeight: 300,
+            fontSize: 11,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.4)",
+          }}
+        >
+          scroll
+        </span>
+        <span
+          style={{
+            width: 1,
+            height: 32,
+            backgroundColor: "rgba(255,255,255,0.25)",
+          }}
+        />
       </div>
     </section>
   );

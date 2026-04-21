@@ -1,52 +1,48 @@
 /**
- * TestimonialSection — dark bg.
- *
- * Defensive rewrite: motion wrappers removed (they were producing
- * invisible render on live because whileInView wasn't firing in some
- * viewports). Content is now always visible. Hex colors inline so we
- * don't depend on @theme variable resolution.
+ * TestimonialSection — clean 5-star centered testimonial.
  */
-
 export function TestimonialSection() {
   return (
     <section
-      data-theme="dark"
       aria-label="Testimonial"
-      className="relative px-6 overflow-hidden"
       style={{
-        backgroundColor: "#050507",
-        color: "#f4f3ef",
-        paddingTop: "clamp(96px, 14vw, 160px)",
-        paddingBottom: "clamp(96px, 14vw, 160px)",
+        backgroundColor: "#111111",
+        padding: "100px 48px",
       }}
     >
-      <span
-        aria-hidden="true"
-        className="absolute select-none pointer-events-none leading-none font-syne"
+      <div
         style={{
-          top: 40,
-          left: 60,
-          fontFamily: "var(--font-syne, sans-serif)",
-          fontWeight: 800,
-          fontSize: "clamp(100px, 18vw, 200px)",
-          color: "#e8ff47",
-          opacity: 0.15,
+          maxWidth: 800,
+          margin: "0 auto",
+          textAlign: "center",
         }}
       >
-        &ldquo;
-      </span>
+        <p
+          aria-label="5 out of 5 stars"
+          style={{
+            color: "#e8ff47",
+            fontSize: 18,
+            letterSpacing: "0.3em",
+            margin: 0,
+          }}
+        >
+          ★★★★★
+        </p>
 
-      <div className="relative mx-auto" style={{ maxWidth: 680 }}>
-        <blockquote>
+        <blockquote
+          style={{
+            margin: "24px 0",
+            padding: 0,
+          }}
+        >
           <p
-            className="italic"
             style={{
-              fontFamily: "var(--font-sans, sans-serif)",
-              fontWeight: 300,
-              fontSize: 26,
+              fontWeight: 400,
+              fontStyle: "italic",
+              fontSize: 22,
               lineHeight: 1.75,
-              textAlign: "center",
-              color: "rgba(244,243,239,0.85)",
+              color: "rgba(255,255,255,0.85)",
+              margin: 0,
             }}
           >
             Hisaku understood our business from day one. They didn&apos;t just
@@ -54,21 +50,16 @@ export function TestimonialSection() {
             find us.
           </p>
         </blockquote>
+
         <p
           style={{
-            fontFamily: "var(--font-sans, sans-serif)",
-            fontWeight: 400,
+            fontWeight: 500,
             fontSize: 14,
-            marginTop: 32,
-            textAlign: "right",
-            color: "rgba(244,243,239,0.45)",
+            color: "rgba(255,255,255,0.4)",
+            margin: 0,
           }}
         >
-          — Owner, Hello2India{" "}
-          <span aria-hidden="true" style={{ color: "#e8ff47" }}>
-            ·
-          </span>{" "}
-          Herndon, Virginia
+          — Owner, Hello2India · Herndon, Virginia
         </p>
       </div>
     </section>

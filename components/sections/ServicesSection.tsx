@@ -1,157 +1,186 @@
 "use client";
 
 import Link from "next/link";
-import { LineReveal } from "@/components/ui/LineReveal";
-import { FadeIn } from "@/components/ui/FadeIn";
+import { useState } from "react";
 
 /**
- * ServicesSection — dark bg, four rows separated by a line that draws
- * left-to-right on scroll. CSS-only hover reveal (tagline fade + arrow
- * + row bg swap to #0d0d12).
+ * ServicesSection — 2x2 card grid.
+ *
+ *   What We Do                                 4 services
+ *
+ *   ┌──────────────────────┬──────────────────────┐
+ *   │ 01                   │ 02                   │
+ *   │ Web Design           │ Development          │
+ *   │ Beautiful, precise…  │ Fast, scalable…      │
+ *   │                    → │                    → │
+ *   ├──────────────────────┼──────────────────────┤
+ *   │ 03                   │ 04                   │
+ *   │ Marketing & SEO      │ AI Automation        │
+ *   │ ...                  │ ...                  │
+ *   └──────────────────────┴──────────────────────┘
  */
 
 const SERVICES = [
   {
-    slug: "design",
     number: "01",
+    slug: "design",
     name: "Web Design",
-    tagline: "Beautiful. Precise. Memorable.",
+    description:
+      "Beautiful, precise websites that convert visitors into clients.",
   },
   {
-    slug: "development",
     number: "02",
+    slug: "development",
     name: "Development",
-    tagline: "Fast. Scalable. Yours.",
+    description:
+      "Fast, scalable builds on Next.js. Yours to own completely.",
   },
   {
-    slug: "digital-marketing",
     number: "03",
-    name: "Marketing",
-    tagline: "Found. Clicked. Converted.",
+    slug: "digital-marketing",
+    name: "Marketing & SEO",
+    description:
+      "Found by the right people at exactly the right moment.",
   },
   {
-    slug: "ai-marketing",
     number: "04",
+    slug: "ai-marketing",
     name: "AI Automation",
-    tagline: "Automated. Intelligent. Unstoppable.",
+    description:
+      "Manual tasks automated. WhatsApp, workflows, reporting.",
   },
 ] as const;
 
 export function ServicesSection() {
   return (
     <section
-      data-theme="dark"
       aria-label="What we do"
-      className="py-24 md:py-32"
-      style={{ background: "var(--color-bg-dark)" }}
+      style={{
+        backgroundColor: "#111111",
+        padding: "120px 48px",
+      }}
     >
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeIn>
-          <p
-            className="uppercase mb-14"
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        {/* Header row */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            gap: 24,
+            flexWrap: "wrap",
+            marginBottom: 48,
+          }}
+        >
+          <h2
             style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: 11,
-              letterSpacing: "0.2em",
-              color:
-                "color-mix(in srgb, var(--color-text-primary) 30%, transparent)",
+              fontWeight: 700,
+              fontSize: "clamp(32px, 4vw, 40px)",
+              color: "#ffffff",
+              margin: 0,
+              letterSpacing: "-0.02em",
             }}
           >
             What We Do
+          </h2>
+          <p
+            style={{
+              fontWeight: 400,
+              fontSize: 14,
+              color: "rgba(255,255,255,0.5)",
+              margin: 0,
+            }}
+          >
+            4 services
           </p>
-        </FadeIn>
+        </div>
 
-        <ul className="flex flex-col">
-          {SERVICES.map((service, i) => (
-            <li key={service.slug}>
-              {/* Line draws left-to-right on scroll, staggered 80ms per row
-                  so the whole list unfurls as you enter the section. */}
-              <LineReveal
-                className={`h-px ${i === 0 ? "bg-[rgba(255,255,255,0.06)]" : "bg-[color:var(--color-accent-primary)]"}`}
-                duration={0.8}
-                delay={i * 0.08}
-              />
-              <Link
-                href={`/services/${service.slug}`}
-                data-cursor="hover"
-                className="group grid grid-cols-[48px_1fr_auto] items-center gap-4 md:gap-8 py-7 md:py-8 px-0 md:px-6 transition-colors duration-300 ease-out hover:bg-[color:var(--color-bg-mid)] cursor-pointer"
-              >
-                <span
-                  className="tabular-nums"
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 300,
-                    fontSize: 13,
-                    color:
-                      "color-mix(in srgb, var(--color-text-primary) 25%, transparent)",
-                  }}
-                >
-                  {service.number}
-                </span>
-
-                <span
-                  className="font-syne transition-colors group-hover:text-[color:var(--color-accent-primary)]"
-                  style={{
-                    fontWeight: 700,
-                    fontSize: "clamp(40px, 6vw, 80px)",
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1.0,
-                    color: "var(--color-text-primary)",
-                  }}
-                >
-                  {service.name}
-                </span>
-
-                <span className="flex items-center gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="hidden md:inline opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontWeight: 300,
-                      fontSize: 16,
-                      color:
-                        "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
-                    }}
-                  >
-                    {service.tagline}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-2xl"
-                    style={{ color: "var(--color-accent-primary)" }}
-                  >
-                    →
-                  </span>
-                </span>
-              </Link>
-
-              {/* Mobile tagline */}
-              <p
-                className="md:hidden pb-6 pl-12"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontWeight: 300,
-                  fontSize: 13,
-                  color:
-                    "color-mix(in srgb, var(--color-text-primary) 50%, transparent)",
-                }}
-              >
-                {service.tagline}
-              </p>
-            </li>
+        {/* 2x2 grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: 24,
+          }}
+        >
+          {SERVICES.map((s) => (
+            <ServiceCard key={s.slug} service={s} />
           ))}
-          {/* Closing hairline — staggered after the last row. */}
-          <li>
-            <LineReveal
-              className="h-px bg-[rgba(255,255,255,0.06)]"
-              duration={0.8}
-              delay={SERVICES.length * 0.08}
-            />
-          </li>
-        </ul>
+        </div>
       </div>
     </section>
+  );
+}
+
+function ServiceCard({
+  service,
+}: {
+  service: (typeof SERVICES)[number];
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <Link
+      href={`/services/${service.slug}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: "block",
+        backgroundColor: "#0a0a0a",
+        border: `1px solid ${hover ? "#e8ff47" : "rgba(255,255,255,0.06)"}`,
+        borderRadius: 12,
+        padding: 32,
+        textDecoration: "none",
+        transition: "all 300ms ease",
+        transform: hover ? "translateY(-4px)" : "translateY(0)",
+      }}
+    >
+      <p
+        style={{
+          fontWeight: 300,
+          fontSize: 13,
+          color: "#e8ff47",
+          margin: 0,
+          letterSpacing: "0.02em",
+        }}
+      >
+        {service.number}
+      </p>
+
+      <h3
+        style={{
+          fontWeight: 700,
+          fontSize: 22,
+          color: "#ffffff",
+          margin: "12px 0 8px",
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {service.name}
+      </h3>
+
+      <p
+        style={{
+          fontWeight: 400,
+          fontSize: 14,
+          color: "rgba(255,255,255,0.5)",
+          lineHeight: 1.6,
+          margin: 0,
+          minHeight: 44,
+        }}
+      >
+        {service.description}
+      </p>
+
+      <p
+        style={{
+          margin: "24px 0 0",
+          fontSize: 20,
+          color: hover ? "#e8ff47" : "rgba(255,255,255,0.4)",
+          transition: "color 200ms ease",
+        }}
+      >
+        →
+      </p>
+    </Link>
   );
 }

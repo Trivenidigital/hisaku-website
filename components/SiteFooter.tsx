@@ -1,123 +1,231 @@
+"use client";
+
 import Link from "next/link";
 
 /**
- * Site footer. Server-rendered.
+ * SiteFooter — 4 columns on desktop.
  *
- * Contains brand, minimal link columns, thesis tagline ("The work is the pitch.")
- * and contact/socials. Kept editorial and minimal — this is an agency site,
- * not a product dashboard.
+ *   ┌──────────────┬──────────┬──────────────┬──────────┐
+ *   │ HISAKU       │ EXPLORE  │ CAPABILITIES │ CONNECT  │
+ *   │ tagline      │ Work     │ Web Design   │ LinkedIn │
+ *   │ location +   │ Capab.   │ Development  │ Twitter  │
+ *   │ email        │ About    │ Marketing    │ WhatsApp │
+ *   │              │ Contact  │ AI Auto.     │          │
+ *   ├──────────────┴──────────┴──────────────┴──────────┤
+ *   │ © 2026 …                            Hyderabad · IN │
+ *   └──────────────────────────────────────────────────────┘
  */
+
+const linkStyle: React.CSSProperties = {
+  fontWeight: 300,
+  fontSize: 14,
+  color: "#ffffff",
+  textDecoration: "none",
+  display: "inline-block",
+  lineHeight: 2,
+  transition: "color 200ms ease",
+};
+
+const labelStyle: React.CSSProperties = {
+  fontWeight: 400,
+  fontSize: 11,
+  textTransform: "uppercase",
+  letterSpacing: "0.15em",
+  color: "rgba(255,255,255,0.4)",
+  margin: "0 0 16px",
+};
+
+function FooterLink({
+  href,
+  children,
+  external,
+}: {
+  href: string;
+  children: React.ReactNode;
+  external?: boolean;
+}) {
+  const handlers = {
+    onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) =>
+      (e.currentTarget.style.color = "#e8ff47"),
+    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) =>
+      (e.currentTarget.style.color = "#ffffff"),
+  };
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={linkStyle}
+        {...handlers}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} style={linkStyle} {...handlers}>
+      {children}
+    </Link>
+  );
+}
+
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-24 border-t border-[color:var(--color-hairline)]">
-      <div className="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-[1fr_auto_auto_auto]">
-        <div className="flex flex-col gap-3">
-          <Link href="/" aria-label="Hisaku home" className="inline-flex items-center">
-            <span
+    <footer
+      style={{
+        backgroundColor: "#0a0a0a",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        padding: "64px 48px 40px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+        }}
+      >
+        {/* 4-column top grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(240px, 2fr) repeat(3, 1fr)",
+            gap: 40,
+          }}
+          className="footer-top"
+        >
+          {/* Brand */}
+          <div>
+            <Link
+              href="/"
+              aria-label="Hisaku home"
               style={{
-                fontFamily: "var(--font-syne, sans-serif)",
-                fontWeight: 800,
-                fontSize: "18px",
-                color: "#f4f3ef",
-                letterSpacing: "-0.02em",
+                fontWeight: 700,
+                fontSize: 24,
+                color: "#ffffff",
+                letterSpacing: "0.05em",
+                textDecoration: "none",
+                display: "inline-block",
               }}
             >
               HISAKU
-            </span>
-          </Link>
+            </Link>
+            <p
+              style={{
+                margin: "16px 0 0",
+                fontWeight: 300,
+                fontSize: 14,
+                color: "rgba(255,255,255,0.5)",
+                maxWidth: 320,
+                lineHeight: 1.7,
+              }}
+            >
+              The work is the pitch. Based in Hyderabad, working with startups
+              and growing businesses.
+            </p>
+            <a
+              href="mailto:hello@hisaku.com"
+              style={{
+                display: "inline-block",
+                marginTop: 20,
+                fontWeight: 400,
+                fontSize: 13,
+                color: "rgba(255,255,255,0.7)",
+                textDecoration: "none",
+                letterSpacing: "0.02em",
+              }}
+            >
+              Hyderabad, India · hello@hisaku.com
+            </a>
+          </div>
+
+          {/* Explore */}
+          <nav aria-label="Explore">
+            <h2 style={labelStyle}>Explore</h2>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+              <li><FooterLink href="/work">Work</FooterLink></li>
+              <li><FooterLink href="/capabilities">Capabilities</FooterLink></li>
+              <li><FooterLink href="/about">About</FooterLink></li>
+              <li><FooterLink href="/contact">Contact</FooterLink></li>
+            </ul>
+          </nav>
+
+          {/* Capabilities */}
+          <nav aria-label="Capabilities">
+            <h2 style={labelStyle}>Capabilities</h2>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+              <li><FooterLink href="/services/design">Web Design</FooterLink></li>
+              <li><FooterLink href="/services/development">Development</FooterLink></li>
+              <li><FooterLink href="/services/digital-marketing">Marketing &amp; SEO</FooterLink></li>
+              <li><FooterLink href="/services/ai-marketing">AI Automation</FooterLink></li>
+            </ul>
+          </nav>
+
+          {/* Connect */}
+          <nav aria-label="Connect">
+            <h2 style={labelStyle}>Connect</h2>
+            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+              <li>
+                <FooterLink href="https://linkedin.com/" external>
+                  LinkedIn
+                </FooterLink>
+              </li>
+              <li>
+                <FooterLink href="https://twitter.com/" external>
+                  Twitter / X
+                </FooterLink>
+              </li>
+              <li>
+                <FooterLink
+                  href={
+                    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER
+                      ? `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.replace(/[^0-9]/g, "")}`
+                      : "mailto:hello@hisaku.com"
+                  }
+                  external
+                >
+                  WhatsApp
+                </FooterLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        {/* Bottom row */}
+        <div
+          style={{
+            marginTop: 48,
+            paddingTop: 32,
+            borderTop: "1px solid rgba(255,255,255,0.06)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 16,
+          }}
+        >
           <p
-            className="text-sm max-w-xs"
-            style={{ color: "var(--color-text-secondary)" }}
+            style={{
+              margin: 0,
+              fontWeight: 300,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.4)",
+            }}
           >
-            The work is the pitch. Based in Hyderabad, India. Working with
-            startups and growing companies worldwide.
+            © {year} Hisaku. All rights reserved.
+          </p>
+          <p
+            style={{
+              margin: 0,
+              fontWeight: 300,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.4)",
+            }}
+          >
+            Hyderabad · India
           </p>
         </div>
-
-        <nav aria-label="Sitemap" className="text-sm">
-          <h2
-            className="text-xs uppercase tracking-widest mb-3"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
-            Explore
-          </h2>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/work" className="hover:text-[color:var(--color-accent-primary)] transition-colors">Work</Link>
-            </li>
-            <li>
-              <Link href="/services/design" className="hover:text-[color:var(--color-accent-primary)] transition-colors">Capabilities</Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-[color:var(--color-accent-primary)] transition-colors">About</Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-[color:var(--color-accent-primary)] transition-colors">Start a project</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <div className="text-sm">
-          <h2
-            className="text-xs uppercase tracking-widest mb-3"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
-            Contact
-          </h2>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="mailto:hello@hisaku.com"
-                className="hover:text-[color:var(--color-accent-primary)] transition-colors"
-              >
-                hello@hisaku.com
-              </a>
-            </li>
-            <li style={{ color: "var(--color-text-secondary)" }}>
-              Hyderabad, IN
-            </li>
-          </ul>
-        </div>
-
-        <div className="text-sm">
-          <h2
-            className="text-xs uppercase tracking-widest mb-3"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
-            Social
-          </h2>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[color:var(--color-accent-primary)] transition-colors"
-              >
-                LinkedIn
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://twitter.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[color:var(--color-accent-primary)] transition-colors"
-              >
-                Twitter / X
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="max-w-6xl mx-auto px-6 pb-8">
-        <p
-          className="text-xs"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          © {year} Hisaku. All rights reserved.
-        </p>
       </div>
     </footer>
   );

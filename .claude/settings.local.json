@@ -11,7 +11,8 @@
       "Bash(npm test *)",
       "Bash(npm run *)",
       "Bash(rm content/case-studies/example-project.mdx public/work/example-project/hero.svg)",
-      "Bash(rmdir public/work/example-project)"
+      "Bash(rmdir public/work/example-project)",
+      "Bash(xargs -I{} grep -L \"use client\" {})"
     ]
   }
 }

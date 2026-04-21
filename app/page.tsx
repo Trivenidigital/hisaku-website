@@ -1,42 +1,38 @@
 import { getCaseStudies } from "@/lib/content/case-studies";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { MarqueeSection } from "@/components/sections/MarqueeSection";
+import { TrustStrip } from "@/components/sections/TrustStrip";
 import { WorkSection } from "@/components/sections/WorkSection";
-import { ThatIsHisakuSection } from "@/components/sections/ThatIsHisakuSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
-import { StudioStatement } from "@/components/sections/StudioStatement";
+import { AboutStrip } from "@/components/sections/AboutStrip";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
 import { CtaSection } from "@/components/sections/CtaSection";
 
 /**
- * Home page — terminal-industries-inspired rebuild.
+ * Home page — premium agency redesign.
  *
- * Background rhythm (the life of the page):
- *   1. Hero           — dark   (dot grid + grain)
- *   2. Marquee        — dark   (seamless continuation)
- *   3. Selected Work  — WHITE  (stark flip; video placeholders)
- *   4. That's Hisaku  — TEAL   (identity moment, scramble text)
- *   5. Services       — dark   (line-draw rows)
- *   6. Studio         — WHITE  (second contrast flip)
- *   7. Testimonial    — dark
- *   8. CTA            — TEAL   (bookends identity)
+ * Section flow (no marquee, no "That's Hisaku" identity moment):
+ *   1. Hero        — centered, video bg, badge + 2 CTAs
+ *   2. TrustStrip  — thin band under hero
+ *   3. Work        — 3-column card grid
+ *   4. Services    — 2x2 card grid
+ *   5. AboutStrip  — 2-col about + 3 stats
+ *   6. Testimonial — 5-star centered
+ *   7. CTA         — gradient bordered card
  *
- * Each section declares its theme via data-theme, which flips the
- * --color-text-* variables so children don't need per-section styles.
+ * Navbar and SiteFooter come from the root layout.
  */
 export default function HomePage() {
   const caseStudies = getCaseStudies();
 
   return (
-    <main id="main" className="flex-1">
+    <main id="main" style={{ backgroundColor: "#0a0a0a" }}>
       <HeroSection />
-      <MarqueeSection />
+      <TrustStrip />
       {caseStudies.length > 0 ? (
-        <WorkSection caseStudies={caseStudies.slice(0, 3)} />
+        <WorkSection caseStudies={caseStudies} />
       ) : null}
-      <ThatIsHisakuSection />
       <ServicesSection />
-      <StudioStatement />
+      <AboutStrip />
       <TestimonialSection />
       <CtaSection />
     </main>
