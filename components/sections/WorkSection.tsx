@@ -1,16 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import type { CaseStudy } from "@/lib/content/case-studies";
 
 /**
- * WorkSection — 3-column card grid with staggered reveal.
+ * WorkSection — 3-column card grid.
  *
- * Container uses staggerChildren so each card slides/fades in one
- * after the other as they enter the viewport. Hover lifts the card
- * 6px and adds a soft shadow.
+ * Cards are static in the DOM — no framer-motion opacity/y initial
+ * state. All motion is CSS: hover lift, hover shadow, conic-glow
+ * border on hover. Content is visible the moment it paints, no
+ * whileInView trigger dependency.
  */
 
 interface WorkSectionProps {
@@ -44,22 +44,6 @@ const CARD_DATA: Record<
   },
 };
 
-const container = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
-const cardVariant = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
-
 export function WorkSection({ caseStudies }: WorkSectionProps) {
   return (
     <section
@@ -77,18 +61,13 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
             letterSpacing: "0.1em",
             textTransform: "uppercase",
             color: "#e8ff47",
-            marginBottom: 64,
             margin: "0 0 64px",
           }}
         >
           Selected Work
         </p>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+        <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
@@ -98,7 +77,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
           {caseStudies.slice(0, 3).map((cs) => (
             <WorkCard key={cs.frontmatter.slug} caseStudy={cs} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -112,132 +91,131 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
   const primary = fm.results[0];
 
   return (
-    <motion.div variants={cardVariant} className="conic-glow" style={{ borderRadius: 12 }}>
-      <Link
-        href={`/work/${fm.slug}`}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+    <Link
+      href={`/work/${fm.slug}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      className="conic-glow"
+      style={{
+        display: "block",
+        backgroundColor: "#111111",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 12,
+        overflow: "hidden",
+        textDecoration: "none",
+        transition: "all 300ms ease",
+        transform: hover ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
+        position: "relative",
+      }}
+    >
+      {/* Video thumbnail */}
+      <div
         style={{
-          display: "block",
-          backgroundColor: "#111111",
-          border: "1px solid rgba(255,255,255,0.06)",
-          borderRadius: 12,
+          height: 240,
           overflow: "hidden",
-          textDecoration: "none",
-          transition: "all 300ms ease",
-          transform: hover ? "translateY(-6px)" : "translateY(0)",
-          boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
           position: "relative",
+          backgroundColor: "#0a0a0a",
         }}
       >
-        {/* Video thumbnail */}
-        <div
+        {video ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+          >
+            <source src={video} type="video/mp4" />
+          </video>
+        ) : null}
+      </div>
+
+      {/* Card body */}
+      <div style={{ padding: 24 }}>
+        <p
           style={{
-            height: 240,
-            overflow: "hidden",
-            position: "relative",
-            backgroundColor: "#0a0a0a",
+            fontWeight: 400,
+            fontSize: 11,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "#e8ff47",
+            margin: 0,
           }}
         >
-          {video ? (
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              aria-hidden="true"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-            >
-              <source src={video} type="video/mp4" />
-            </video>
-          ) : null}
-        </div>
+          {meta?.category ?? "Project"}
+        </p>
 
-        {/* Card body */}
-        <div style={{ padding: 24 }}>
+        <h3
+          style={{
+            fontWeight: 700,
+            fontSize: 24,
+            color: "#ffffff",
+            margin: "8px 0 12px",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {fm.title.split(" — ")[0]}
+        </h3>
+
+        {primary ? (
           <p
-            style={{
-              fontWeight: 400,
-              fontSize: 11,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "#e8ff47",
-              margin: 0,
-            }}
-          >
-            {meta?.category ?? "Project"}
-          </p>
-
-          <h3
             style={{
               fontWeight: 700,
-              fontSize: 24,
-              color: "#ffffff",
-              margin: "8px 0 12px",
-              letterSpacing: "-0.01em",
+              fontSize: 36,
+              color: "#e8ff47",
+              margin: "0 0 12px",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
             }}
           >
-            {fm.title.split(" — ")[0]}
-          </h3>
-
-          {primary ? (
-            <p
+            {primary.metric}
+            <span
               style={{
-                fontWeight: 700,
-                fontSize: 36,
-                color: "#e8ff47",
-                margin: "0 0 12px",
-                letterSpacing: "-0.02em",
-                lineHeight: 1,
+                fontSize: 11,
+                fontWeight: 400,
+                color: "rgba(255,255,255,0.4)",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginLeft: 12,
+                verticalAlign: "middle",
               }}
             >
-              {primary.metric}
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.4)",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  marginLeft: 12,
-                  verticalAlign: "middle",
-                }}
-              >
-                {primary.label}
-              </span>
-            </p>
-          ) : null}
-
-          <p
-            style={{
-              fontWeight: 400,
-              fontSize: 14,
-              color: "rgba(255,255,255,0.55)",
-              lineHeight: 1.6,
-              margin: 0,
-            }}
-          >
-            {meta?.description ?? fm.client}
+              {primary.label}
+            </span>
           </p>
+        ) : null}
 
-          <p
-            style={{
-              margin: "16px 0 0",
-              fontWeight: 500,
-              fontSize: 13,
-              color: hover ? "#e8ff47" : "rgba(255,255,255,0.4)",
-              transition: "color 200ms ease",
-            }}
-          >
-            View Case Study →
-          </p>
-        </div>
-      </Link>
-    </motion.div>
+        <p
+          style={{
+            fontWeight: 400,
+            fontSize: 14,
+            color: "rgba(255,255,255,0.55)",
+            lineHeight: 1.6,
+            margin: 0,
+          }}
+        >
+          {meta?.description ?? fm.client}
+        </p>
+
+        <p
+          style={{
+            margin: "16px 0 0",
+            fontWeight: 500,
+            fontSize: 13,
+            color: hover ? "#e8ff47" : "rgba(255,255,255,0.4)",
+            transition: "color 200ms ease",
+          }}
+        >
+          View Case Study →
+        </p>
+      </div>
+    </Link>
   );
 }

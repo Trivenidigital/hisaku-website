@@ -1,11 +1,9 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { SpringCounter } from "@/components/ui/SpringCounter";
 
 /**
- * AboutStrip — 2-column about + stats row with fadeUp on scroll.
- * Stats use SpringCounter so 0 → target has spring physics (bouncy).
+ * AboutStrip — 2-col about + 3 stats. Static layout.
+ * The stats use SpringCounter which has its own safety timer so the
+ * final value always renders even if the viewport trigger never fires.
  */
 
 const STATS: { value: number; label: string }[] = [
@@ -14,26 +12,13 @@ const STATS: { value: number; label: string }[] = [
   { value: 0, label: "missed deadlines" },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
-
 export function AboutStrip() {
   return (
     <section
       aria-label="About"
       style={{ backgroundColor: "#0a0a0a", padding: "120px 48px" }}
     >
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
+      <div
         style={{
           maxWidth: 1200,
           margin: "0 auto",
@@ -123,7 +108,7 @@ export function AboutStrip() {
             ))}
           </dl>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,20 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
 
 /**
- * CtaSection — gradient card with "Ready to build / something great?"
- * where "something great?" is lime. fadeUp on scroll.
+ * CtaSection — gradient card. Static render (no motion wrapper).
+ * Button keeps the shimmer-btn class and hover scale.
  */
 export function CtaSection() {
   return (
@@ -22,11 +12,7 @@ export function CtaSection() {
       aria-label="Call to action"
       style={{ backgroundColor: "#0a0a0a", padding: "0 48px 120px" }}
     >
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
+      <div
         style={{
           maxWidth: 1200,
           margin: "0 auto",
@@ -88,7 +74,7 @@ export function CtaSection() {
         >
           Start a Project →
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 }
