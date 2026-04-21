@@ -5,157 +5,275 @@ import { buildMetadata } from "@/lib/metadata";
 export const metadata: Metadata = buildMetadata({
   title: "About",
   description:
-    "Hisaku is a small digital agency. We design, build, and grow digital products for startups and growing companies. Based in Hyderabad, working worldwide.",
+    "A 2-person studio based in Hyderabad. We design, build, and grow digital products for startups and growing companies across 3 countries.",
   canonicalPath: "/about",
 });
 
 /**
- * About page. Founder-driven narrative.
+ * About page — 4-section layout.
  *
- * Kept intentionally text-forward and personal. No team photo grid, no
- * "our values" icons — those are agency-site clichés. The page tells you
- * who we are, what we believe, and why we're worth talking to.
+ *   1. Hero (60vh, dark, centered): "We Build What Moves."
+ *   2. Big statement (white): founder thesis
+ *   3. Values as 3 large rows (dark): craft / outcomes / simplicity
+ *   4. Location strip (white): Hyderabad + 3 countries
+ *   5. CTA (teal): Ready to move?
  */
+
+const VALUES = [
+  {
+    number: "01",
+    title: "Craft over speed",
+    body: "We'd rather ship one thing that's tight than five things that are sloppy. Speed matters, but not at the expense of what we'd put our name on.",
+  },
+  {
+    number: "02",
+    title: "Outcomes over outputs",
+    body: "Deliverables aren't the point. The point is your revenue going up, your customers booking faster, your team stopping manual work. We design backwards from that.",
+  },
+  {
+    number: "03",
+    title: "Simple over clever",
+    body: "If it takes a 40-minute explainer to understand, it's wrong. The work we're proud of is the work you can point at and immediately understand why it's there.",
+  },
+];
+
 export default function AboutPage() {
   return (
-    <main id="main" className="flex-1">
+    <main id="main" style={{ backgroundColor: "#050507" }}>
+      {/* Section 1 — Hero */}
       <section
-        aria-label="About intro"
-        className="max-w-4xl mx-auto px-6 pt-20 md:pt-28 pb-12"
+        data-theme="dark"
+        style={{
+          backgroundColor: "#050507",
+          minHeight: "60vh",
+          paddingTop: 160,
+          paddingBottom: 80,
+          paddingLeft: 60,
+          paddingRight: 60,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}
       >
         <p
-          className="text-xs uppercase tracking-[0.3em] mb-6"
-          style={{ color: "var(--color-accent-primary)" }}
+          style={{
+            fontFamily: "var(--font-sans, sans-serif)",
+            fontWeight: 300,
+            fontSize: 11,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "#e8ff47",
+            marginBottom: 24,
+          }}
         >
-          About
+          About Hisaku
         </p>
         <h1
-          className="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight"
-          style={{ fontFamily: "var(--font-display)" }}
+          style={{
+            fontFamily: "var(--font-syne, sans-serif)",
+            fontWeight: 800,
+            fontSize: "clamp(64px, 9vw, 120px)",
+            letterSpacing: "-0.04em",
+            lineHeight: 0.9,
+            color: "#f4f3ef",
+          }}
         >
-          A small team
-          <br />
-          that ships like
-          <br />
-          a big one.
+          We Build What Moves.
         </h1>
       </section>
 
+      {/* Section 2 — Big statement (white) */}
       <section
-        aria-label="Narrative"
-        className="max-w-3xl mx-auto px-6 py-8 md:py-12 flex flex-col gap-6"
+        data-theme="light"
+        style={{
+          backgroundColor: "#f4f3ef",
+          color: "#050507",
+          padding: "160px 60px",
+        }}
       >
-        <p
-          className="text-lg md:text-xl leading-relaxed"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          Hisaku is a digital agency based in Hyderabad. We take on design,
-          development, and marketing end-to-end for startups and growing
-          companies. One team, one decision-maker, one invoice.
-        </p>
-        <p
-          className="text-lg md:text-xl leading-relaxed"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          We started because the old agency model is broken for modern
-          businesses. Handoffs between separate design, dev, and marketing
-          vendors cost weeks. Retainers full of dashboards nobody reads cost
-          money. You just want the thing built well, launched, and growing.
-          That&apos;s what we do.
-        </p>
-        <p
-          className="text-lg md:text-xl leading-relaxed"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          Every client we&apos;ve worked with has come through a referral.
-          We&apos;re happy about that and also suspicious of it, which is
-          why this site exists: to make it easy for new people to see what
-          we&apos;ve done and decide for themselves.
-        </p>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-syne, sans-serif)",
+              fontWeight: 800,
+              fontSize: "clamp(36px, 5vw, 60px)",
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              color: "#050507",
+            }}
+          >
+            We are a 2-person studio that builds digital products, websites,
+            and AI systems for businesses that want to grow.
+          </h2>
+        </div>
       </section>
 
-      {/* How we work — 3 principles, editorial, not cards */}
+      {/* Section 3 — Values as 3 large rows (dark) */}
       <section
-        aria-label="How we work"
-        className="max-w-4xl mx-auto px-6 py-16 md:py-20 border-t border-[color:var(--color-hairline)] mt-16"
+        data-theme="dark"
+        style={{
+          backgroundColor: "#050507",
+          color: "#f4f3ef",
+          padding: "120px 0",
+        }}
       >
-        <h2
-          className="text-xs uppercase tracking-[0.3em] mb-10"
-          style={{ color: "var(--color-text-secondary)" }}
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 60px" }}>
+          <p
+            style={{
+              fontFamily: "var(--font-sans, sans-serif)",
+              fontWeight: 300,
+              fontSize: 11,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "rgba(244,243,239,0.3)",
+              marginBottom: 56,
+            }}
+          >
+            How We Work
+          </p>
+        </div>
+        <ul
+          style={{
+            listStyle: "none",
+            margin: 0,
+            padding: 0,
+            borderTop: "1px solid rgba(255,255,255,0.06)",
+          }}
         >
-          How we work
-        </h2>
-        <ol className="flex flex-col">
-          {[
-            {
-              title: "Ship first, polish second.",
-              body: "We prefer a working thing you can use over a beautiful deck you can present. Revisions happen on live code, not in the abstract.",
-            },
-            {
-              title: "Craft matters.",
-              body: "The site IS the portfolio, the codebase IS the case study. We care about typography, performance, accessibility, and the edge cases nobody notices until they break.",
-            },
-            {
-              title: "Honest about AI.",
-              body: "We use AI where it measurably beats the manual alternative. Where it doesn't, we tell you. No hype-driven recommendations.",
-            },
-          ].map((item, i) => (
+          {VALUES.map((v) => (
             <li
-              key={item.title}
-              className="grid grid-cols-[auto_1fr] gap-x-6 md:gap-x-10 py-8 md:py-10 border-t border-[color:var(--color-hairline)] last:border-b"
+              key={v.number}
+              style={{
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                padding: "48px 60px",
+              }}
             >
-              <span
-                className="text-3xl md:text-5xl font-bold leading-none tracking-tight"
+              <div
                 style={{
-                  fontFamily: "var(--font-display)",
-                  color: "var(--color-text-secondary)",
+                  display: "grid",
+                  gridTemplateColumns: "60px 1fr 1fr",
+                  alignItems: "start",
+                  gap: 40,
+                  maxWidth: 1280,
+                  margin: "0 auto",
                 }}
-                aria-hidden="true"
               >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="flex flex-col gap-3">
-                <h3
-                  className="text-2xl md:text-3xl font-bold tracking-tight"
-                  style={{ fontFamily: "var(--font-display)" }}
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans, sans-serif)",
+                    fontWeight: 300,
+                    fontSize: 13,
+                    color: "rgba(244,243,239,0.25)",
+                  }}
                 >
-                  {item.title}
+                  {v.number}
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-syne, sans-serif)",
+                    fontWeight: 700,
+                    fontSize: "clamp(32px, 5vw, 64px)",
+                    letterSpacing: "-0.03em",
+                    lineHeight: 1,
+                    color: "#f4f3ef",
+                  }}
+                >
+                  {v.title}
                 </h3>
                 <p
-                  className="text-base md:text-lg max-w-2xl"
-                  style={{ color: "var(--color-text-secondary)" }}
+                  style={{
+                    fontFamily: "var(--font-sans, sans-serif)",
+                    fontWeight: 300,
+                    fontSize: 16,
+                    lineHeight: 1.7,
+                    color: "rgba(244,243,239,0.6)",
+                  }}
                 >
-                  {item.body}
+                  {v.body}
                 </p>
               </div>
             </li>
           ))}
-        </ol>
+        </ul>
       </section>
 
-      {/* CTA */}
+      {/* Section 4 — Location strip (white) */}
       <section
-        aria-label="CTA"
-        className="max-w-6xl mx-auto px-6 py-20 md:py-28"
+        data-theme="light"
+        style={{
+          backgroundColor: "#f4f3ef",
+          color: "#050507",
+          padding: "160px 60px",
+          textAlign: "center",
+        }}
       >
-        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+        <h2
+          style={{
+            fontFamily: "var(--font-syne, sans-serif)",
+            fontWeight: 800,
+            fontSize: "clamp(36px, 5vw, 64px)",
+            letterSpacing: "-0.03em",
+            lineHeight: 1.05,
+            color: "#050507",
+            maxWidth: 900,
+            margin: "0 auto",
+          }}
+        >
+          Based in Hyderabad, India.
+          <br />
+          Working with clients across 3 countries.
+        </h2>
+      </section>
+
+      {/* Section 5 — CTA (teal) */}
+      <section
+        data-theme="dark"
+        style={{
+          backgroundColor: "#0a3d2e",
+          color: "#f4f3ef",
+          padding: "160px 60px",
+          textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div className="teal-grid" aria-hidden="true" />
+        <div style={{ position: "relative", zIndex: 2 }}>
           <h2
-            className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]"
-            style={{ fontFamily: "var(--font-display)" }}
+            style={{
+              fontFamily: "var(--font-syne, sans-serif)",
+              fontWeight: 800,
+              fontSize: "clamp(64px, 10vw, 120px)",
+              letterSpacing: "-0.04em",
+              lineHeight: 0.88,
+              color: "#f4f3ef",
+              marginBottom: 56,
+            }}
           >
-            Let&apos;s make
+            Ready to
             <br />
-            something.
+            <span style={{ color: "#e8ff47" }}>move?</span>
           </h2>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold self-start md:self-end"
+            data-cursor="hover"
             style={{
-              background: "var(--color-accent-primary)",
-              color: "var(--color-base)",
+              display: "inline-flex",
+              alignItems: "center",
+              backgroundColor: "#e8ff47",
+              color: "#0a3d2e",
+              padding: "20px 56px",
+              fontFamily: "var(--font-syne, sans-serif)",
+              fontWeight: 600,
+              fontSize: 18,
             }}
           >
-            Start a project
+            Start a Project
+            <span aria-hidden="true" style={{ marginLeft: 12 }}>
+              →
+            </span>
           </Link>
         </div>
       </section>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getCaseStudies } from "@/lib/content/case-studies";
-import { WorkTile } from "@/components/WorkTile";
+import { WorkRows } from "@/components/sections/WorkRows";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -12,95 +11,70 @@ export const metadata: Metadata = buildMetadata({
 });
 
 /**
- * Work grid — every published case study, sorted newest first.
+ * Work index — hero strip + full-width hover-reveal video rows per project.
  *
- * Layout: single column mobile, 2-col tablet, 2-col desktop with one hero
- * tile at full width breaking the rhythm. Per plan's section rhythm rule.
+ * Layout:
+ *   40vh centered hero intro.
+ *   60vh video row per case study (plays at 0.4 opacity, hover increases it).
  */
 export default function WorkIndexPage() {
   const all = getCaseStudies();
-
   return (
-    <main id="main" className="flex-1">
+    <main id="main" style={{ backgroundColor: "#050507", color: "#f4f3ef" }}>
+      {/* Hero strip */}
       <section
-        aria-label="Work intro"
-        className="max-w-6xl mx-auto px-6 pt-20 md:pt-28 pb-12"
+        data-theme="dark"
+        style={{
+          minHeight: "40vh",
+          paddingTop: 160,
+          paddingBottom: 64,
+          paddingLeft: 48,
+          paddingRight: 48,
+          textAlign: "center",
+          backgroundColor: "#050507",
+        }}
       >
         <p
-          className="text-xs uppercase tracking-[0.3em] mb-6"
-          style={{ color: "var(--color-accent-primary)" }}
+          style={{
+            fontFamily: "var(--font-sans, sans-serif)",
+            fontWeight: 300,
+            fontSize: 11,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "#e8ff47",
+            marginBottom: 24,
+          }}
         >
-          Selected work
+          Selected Work
         </p>
         <h1
-          className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] max-w-3xl"
-          style={{ fontFamily: "var(--font-display)" }}
+          style={{
+            fontFamily: "var(--font-syne, sans-serif)",
+            fontWeight: 800,
+            fontSize: "clamp(48px, 7vw, 96px)",
+            letterSpacing: "-0.04em",
+            lineHeight: 0.95,
+            color: "#f4f3ef",
+          }}
         >
-          Things we&apos;ve
-          <br />
-          built and shipped.
+          Things we&apos;ve built.
         </h1>
         <p
-          className="mt-6 max-w-xl text-lg"
-          style={{ color: "var(--color-text-secondary)" }}
+          style={{
+            marginTop: 24,
+            fontFamily: "var(--font-sans, sans-serif)",
+            fontWeight: 300,
+            fontSize: 14,
+            color: "rgba(244,243,239,0.45)",
+          }}
         >
-          Every project here launched and is running. No concept mockups, no
-          &ldquo;coming soon.&rdquo;
+          {all.length} case stud{all.length === 1 ? "y" : "ies"} ·
+          Hyderabad, India
         </p>
       </section>
 
-      {all.length === 0 ? (
-        <section
-          aria-label="Empty state"
-          className="max-w-6xl mx-auto px-6 py-24 text-center"
-        >
-          <h2
-            className="text-3xl md:text-5xl font-bold tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Case studies coming soon.
-          </h2>
-          <p
-            className="mt-4 max-w-md mx-auto"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
-            We&apos;ve shipped the work. Adding the stories.
-          </p>
-          <div className="mt-8">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold"
-              style={{
-                background: "var(--color-accent-primary)",
-                color: "var(--color-base)",
-              }}
-            >
-              Start a project
-            </Link>
-          </div>
-        </section>
-      ) : (
-        <section
-          aria-label="Case studies"
-          className="max-w-6xl mx-auto px-6 pb-20"
-        >
-          <div className="grid gap-6 md:grid-cols-2">
-            {all.map((cs, i) => (
-              <div key={cs.frontmatter.slug} className={i === 0 ? "md:col-span-2" : undefined}>
-                <WorkTile
-                  caseStudy={cs}
-                  variant={i === 0 ? "hero" : "standard"}
-                  sizes={
-                    i === 0
-                      ? "(max-width: 767px) 100vw, 100vw"
-                      : "(max-width: 767px) 100vw, 50vw"
-                  }
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Project rows — client component for hover state */}
+      <WorkRows caseStudies={all} />
     </main>
   );
 }
