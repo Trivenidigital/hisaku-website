@@ -91,11 +91,12 @@ export function ServicesSection() {
                 </span>
 
                 <span
-                  className="leading-[1.1] tracking-tight transition-colors group-hover:text-[color:var(--color-accent-primary)]"
+                  className="font-syne transition-colors group-hover:text-[color:var(--color-accent-primary)]"
                   style={{
-                    fontFamily: "var(--font-display)",
                     fontWeight: 700,
-                    fontSize: "clamp(28px, 5vw, 72px)",
+                    fontSize: "clamp(40px, 6vw, 80px)",
+                    letterSpacing: "-0.03em",
+                    lineHeight: 1.0,
                     color: "var(--color-text-primary)",
                   }}
                 >

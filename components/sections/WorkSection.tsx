@@ -32,26 +32,19 @@ interface WorkSectionProps {
   caseStudies: CaseStudy[];
 }
 
-/** Per-slug visual data: category label + gradient colors for the placeholder. */
-const VISUAL: Record<
-  string,
-  { category: string; gradient: string; arrow?: boolean }
-> = {
+/** Per-slug visual data: category label + demo video source. */
+const VISUAL: Record<string, { category: string; video: string }> = {
   vizora: {
     category: "— Product Development",
-    // Tech-dark mesh.
-    gradient: "linear-gradient(135deg, #060d0a 0%, #0d2518 50%, #060d0a 100%)",
-    arrow: true,
+    video: "/videos/vizora-demo.mp4",
   },
   hello2india: {
     category: "— Marketing & SEO",
-    // Warm amber market feel.
-    gradient: "linear-gradient(135deg, #120800 0%, #2d1400 50%, #120800 100%)",
+    video: "/videos/hello2india-demo.mp4",
   },
   "triveni-express": {
     category: "— Web & Ordering",
-    // Restaurant/food green.
-    gradient: "linear-gradient(135deg, #060d08 0%, #0d2010 50%, #060d08 100%)",
+    video: "/videos/triveni-demo.mp4",
   },
 };
 
@@ -206,11 +199,12 @@ function WorkBlock({
 
       <ClipReveal className="mt-6">
         <h3
-          className="leading-[1.02] tracking-tight"
+          className="font-syne"
           style={{
-            fontFamily: "var(--font-display)",
             fontWeight: 700,
-            fontSize: "clamp(36px, 6vw, 80px)",
+            fontSize: "clamp(48px, 7vw, 96px)",
+            letterSpacing: "-0.03em",
+            lineHeight: 0.95,
             color: "var(--color-text-primary)",
           }}
         >
@@ -229,11 +223,12 @@ function WorkBlock({
                 transition={{ duration: 0.6 }}
               >
                 <span
-                  className="leading-none tracking-tight"
+                  className="font-syne"
                   style={{
-                    fontFamily: "var(--font-display)",
                     fontWeight: 800,
-                    fontSize: "clamp(56px, 10vw, 120px)",
+                    fontSize: "clamp(72px, 12vw, 140px)",
+                    letterSpacing: "-0.04em",
+                    lineHeight: 0.85,
                     color: "var(--color-accent-primary)",
                     display: "inline-block",
                   }}
@@ -299,35 +294,25 @@ function WorkBlock({
           </div>
         </div>
 
-        {/* Video placeholder — animated gradient until real footage lands.
-         * min-height 320px, width 100% of its grid cell, pulses via
-         * .gradient-pulse. Vizora gets an oversized lime arrow inside. */}
-        <div
+        {/* Demo video for this case study. Muted + playsInline so it
+         * auto-plays on every platform including iOS. objectFit: cover
+         * fills the 420x320 cell cleanly. Hidden on mobile — the phone
+         * grid is single-column and the demo would dominate the viewport. */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
           aria-hidden="true"
-          className="gradient-pulse hidden md:flex items-center justify-center"
+          className="hidden md:block"
           style={{
             width: 420,
             minHeight: 320,
-            background: visual.gradient,
-            // Inline backstops — the class alone was being overridden in
-            // some production builds, leaving the div black.
-            backgroundSize: "300% 300%",
+            objectFit: "cover",
           }}
         >
-          {visual.arrow ? (
-            <span
-              className="font-syne leading-none"
-              style={{
-                fontWeight: 800,
-                fontSize: 48,
-                color: "var(--color-accent-primary)",
-                opacity: 0.2,
-              }}
-            >
-              →
-            </span>
-          ) : null}
-        </div>
+          <source src={visual.video} type="video/mp4" />
+        </video>
       </div>
     </div>
   );

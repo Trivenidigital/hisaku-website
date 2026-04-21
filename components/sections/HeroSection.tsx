@@ -29,14 +29,52 @@ export function HeroSection() {
       style={{
         position: "relative",
         minHeight: "100dvh",
-        background: "var(--color-bg-dark)",
+        backgroundColor: "#050507",
       }}
     >
-      <div className="hero-dotgrid" aria-hidden="true" />
+      {/* Video background — dark fluid smoke. Muted + playsInline so it
+       * plays everywhere, including iOS. objectFit: cover to fill the
+       * viewport without letterboxing. zIndex 0 pins it behind the dim
+       * overlay and all foreground content. */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+        }}
+      >
+        <source src="/videos/hero-bg.mp4" type="video/mp4" />
+      </video>
+      {/* Dim overlay so headline stays legible against whatever the video shows. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "rgba(5,5,7,0.58)",
+          zIndex: 1,
+        }}
+      />
+      {/* Dot-grid now sits above the overlay so it still reads as atmosphere. */}
+      <div
+        className="hero-dotgrid"
+        aria-hidden="true"
+        style={{ zIndex: 1 }}
+      />
 
       {/* Top-right rotated location text */}
       <div
-        className="absolute top-24 right-6 md:right-10 z-10 select-none"
+        className="absolute top-24 right-6 md:right-10 select-none"
+        style={{ zIndex: 2 }}
         aria-hidden="true"
       >
         <p
@@ -64,6 +102,7 @@ export function HeroSection() {
           bottom: "clamp(40px, 8vw, 80px)",
           left: 0,
           right: 0,
+          zIndex: 2,
         }}
       >
         <div
@@ -74,11 +113,13 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0, duration: 0.9, ease: EASE }}
-            className="font-syne leading-[0.95] tracking-tight"
+            className="font-syne"
             style={{
               fontWeight: 800,
-              fontSize: "clamp(44px, 8vw, 120px)",
-              color: "var(--color-text-primary)",
+              fontSize: "clamp(72px, 10vw, 140px)",
+              letterSpacing: "-0.04em",
+              lineHeight: 0.88,
+              color: "#f4f3ef",
             }}
           >
             We Build
@@ -87,15 +128,17 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.9, ease: EASE }}
-            className="font-syne leading-[0.95] tracking-tight"
+            className="font-syne"
             style={{
               fontWeight: 800,
-              fontSize: "clamp(44px, 8vw, 120px)",
-              color: "var(--color-text-primary)",
+              fontSize: "clamp(72px, 10vw, 140px)",
+              letterSpacing: "-0.04em",
+              lineHeight: 0.88,
+              color: "#f4f3ef",
             }}
           >
             What{" "}
-            <span style={{ color: "var(--color-accent-primary)" }}>Moves.</span>
+            <span style={{ color: "#e8ff47" }}>Moves.</span>
           </motion.h1>
 
           <motion.p
@@ -165,10 +208,11 @@ export function HeroSection() {
           bottom: "32px",
           left: "50%",
           transform: "translateX(-50%)",
-          color: "color-mix(in srgb, var(--color-text-primary) 55%, transparent)",
+          color: "rgba(244,243,239,0.55)",
           fontSize: "22px",
           lineHeight: 1,
           pointerEvents: "none",
+          zIndex: 2,
         }}
       >
         ↓

@@ -30,9 +30,39 @@ export function ThatIsHisakuSection() {
         paddingBottom: "clamp(80px, 12vw, 140px)",
       }}
     >
-      <div className="teal-grid" aria-hidden="true" />
+      {/* Wireframe background video — ghosted at 15% so it reads as
+       * atmospheric texture, not footage. zIndex 0 pins it behind the
+       * grid overlay and all content. */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+          opacity: 0.15,
+        }}
+      >
+        <source src="/videos/wireframe-bg.mp4" type="video/mp4" />
+      </video>
 
-      <div className="relative max-w-6xl mx-auto px-6 text-center">
+      <div
+        className="teal-grid"
+        aria-hidden="true"
+        style={{ zIndex: 1 }}
+      />
+
+      <div
+        className="max-w-6xl mx-auto px-6 text-center"
+        style={{ position: "relative", zIndex: 2 }}
+      >
         <p
           className="uppercase"
           style={{
@@ -47,11 +77,13 @@ export function ThatIsHisakuSection() {
         </p>
 
         <h2
-          className="font-syne mt-6 leading-[0.95] tracking-tight block"
+          className="font-syne mt-6 block"
           style={{
             fontFamily: "var(--font-syne, sans-serif)",
             fontWeight: 800,
-            fontSize: "clamp(100px, 15vw, 200px)",
+            fontSize: "clamp(96px, 15vw, 200px)",
+            letterSpacing: "-0.05em",
+            lineHeight: 0.82,
             color: "#f4f3ef",
           }}
         >
@@ -76,13 +108,14 @@ export function ThatIsHisakuSection() {
         </p>
       </div>
 
-      {/* Slower capability marquee below */}
+      {/* Slower capability marquee below — stacks above the video bg. */}
       <div
         className="relative mt-16 overflow-hidden"
         style={{
           borderTop: "1px solid rgba(255,255,255,0.08)",
           borderBottom: "1px solid rgba(255,255,255,0.08)",
           height: 50,
+          zIndex: 2,
         }}
         aria-hidden="true"
       >

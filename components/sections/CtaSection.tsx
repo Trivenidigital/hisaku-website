@@ -52,11 +52,12 @@ export function CtaSection() {
 
       <div className="relative max-w-3xl mx-auto">
         <h2
-          className="leading-[1.02] tracking-tight"
+          className="font-syne"
           style={{
-            fontFamily: "var(--font-display)",
             fontWeight: 800,
-            fontSize: "clamp(52px, 9vw, 96px)",
+            fontSize: "clamp(64px, 10vw, 120px)",
+            letterSpacing: "-0.04em",
+            lineHeight: 0.88,
             color: "var(--color-text-primary)",
           }}
         >

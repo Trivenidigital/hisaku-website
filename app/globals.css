@@ -68,9 +68,22 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   font-weight: 300;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display defaults for every headline on the site. Per-component styles
+ * override the font-size/weight individually — this rule just locks in
+ * the face + negative tracking + tight line-height that make the Syne
+ * headlines feel intentional. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-syne);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
 }
 
 :focus-visible {

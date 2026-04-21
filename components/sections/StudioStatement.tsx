@@ -23,12 +23,13 @@ export function StudioStatement() {
     >
       <div className="max-w-4xl mx-auto">
         <h2
-          className="leading-[1.05] tracking-tight"
+          className="font-syne"
           style={{
-            fontFamily: "var(--font-display)",
             fontWeight: 800,
-            fontSize: "clamp(40px, 6.5vw, 80px)",
-            color: "var(--color-text-primary)",
+            fontSize: "clamp(40px, 6vw, 72px)",
+            letterSpacing: "-0.03em",
+            lineHeight: 0.92,
+            color: "#050507",
           }}
         >
           <ClipReveal delay={0}>

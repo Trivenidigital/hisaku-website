@@ -79,7 +79,7 @@ export function Navbar() {
             style={{
               fontFamily: "var(--font-syne, sans-serif)",
               fontWeight: 800,
-              fontSize: "20px",
+              fontSize: "18px",
               color: "#f4f3ef",
               letterSpacing: "-0.02em",
             }}
