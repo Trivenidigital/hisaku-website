@@ -157,6 +157,10 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
             fontWeight: 700,
             fontSize: 24,
             color: "#ffffff",
+            // Belt + braces: some browsers inherit -webkit-text-fill-color
+            // from a parent or from accent gradient text, leaving the h3
+            // looking teal/blue. Force-override explicitly.
+            WebkitTextFillColor: "#ffffff",
             margin: "8px 0 12px",
             letterSpacing: "-0.01em",
           }}
@@ -180,7 +184,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
               style={{
                 fontSize: 11,
                 fontWeight: 400,
-                color: "rgba(255,255,255,0.4)",
+                color: "rgba(255,255,255,0.5)",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 marginLeft: 12,
@@ -196,7 +200,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
           style={{
             fontWeight: 400,
             fontSize: 14,
-            color: "rgba(255,255,255,0.55)",
+            color: "rgba(255,255,255,0.65)",
             lineHeight: 1.6,
             margin: 0,
           }}

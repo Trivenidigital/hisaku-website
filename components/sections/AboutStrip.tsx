@@ -16,7 +16,7 @@ export function AboutStrip() {
   return (
     <section
       aria-label="About"
-      style={{ backgroundColor: "#0a0a0a", padding: "120px 48px" }}
+      style={{ backgroundColor: "#111111", padding: "120px 48px" }}
     >
       <div
         style={{
@@ -63,7 +63,7 @@ export function AboutStrip() {
               fontWeight: 400,
               fontSize: 17,
               lineHeight: 1.75,
-              color: "rgba(255,255,255,0.5)",
+              color: "rgba(255,255,255,0.65)",
               margin: "0 0 48px",
             }}
           >

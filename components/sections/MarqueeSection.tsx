@@ -25,13 +25,13 @@ export function MarqueeSection() {
     <section
       aria-hidden="true"
       style={{
-        backgroundColor: "#050507",
+        backgroundColor: "#111111",
         overflow: "hidden",
         width: "100%",
         display: "block",
         height: 56,
-        borderTop: "1px solid rgba(255,255,255,0.12)",
-        borderBottom: "1px solid rgba(255,255,255,0.12)",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
       }}
     >
       <div
@@ -57,7 +57,7 @@ export function MarqueeSection() {
               fontWeight: 300,
               fontSize: 11,
               letterSpacing: "0.18em",
-              color: "rgba(244,243,239,0.6)",
+              color: "rgba(255,255,255,0.5)",
             }}
           >
             {item}

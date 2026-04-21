@@ -43,7 +43,7 @@ export function TestimonialSection() {
           style={{
             fontWeight: 500,
             fontSize: 14,
-            color: "rgba(255,255,255,0.4)",
+            color: "rgba(255,255,255,0.45)",
             margin: 0,
           }}
         >

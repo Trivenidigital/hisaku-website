@@ -3,78 +3,95 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/metadata";
 import { colors, fonts } from "@/lib/design";
 import PageHero from "@/components/layout/PageHero";
-import { CtaSection } from "@/components/sections/CtaSection";
 
 export const metadata: Metadata = buildMetadata({
   title: "Capabilities",
   description:
-    "What we build: web design, development, marketing and SEO, and AI automation. Four disciplines, one team, end to end.",
+    "Four disciplines, one studio. Web design, development, marketing & SEO, and AI automation — end to end.",
   canonicalPath: "/capabilities",
 });
 
 interface Capability {
   number: string;
-  slug: string;
   name: string;
+  tagline: string;
   description: string;
   bullets: string[];
-  /** 3-stop gradient for the visual side — colors distinct per discipline. */
+  /** Background color of the text-side panel. */
+  textBg: string;
+  /** Gradient for the visual-side panel. */
   gradient: string;
 }
 
 const CAPABILITIES: Capability[] = [
   {
     number: "01",
-    slug: "design",
     name: "Web Design",
+    tagline: "Beautiful. Precise. Memorable.",
     description:
-      "We obsess over every pixel. Websites that don't just look good — they convert.",
+      "We design websites that don't just look good — they convert. Every pixel is intentional, every interaction considered. We start with your business goals and work backwards to a design that serves them.",
     bullets: [
-      "Brand-aligned visual design",
+      "Brand-aligned UI design",
       "Mobile-first responsive layouts",
-      "Performance-optimized delivery",
+      "Landing pages that convert",
+      "UI/UX for web applications",
+      "Design systems and style guides",
     ],
-    // Greens
-    gradient: "linear-gradient(135deg, #0a1a0a 0%, #0d2518 50%, #0a1a0a 100%)",
+    textBg: "#0a0a0a",
+    gradient: "linear-gradient(135deg, #0a1a0a 0%, #0d2518 50%, #061006 100%)",
   },
   {
     number: "02",
-    slug: "development",
     name: "Development",
-    description: "Clean code, fast load times, built to scale.",
+    tagline: "Fast. Scalable. Yours to own.",
+    description:
+      "We build on Next.js and React — the same stack powering the world's fastest websites. Clean code, zero vendor lock-in, and performance baked in from day one. You own everything we deliver.",
     bullets: [
-      "Next.js and React applications",
-      "Custom CMS integrations",
-      "API and third-party connections",
+      "Next.js and React development",
+      "Full-stack web applications",
+      "E-commerce and online ordering",
+      "CMS integrations (Sanity, Contentful)",
+      "API design and third-party integrations",
+      "Performance optimisation",
     ],
-    // Blues
-    gradient: "linear-gradient(135deg, #0a0d1a 0%, #0d1025 50%, #0a0d1a 100%)",
+    textBg: "#111111",
+    gradient: "linear-gradient(135deg, #0a0d1a 0%, #0d1025 50%, #080a14 100%)",
   },
   {
     number: "03",
-    slug: "digital-marketing",
     name: "Marketing & SEO",
-    description: "Found by the right people, at the right moment.",
+    tagline: "Found. Clicked. Converted.",
+    description:
+      "Marketing isn't just getting traffic — it's getting the right traffic and turning it into customers. We handle everything from search visibility to social presence to WhatsApp campaigns.",
     bullets: [
-      "Local and national SEO strategy",
-      "Google Business Profile optimization",
-      "Content that ranks and converts",
+      "Local SEO and Google Business Profile",
+      "National and international SEO strategy",
+      "Content marketing and blogging",
+      "Social media management (Instagram, Facebook, LinkedIn)",
+      "WhatsApp Business marketing campaigns",
+      "Email marketing and automation",
+      "Paid advertising (Google Ads, Meta Ads)",
+      "Analytics setup and monthly reporting",
     ],
-    // Purples
-    gradient: "linear-gradient(135deg, #0f0a1a 0%, #1a0d28 50%, #0f0a1a 100%)",
+    textBg: "#0a0a0a",
+    gradient: "linear-gradient(135deg, #150a1a 0%, #1e0d28 50%, #100814 100%)",
   },
   {
     number: "04",
-    slug: "ai-marketing",
     name: "AI Automation",
-    description: "Manual tasks are expensive. We automate them.",
+    tagline: "Automated. Intelligent. Unstoppable.",
+    description:
+      "Manual tasks are expensive and error-prone. We build AI agents that handle repetitive work — from customer enquiries to invoice reminders to content generation — so your team focuses on what matters.",
     bullets: [
-      "WhatsApp business automation",
-      "AI-powered content workflows",
-      "Custom agent development",
+      "WhatsApp Business automation agents",
+      "Customer enquiry and booking bots",
+      "Invoice and payment reminder systems",
+      "AI-powered content generation workflows",
+      "Internal reporting and digest automation",
+      "Custom AI integrations for your tools",
     ],
-    // Teals
-    gradient: "linear-gradient(135deg, #0a1518 0%, #0d2020 50%, #0a1518 100%)",
+    textBg: "#111111",
+    gradient: "linear-gradient(135deg, #0a1518 0%, #0d2020 50%, #081010 100%)",
   },
 ];
 
@@ -85,43 +102,101 @@ export default function CapabilitiesPage() {
         label="Capabilities"
         title="What We Build."
         accentWord="Build."
+        subtitle="Four disciplines. One studio. Zero compromise."
       />
 
       {CAPABILITIES.map((cap, i) => (
-        <CapabilitySection key={cap.slug} capability={cap} index={i} />
+        <CapabilitySection
+          key={cap.number}
+          capability={cap}
+          textOnLeft={i % 2 === 0}
+        />
       ))}
 
-      <CtaSection />
+      {/* Inline CTA card — matches homepage style. Kept inline (not the
+       * shared CtaSection) so the headline can be customized for this
+       * page without polluting the homepage component. */}
+      <section
+        style={{
+          backgroundColor: colors.bg,
+          padding: "0 48px 120px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            backgroundColor: "#0d1f0d",
+            border: "1px solid rgba(232,255,71,0.2)",
+            borderRadius: 16,
+            padding: 80,
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: fonts.display,
+              fontWeight: 700,
+              fontSize: "clamp(40px, 6vw, 72px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1,
+              color: "#ffffff",
+              margin: "0 0 40px",
+            }}
+          >
+            Ready to start?
+            <br />
+            <span style={{ color: "#e8ff47" }}>Let&apos;s talk.</span>
+          </h2>
+          <Link
+            href="/contact"
+            className="shimmer-btn"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              backgroundColor: "#e8ff47",
+              color: "#0a0a0a",
+              padding: "14px 28px",
+              borderRadius: 6,
+              fontFamily: fonts.body,
+              fontWeight: 600,
+              fontSize: 15,
+              textDecoration: "none",
+            }}
+          >
+            Start a Project →
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }
 
 function CapabilitySection({
   capability,
-  index,
+  textOnLeft,
 }: {
   capability: Capability;
-  index: number;
+  textOnLeft: boolean;
 }) {
-  // Alternate layout: even index = text left, odd = text right
-  const reverse = index % 2 === 1;
   return (
     <section
       style={{
-        backgroundColor: colors.bg,
-        minHeight: "70vh",
+        minHeight: "80vh",
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
         alignItems: "stretch",
         borderTop: `1px solid ${colors.border}`,
-        direction: reverse ? "rtl" : "ltr",
+        // RTL trick to swap visual order without changing JSX order.
+        direction: textOnLeft ? "ltr" : "rtl",
       }}
     >
       {/* Text side */}
       <div
         style={{
           direction: "ltr",
-          padding: "80px 48px",
+          backgroundColor: capability.textBg,
+          padding: "80px 60px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -131,11 +206,11 @@ function CapabilitySection({
           style={{
             fontFamily: fonts.body,
             fontWeight: 500,
-            fontSize: 13,
-            color: colors.accent,
-            letterSpacing: "0.15em",
+            fontSize: 12,
+            letterSpacing: "0.1em",
             textTransform: "uppercase",
-            margin: "0 0 24px",
+            color: "#e8ff47",
+            margin: 0,
           }}
         >
           {capability.number}
@@ -147,8 +222,9 @@ function CapabilitySection({
             fontSize: "clamp(40px, 5vw, 64px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.05,
-            color: colors.white,
-            margin: "0 0 24px",
+            color: "#ffffff",
+            WebkitTextFillColor: "#ffffff",
+            margin: "16px 0 8px",
           }}
         >
           {capability.name}
@@ -157,9 +233,21 @@ function CapabilitySection({
           style={{
             fontFamily: fonts.body,
             fontWeight: 400,
+            fontStyle: "italic",
+            fontSize: 16,
+            color: "rgba(255,255,255,0.5)",
+            margin: "0 0 24px",
+          }}
+        >
+          {capability.tagline}
+        </p>
+        <p
+          style={{
+            fontFamily: fonts.body,
+            fontWeight: 400,
             fontSize: 17,
             lineHeight: 1.75,
-            color: colors.muted2,
+            color: "rgba(255,255,255,0.7)",
             margin: "0 0 32px",
             maxWidth: 480,
           }}
@@ -174,11 +262,10 @@ function CapabilitySection({
                 fontFamily: fonts.body,
                 fontWeight: 400,
                 fontSize: 15,
-                color: colors.muted2,
+                color: "rgba(255,255,255,0.75)",
                 paddingLeft: 28,
                 position: "relative",
-                marginBottom: 12,
-                lineHeight: 1.6,
+                lineHeight: 2,
               }}
             >
               <span
@@ -186,7 +273,7 @@ function CapabilitySection({
                 style={{
                   position: "absolute",
                   left: 0,
-                  color: colors.accent,
+                  color: "#e8ff47",
                   fontWeight: 600,
                 }}
               >
@@ -199,13 +286,12 @@ function CapabilitySection({
         <Link
           href="/contact"
           style={{
+            display: "block",
             marginTop: 32,
-            display: "inline-block",
-            alignSelf: "flex-start",
             fontFamily: fonts.body,
             fontWeight: 500,
-            fontSize: 15,
-            color: colors.accent,
+            fontSize: 14,
+            color: "#e8ff47",
             textDecoration: "none",
           }}
         >
@@ -213,7 +299,7 @@ function CapabilitySection({
         </Link>
       </div>
 
-      {/* Visual side */}
+      {/* Visual side — gradient pulse */}
       <div
         aria-hidden="true"
         className="gradient-pulse"

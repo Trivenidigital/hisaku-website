@@ -42,7 +42,7 @@ export function CtaSection() {
           style={{
             fontWeight: 400,
             fontSize: 17,
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(255,255,255,0.55)",
             margin: "0 0 40px",
           }}
         >

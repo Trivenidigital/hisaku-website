@@ -151,7 +151,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              opacity: 0.3,
+              opacity: 0.25,
               zIndex: 0,
             }}
           >
@@ -163,7 +163,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundColor: "rgba(5,5,7,0.7)",
+            backgroundColor: "rgba(5,5,7,0.72)",
             zIndex: 1,
           }}
         />
