@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { SiteFooter } from "@/components/SiteFooter";
+import { Navbar } from "@/components/navigation/Navbar";
+import { Footer } from "@/components/navigation/Footer";
 
 // Inter Variable — Linear's typographic signature. cv01 + ss03
 // feature flags applied globally in globals.css.
@@ -43,7 +43,7 @@ export default function RootLayout({
         </a>
         <Navbar />
         {children}
-        <SiteFooter />
+        <Footer />
       </body>
     </html>
   );

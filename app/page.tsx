@@ -1,42 +1,47 @@
-import { getCaseStudies } from "@/lib/content/case-studies";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { MarqueeSection } from "@/components/sections/MarqueeSection";
-import { WorkSection } from "@/components/sections/WorkSection";
-import { ServicesSection } from "@/components/sections/ServicesSection";
+import { Hero } from "@/components/sections/Hero";
+import { HomeMarquee } from "@/components/sections/Marquee";
+import { WorkGrid } from "@/components/sections/WorkGrid";
+import { Services } from "@/components/sections/Services";
 import { AboutStrip } from "@/components/sections/AboutStrip";
-import { TestimonialSection } from "@/components/sections/TestimonialSection";
-import { CtaSection } from "@/components/sections/CtaSection";
-import { colors } from "@/lib/design";
+import { Testimonial } from "@/components/sections/Testimonial";
+import { CTA } from "@/components/sections/CTA";
+import { getCaseStudies } from "@/lib/content/case-studies";
 
-/**
- * Home page — premium agency layout.
- *
- * Section flow:
- *   1. Hero          — video, spotlight, headline with accent
- *   2. Marquee       — seamless scrolling strip
- *   3. Work          — 3-col card grid with video thumbs
- *   4. Services      — 2x2 card grid
- *   5. AboutStrip    — 2-col about + spring-animated stats
- *   6. Testimonial   — 5-star centered
- *   7. CTA           — gradient card with shimmer button
- */
+const SERVICE_LABEL: Record<string, string> = {
+  design: "Design",
+  development: "Development",
+  "digital-marketing": "Marketing",
+  "ai-marketing": "AI Automation",
+};
+
 export default function HomePage() {
-  const caseStudies = getCaseStudies();
+  const studies = getCaseStudies().slice(0, 3).map((c) => {
+    const fm = c.frontmatter;
+    return {
+      slug: fm.slug,
+      title: fm.title,
+      category: SERVICE_LABEL[fm.services[0]] ?? fm.services[0],
+      year: fm.publishedAt.slice(0, 4),
+      thumbnail: fm.hero.src,
+      metric: fm.results[0]
+        ? { value: fm.results[0].metric, label: fm.results[0].label }
+        : null,
+    };
+  });
 
   return (
-    <main
-      id="main"
-      style={{ backgroundColor: colors.bg, color: "#f7f8f8" }}
-    >
-      <HeroSection />
-      <MarqueeSection />
-      {caseStudies.length > 0 ? (
-        <WorkSection caseStudies={caseStudies} />
-      ) : null}
-      <ServicesSection />
+    <main id="main">
+      <Hero />
+      <HomeMarquee />
+      <WorkGrid items={studies} />
+      <Services />
       <AboutStrip />
-      <TestimonialSection />
-      <CtaSection />
+      <Testimonial
+        quote="They shipped more in six weeks than our previous agency did in six months. The work is honest, the communication is tight, and the outcomes are measurable."
+        author="Ravi K."
+        role="Founder, Triveni Express"
+      />
+      <CTA />
     </main>
   );
 }

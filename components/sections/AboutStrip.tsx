@@ -1,120 +1,128 @@
-import { SpringCounter } from "@/components/ui/SpringCounter";
+"use client";
+
+import { NumberTicker } from "@/components/ui/NumberTicker";
 
 /**
- * AboutStrip — 2-col about + 3 stats. Single dark bg.
- * Stat numbers are PURE WHITE (not violet) per Superhuman restraint.
+ * AboutStrip — 2-column about section with three animated stats.
+ *
+ * Numbers are in WHITE at 48px weight 500, tabular-nums, -0.035em
+ * tracking. Labels below in muted grey. No card, no glass — pure
+ * typography on the dark field.
  */
-
-const STATS: { value: number; label: string }[] = [
-  { value: 8, label: "clients" },
-  { value: 3, label: "countries" },
-  { value: 0, label: "missed deadlines" },
-];
-
 export function AboutStrip() {
   return (
     <section
-      aria-label="About"
+      aria-label="About Hisaku"
       style={{
         backgroundColor: "#0a0a0f",
-        color: "#f7f8f8",
-        padding: "100px 48px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
+        padding: "120px 48px",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: 64,
-          alignItems: "start",
-        }}
-      >
-        <div>
-          <p
-            style={{
-              fontWeight: 500,
-              fontSize: 13,
-              color: "#62666d",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              margin: "0 0 24px",
-            }}
-          >
-            About
-          </p>
-          <h2
-            style={{
-              fontWeight: 510,
-              fontSize: "clamp(36px, 5vw, 56px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-              color: "#f7f8f8",
-              margin: 0,
-            }}
-          >
-            A 2-person studio.
-            <br />
-            Thinking like an agency.
-          </h2>
-        </div>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.2fr 1fr",
+            gap: 80,
+            alignItems: "start",
+          }}
+          className="about-strip-grid"
+        >
+          <div>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 13,
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#8a8f98",
+              }}
+            >
+              About
+            </p>
+            <h2
+              style={{
+                margin: "16px 0 24px",
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 500,
+                letterSpacing: "-0.03em",
+                color: "#f7f8f8",
+                lineHeight: 1.1,
+              }}
+            >
+              A two-person studio in Hyderabad.
+            </h2>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 17,
+                lineHeight: 1.7,
+                color: "#8a8f98",
+                maxWidth: 540,
+              }}
+            >
+              We partner with a small number of clients per quarter — enough
+              time to understand the business, ship real work, and stay
+              accountable for outcomes. The work is the pitch.
+            </p>
+          </div>
 
-        <div>
-          <p
-            style={{
-              fontWeight: 400,
-              fontSize: 17,
-              lineHeight: 1.75,
-              color: "#8a8f98",
-              margin: "0 0 48px",
-            }}
-          >
-            We are Srini and a small team of collaborators in Hyderabad. We
-            work with startups and growing businesses to build their digital
-            presence — from the first wireframe to the live product.
-          </p>
-
-          <dl
+          <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: 32,
-              margin: 0,
+              gridTemplateColumns: "1fr",
+              gap: 40,
+              paddingTop: 24,
             }}
           >
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <dt
-                  style={{
-                    fontWeight: 510,
-                    fontSize: 48,
-                    color: "#f7f8f8",
-                    margin: 0,
-                    letterSpacing: "-0.02em",
-                    lineHeight: 1,
-                  }}
-                >
-                  <SpringCounter to={s.value} />
-                </dt>
-                <dd
-                  style={{
-                    margin: "12px 0 0",
-                    fontWeight: 400,
-                    fontSize: 13,
-                    color: "#8a8f98",
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {s.label}
-                </dd>
-              </div>
-            ))}
-          </dl>
+            <Stat value={40} suffix="+" label="Projects shipped since 2022" />
+            <Stat value={12} label="Industries served" />
+            <Stat value={98} suffix="%" label="Client retention rate" />
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function Stat({
+  value,
+  suffix,
+  label,
+}: {
+  value: number;
+  suffix?: string;
+  label: string;
+}) {
+  return (
+    <div>
+      <div
+        style={{
+          fontSize: 48,
+          fontWeight: 500,
+          letterSpacing: "-0.035em",
+          color: "#f7f8f8",
+          fontVariantNumeric: "tabular-nums",
+          lineHeight: 1,
+        }}
+      >
+        <NumberTicker value={value} />
+        {suffix ? (
+          <span style={{ color: "#d0d6e0" }}>{suffix}</span>
+        ) : null}
+      </div>
+      <p
+        style={{
+          margin: "12px 0 0",
+          fontSize: 14,
+          color: "#8a8f98",
+          fontWeight: 400,
+        }}
+      >
+        {label}
+      </p>
+    </div>
   );
 }

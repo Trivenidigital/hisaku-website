@@ -3,17 +3,8 @@
 import Link from "next/link";
 
 /**
- * SiteFooter — 4 columns on desktop.
- *
- *   ┌──────────────┬──────────┬──────────────┬──────────┐
- *   │ HISAKU       │ EXPLORE  │ CAPABILITIES │ CONNECT  │
- *   │ tagline      │ Work     │ Web Design   │ LinkedIn │
- *   │ location +   │ Capab.   │ Development  │ Twitter  │
- *   │ email        │ About    │ Marketing    │ WhatsApp │
- *   │              │ Contact  │ AI Auto.     │          │
- *   ├──────────────┴──────────┴──────────────┴──────────┤
- *   │ © 2026 …                            Hyderabad · IN │
- *   └──────────────────────────────────────────────────────┘
+ * Footer — 4-column grid. Brand + links. Pure dark, hairline
+ * separators. Hover is grey → white; no violet in the footer.
  */
 
 const linkStyle: React.CSSProperties = {
@@ -27,12 +18,12 @@ const linkStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-  fontWeight: 400,
+  fontWeight: 500,
   fontSize: 11,
   textTransform: "uppercase",
   letterSpacing: "0.15em",
-  color: "rgba(255,255,255,0.4)",
-  margin: "0 0 16px",
+  color: "#62666d",
+  margin: "0 0 20px",
 };
 
 function FooterLink({
@@ -70,41 +61,34 @@ function FooterLink({
   );
 }
 
-export function SiteFooter() {
+export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer
       style={{
         backgroundColor: "#0a0a0f",
         borderTop: "1px solid rgba(255,255,255,0.06)",
-        padding: "64px 48px 40px",
+        padding: "80px 48px 40px",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-        }}
-      >
-        {/* 4-column top grid */}
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "minmax(240px, 2fr) repeat(3, 1fr)",
-            gap: 40,
+            gap: 48,
           }}
           className="footer-top"
         >
-          {/* Brand */}
           <div>
             <Link
               href="/"
               aria-label="Hisaku home"
               style={{
-                fontWeight: 510,
-                fontSize: 24,
+                fontWeight: 600,
+                fontSize: 15,
                 color: "#f7f8f8",
-                letterSpacing: "0.05em",
+                letterSpacing: "0.08em",
                 textDecoration: "none",
                 display: "inline-block",
               }}
@@ -113,34 +97,36 @@ export function SiteFooter() {
             </Link>
             <p
               style={{
-                margin: "16px 0 0",
-                fontWeight: 300,
+                margin: "20px 0 0",
+                fontWeight: 400,
                 fontSize: 14,
-                color: "rgba(255,255,255,0.5)",
-                maxWidth: 320,
+                color: "#8a8f98",
+                maxWidth: 340,
                 lineHeight: 1.7,
               }}
             >
-              The work is the pitch. Based in Hyderabad, working with startups
-              and growing businesses.
+              The work is the pitch. A 2-person studio in Hyderabad, building
+              for startups and growing companies worldwide.
             </p>
             <a
               href="mailto:hello@hisaku.com"
               style={{
                 display: "inline-block",
-                marginTop: 20,
+                marginTop: 24,
                 fontWeight: 400,
-                fontSize: 13,
-                color: "rgba(255,255,255,0.7)",
+                fontSize: 14,
+                color: "#d0d6e0",
                 textDecoration: "none",
-                letterSpacing: "0.02em",
+                letterSpacing: "0.01em",
+                transition: "color 200ms ease",
               }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#f7f8f8")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#d0d6e0")}
             >
-              Hyderabad, India · hello@hisaku.com
+              hello@hisaku.com
             </a>
           </div>
 
-          {/* Explore */}
           <nav aria-label="Explore">
             <h2 style={labelStyle}>Explore</h2>
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -151,7 +137,6 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Capabilities */}
           <nav aria-label="Capabilities">
             <h2 style={labelStyle}>Capabilities</h2>
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -162,7 +147,6 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Connect */}
           <nav aria-label="Connect">
             <h2 style={labelStyle}>Connect</h2>
             <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -192,10 +176,9 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        {/* Bottom row */}
         <div
           style={{
-            marginTop: 48,
+            marginTop: 64,
             paddingTop: 32,
             borderTop: "1px solid rgba(255,255,255,0.06)",
             display: "flex",
@@ -208,9 +191,9 @@ export function SiteFooter() {
           <p
             style={{
               margin: 0,
-              fontWeight: 300,
+              fontWeight: 400,
               fontSize: 13,
-              color: "rgba(255,255,255,0.4)",
+              color: "#62666d",
             }}
           >
             © {year} Hisaku. All rights reserved.
@@ -218,9 +201,9 @@ export function SiteFooter() {
           <p
             style={{
               margin: 0,
-              fontWeight: 300,
+              fontWeight: 400,
               fontSize: 13,
-              color: "rgba(255,255,255,0.4)",
+              color: "#62666d",
             }}
           >
             Hyderabad · India

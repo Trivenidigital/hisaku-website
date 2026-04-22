@@ -1,15 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { RadialVignette } from "@/components/ui/RadialVignette";
 
 /**
- * HeroSection — Superhuman-inspired. Still, left-aligned, restrained.
+ * Homepage Hero — still, composed, Superhuman-restrained.
  *
- * No video. No animated paths. No spotlight. No word rotation.
- * Typography does the work. Single violet CTA is the only chromatic
- * element. Content is vertically centered at top:50%.
+ * Single radial violet bloom (8% opacity) centered horizontally,
+ * lower-third vertically. No motion, no aurora, no video.
+ * Content is left-aligned editorial: eyebrow, headline, sub, CTAs.
+ *
+ * Vertically anchored at 55% (slightly lower than centre) so the
+ * violet CTA lands near the vignette's peak brightness.
  */
-export function HeroSection() {
+export function Hero() {
   return (
     <section
       aria-label="Hero"
@@ -20,23 +24,20 @@ export function HeroSection() {
         overflow: "hidden",
       }}
     >
+      <RadialVignette color="#8B5CF6" opacity={0.08} x={50} y={65} size={55} />
+
       <div
         style={{
           position: "absolute",
-          top: "50%",
+          top: "55%",
           left: 0,
           right: 0,
           transform: "translateY(-50%)",
           padding: "0 48px",
+          zIndex: 1,
         }}
       >
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: "0 auto",
-            textAlign: "left",
-          }}
-        >
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p
             style={{
               fontWeight: 500,
@@ -53,17 +54,18 @@ export function HeroSection() {
           <h1
             style={{
               fontWeight: 500,
-              fontSize: "clamp(48px, 7vw, 88px)",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.98,
+              fontSize: "clamp(48px, 7vw, 96px)",
+              letterSpacing: "-0.035em",
+              lineHeight: 0.96,
               color: "#f7f8f8",
               margin: 0,
-              maxWidth: 1000,
+              maxWidth: 1100,
             }}
           >
             We build digital
             <br />
-            experiences that move.
+            experiences that{" "}
+            <span style={{ fontStyle: "italic", fontWeight: 400 }}>move.</span>
           </h1>
 
           <p
@@ -100,14 +102,18 @@ export function HeroSection() {
                 fontWeight: 510,
                 fontSize: 15,
                 textDecoration: "none",
-                transition: "background-color 200ms ease",
+                transition: "background-color 200ms ease, box-shadow 200ms ease",
+                boxShadow: "0 0 0 rgba(139,92,246,0)",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "#7C3AED")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = "#8B5CF6")
-              }
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#7C3AED";
+                e.currentTarget.style.boxShadow =
+                  "0 0 32px rgba(139,92,246,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#8B5CF6";
+                e.currentTarget.style.boxShadow = "0 0 0 rgba(139,92,246,0)";
+              }}
             >
               Start a Project →
             </Link>
@@ -124,11 +130,13 @@ export function HeroSection() {
                 fontWeight: 510,
                 fontSize: 15,
                 textDecoration: "none",
-                transition: "border-color 200ms ease, background-color 200ms ease",
+                transition:
+                  "border-color 200ms ease, background-color 200ms ease",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
-                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
+                e.currentTarget.style.backgroundColor =
+                  "rgba(255,255,255,0.02)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";

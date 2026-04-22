@@ -6,8 +6,16 @@ import { useEffect, useState } from "react";
 import { MobileNav } from "./MobileNav";
 
 /**
- * Navbar — Superhuman-style: tight 60px bar, ghost nav text,
- * single violet CTA. No theme flipping.
+ * Navbar — 60px fixed bar. Backdrop-blurred glass at scroll > 20.
+ *
+ *   HISAKU            Work · Capabilities · About · Contact   [Start →]
+ *
+ * Logo: 13px, weight 600, letter-spacing 0.08em. Links: 14px
+ * weight 400, grey → white on hover. CTA: violet fill, white text,
+ * 8px 18px padding, subtle violet glow on hover.
+ *
+ * The only chromatic element in the nav is the CTA. Everything else
+ * is white, grey, or transparent.
  */
 const NAV_LINKS = [
   { href: "/work", label: "Work" },
@@ -43,13 +51,15 @@ export function Navbar() {
         right: 0,
         height: 60,
         zIndex: 100,
-        backgroundColor: "rgba(10,10,15,0.85)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
+        backgroundColor: scrolled
+          ? "rgba(10,10,15,0.72)"
+          : "rgba(10,10,15,0)",
+        backdropFilter: scrolled ? "blur(20px) saturate(160%)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(160%)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(255,255,255,0.06)"
           : "1px solid transparent",
-        transition: "border-color 200ms ease",
+        transition: "background-color 200ms ease, backdrop-filter 200ms ease, border-color 200ms ease",
       }}
     >
       <nav
@@ -117,7 +127,6 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Violet filled CTA — the single chromatic element in the nav. */}
         <Link
           href="/contact"
           className="hidden md:inline-flex"
@@ -130,13 +139,16 @@ export function Navbar() {
             fontWeight: 500,
             fontSize: 13,
             textDecoration: "none",
-            transition: "background-color 200ms ease",
+            transition: "background-color 200ms ease, box-shadow 200ms ease",
+            boxShadow: "0 0 0 rgba(139,92,246,0)",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = "#7C3AED";
+            e.currentTarget.style.boxShadow = "0 0 24px rgba(139,92,246,0.3)";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = "#8B5CF6";
+            e.currentTarget.style.boxShadow = "0 0 0 rgba(139,92,246,0)";
           }}
         >
           Start a Project →

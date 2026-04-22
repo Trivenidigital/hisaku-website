@@ -17,7 +17,9 @@
       "Bash(grep -v \":0$\")",
       "Bash(python -c ' *)",
       "WebFetch(domain:getdesign.md)",
-      "WebFetch(domain:vercel.com)"
+      "WebFetch(domain:vercel.com)",
+      "Bash(cp /tmp/tb.txt components/ui/TracingBeam.tsx)",
+      "Bash(cp /tmp/mq.txt components/ui/Marquee.tsx)"
     ]
   }
 }

@@ -2,7 +2,7 @@
 
 /**
  * TracingBeam — vertical SVG line that fills as the user scrolls past
- * it. Mirrors Aceternity's pattern but tuned to our lime accent.
+ * it. Mirrors Aceternity's pattern, tuned to our violet accent.
  *
  * Wrap long-form content. The beam renders at the left gutter on md+
  * and collapses on mobile.
