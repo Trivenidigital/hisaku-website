@@ -8,6 +8,7 @@ import {
 } from "@/lib/content/case-studies";
 import { buildMetadata } from "@/lib/metadata";
 import { colors, fonts } from "@/lib/design";
+import { TracingBeam } from "@/components/ui/TracingBeam";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -274,6 +275,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Scroll-traced long-form: Challenge → Solution → Results. */}
+      <TracingBeam className="py-0">
       {/* Challenge */}
       <ContentSection
         label="— The Challenge"
@@ -380,6 +383,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+      </TracingBeam>
 
       {/* Next + back */}
       <section

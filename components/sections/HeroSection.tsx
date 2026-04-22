@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { BackgroundPaths } from "@/components/ui/BackgroundPaths";
+import { Spotlight } from "@/components/ui/Spotlight";
+import { WordRotate } from "@/components/ui/WordRotate";
 
 /**
  * HeroSection — centered premium layout with:
@@ -19,27 +21,9 @@ import { useRef } from "react";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function HeroSection() {
-  const spotlightRef = useRef<HTMLDivElement>(null);
-
-  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const el = spotlightRef.current;
-    if (!el) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    // Radial gradient centered on cursor, size 40vw, soft falloff.
-    el.style.background = `radial-gradient(600px circle at ${x}px ${y}px, rgba(232,255,71,0.10), transparent 40%)`;
-  }
-
-  function onMouseLeave() {
-    if (spotlightRef.current) spotlightRef.current.style.background = "transparent";
-  }
-
   return (
     <section
       aria-label="Hero"
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
       style={{
         position: "relative",
         minHeight: "100vh",
@@ -47,6 +31,8 @@ export function HeroSection() {
         overflow: "hidden",
       }}
     >
+      {/* Ambient animated paths — z-0, sits behind video + overlay. */}
+      <BackgroundPaths />
       {/* Video background */}
       <video
         autoPlay
@@ -76,18 +62,17 @@ export function HeroSection() {
           zIndex: 1,
         }}
       />
-      {/* Spotlight layer — repainted imperatively on every mousemove */}
+      {/* Mouse-following spotlight — z-2, sits above overlay, below content. */}
       <div
-        ref={spotlightRef}
-        aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           zIndex: 2,
           pointerEvents: "none",
-          transition: "background 200ms ease",
         }}
-      />
+      >
+        <Spotlight size={800} color="rgba(232,255,71,0.08)" />
+      </div>
 
       {/* Content — centered, anchored at ~45% from top */}
       <div
@@ -155,7 +140,7 @@ export function HeroSection() {
           We build digital
           <br />
           experiences that{" "}
-          <span style={{ color: "#e8ff47" }}>move.</span>
+          <WordRotate words={["move.", "grow.", "convert.", "scale."]} />
         </motion.h1>
 
         {/* Subheadline */}

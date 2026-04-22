@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { CaseStudy } from "@/lib/content/case-studies";
+import { GlowCard } from "@/components/ui/GlowCard";
 
 /**
  * WorkSection — 3-column card grid.
@@ -92,24 +93,22 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
   const primary = fm.results[0];
 
   return (
-    <Link
-      href={`/work/${fm.slug}`}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+    <GlowCard
       className="conic-glow"
-      style={{
-        display: "block",
-        backgroundColor: "#0f1011",
-        border: "1px solid rgba(255,255,255,0.06)",
-        borderRadius: 12,
-        overflow: "hidden",
-        textDecoration: "none",
-        transition: "all 300ms ease",
-        transform: hover ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
-        position: "relative",
-      }}
     >
+      <Link
+        href={`/work/${fm.slug}`}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          display: "block",
+          textDecoration: "none",
+          color: "inherit",
+          transition: "transform 300ms ease, box-shadow 300ms ease",
+          transform: hover ? "translateY(-6px)" : "translateY(0)",
+          boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
+        }}
+      >
       {/* Video thumbnail */}
       <div
         style={{
@@ -221,6 +220,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
           View Case Study →
         </p>
       </div>
-    </Link>
+      </Link>
+    </GlowCard>
   );
 }
