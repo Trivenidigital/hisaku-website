@@ -19,7 +19,11 @@
       "WebFetch(domain:getdesign.md)",
       "WebFetch(domain:vercel.com)",
       "Bash(cp /tmp/tb.txt components/ui/TracingBeam.tsx)",
-      "Bash(cp /tmp/mq.txt components/ui/Marquee.tsx)"
+      "Bash(cp /tmp/mq.txt components/ui/Marquee.tsx)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(netstat -ano)",
+      "Bash(powershell -c \"Stop-Process -Id 17792 -Force\")"
     ]
   }
 }
