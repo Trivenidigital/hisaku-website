@@ -24,7 +24,10 @@ export default function HomePage() {
   const caseStudies = getCaseStudies();
 
   return (
-    <main id="main" style={{ backgroundColor: colors.bg }}>
+    <main
+      id="main"
+      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+    >
       <HeroSection />
       <MarqueeSection />
       {caseStudies.length > 0 ? (

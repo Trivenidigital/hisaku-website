@@ -16,7 +16,11 @@ export function AboutStrip() {
   return (
     <section
       aria-label="About"
-      style={{ backgroundColor: "#111111", padding: "120px 48px" }}
+      style={{
+        backgroundColor: "#111111",
+        color: "#ffffff",
+        padding: "120px 48px",
+      }}
     >
       <div
         style={{

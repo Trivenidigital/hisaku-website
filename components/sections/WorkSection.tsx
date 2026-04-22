@@ -50,6 +50,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
       aria-label="Selected work"
       style={{
         backgroundColor: "#0a0a0a",
+        color: "#ffffff",
         padding: "120px 0",
       }}
     >

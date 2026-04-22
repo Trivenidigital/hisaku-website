@@ -10,7 +10,11 @@ export function CtaSection() {
   return (
     <section
       aria-label="Call to action"
-      style={{ backgroundColor: "#0a0a0a", padding: "0 48px 120px" }}
+      style={{
+        backgroundColor: "#0a0a0a",
+        color: "#ffffff",
+        padding: "0 48px 120px",
+      }}
     >
       <div
         style={{

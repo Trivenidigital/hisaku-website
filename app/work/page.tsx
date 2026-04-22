@@ -15,7 +15,10 @@ export const metadata: Metadata = buildMetadata({
 export default function WorkIndexPage() {
   const all = getCaseStudies();
   return (
-    <main id="main" style={{ backgroundColor: colors.bg }}>
+    <main
+      id="main"
+      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+    >
       <PageHero
         label="Selected Work"
         title="Things we've built."

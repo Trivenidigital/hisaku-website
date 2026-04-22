@@ -97,7 +97,10 @@ const CAPABILITIES: Capability[] = [
 
 export default function CapabilitiesPage() {
   return (
-    <main id="main" style={{ backgroundColor: colors.bg }}>
+    <main
+      id="main"
+      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+    >
       <PageHero
         label="Capabilities"
         title="What We Build."
@@ -196,6 +199,7 @@ function CapabilitySection({
         style={{
           direction: "ltr",
           backgroundColor: capability.textBg,
+          color: "#ffffff",
           padding: "80px 60px",
           display: "flex",
           flexDirection: "column",

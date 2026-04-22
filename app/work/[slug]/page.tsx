@@ -123,7 +123,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
   };
 
   return (
-    <main id="main" style={{ backgroundColor: colors.bg }}>
+    <main
+      id="main"
+      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}

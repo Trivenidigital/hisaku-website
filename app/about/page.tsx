@@ -32,7 +32,10 @@ const VALUES = [
 
 export default function AboutPage() {
   return (
-    <main id="main" style={{ backgroundColor: colors.bg }}>
+    <main
+      id="main"
+      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+    >
       <PageHero
         label="About Hisaku"
         title="We Build What Moves."

@@ -5,7 +5,11 @@ export function TestimonialSection() {
   return (
     <section
       aria-label="Testimonial"
-      style={{ backgroundColor: "#111111", padding: "100px 48px" }}
+      style={{
+        backgroundColor: "#111111",
+        color: "#ffffff",
+        padding: "100px 48px",
+      }}
     >
       <div
         style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}
