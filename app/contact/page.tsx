@@ -52,11 +52,11 @@ export default function ContactPage() {
             style={{
               fontFamily: fonts.body,
               fontWeight: 500,
-              fontSize: 12,
-              letterSpacing: "0.15em",
+              fontSize: 13,
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: colors.accent,
-              margin: "0 0 24px",
+              color: colors.dim,
+              margin: "0 0 32px",
             }}
           >
             Start a Project
@@ -111,17 +111,16 @@ export default function ContactPage() {
               href={whatsApp ?? `mailto:${FALLBACK_EMAIL}`}
               target={whatsApp ? "_blank" : undefined}
               rel={whatsApp ? "noopener noreferrer" : undefined}
-              className="shimmer-btn"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 backgroundColor: colors.accent,
-                color: colors.bg,
-                padding: "12px 28px",
-                borderRadius: 6,
+                color: "#ffffff",
+                padding: "14px 28px",
+                borderRadius: 8,
                 fontFamily: fonts.body,
                 fontWeight: 510,
-                fontSize: 14,
+                fontSize: 15,
                 textDecoration: "none",
               }}
             >
@@ -147,7 +146,7 @@ export default function ContactPage() {
             >
               LinkedIn
             </a>
-            <span style={{ color: colors.accent }}>·</span>
+            <span style={{ color: colors.dim }}>·</span>
             <a
               href="https://twitter.com/"
               target="_blank"
@@ -169,14 +168,15 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Right — form on elevated surface */}
+        {/* Right — form on same dark bg; split by left border only. */}
         <section
           style={{
-            backgroundColor: colors.surface,
+            backgroundColor: colors.bg,
             padding: "120px 48px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            borderLeft: "1px solid rgba(255,255,255,0.06)",
           }}
         >
           <ContactForm />

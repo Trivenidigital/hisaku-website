@@ -6,13 +6,8 @@ import { useEffect, useState } from "react";
 import { MobileNav } from "./MobileNav";
 
 /**
- * Navbar — clean, minimal, premium-agency-style.
- *
- *   HISAKU               Work · Capabilities · About · Contact    [Start a Project →]
- *
- * Fixed 64px bar with backdrop blur. Simple hover states. No
- * IntersectionObserver theme flipping — the new site is dark-dominant
- * and the nav reads cleanly on every section.
+ * Navbar — Superhuman-style: tight 60px bar, ghost nav text,
+ * single violet CTA. No theme flipping.
  */
 const NAV_LINKS = [
   { href: "/work", label: "Work" },
@@ -25,7 +20,6 @@ export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
-  // Active link match — /work/xyz should still highlight the "Work" nav item.
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(`${href}/`);
@@ -47,9 +41,9 @@ export function Navbar() {
         top: 0,
         left: 0,
         right: 0,
-        height: 64,
+        height: 60,
         zIndex: 100,
-        backgroundColor: "rgba(8,9,10,0.85)",
+        backgroundColor: "rgba(10,10,15,0.85)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: scrolled
@@ -70,22 +64,20 @@ export function Navbar() {
           justifyContent: "space-between",
         }}
       >
-        {/* Brand */}
         <Link
           href="/"
           aria-label="Hisaku home"
           style={{
-            fontWeight: 590,
-            fontSize: 15,
+            fontWeight: 600,
+            fontSize: 13,
             color: "#f7f8f8",
-            letterSpacing: "0.04em",
+            letterSpacing: "0.08em",
             textDecoration: "none",
           }}
         >
           HISAKU
         </Link>
 
-        {/* Center — desktop only */}
         <ul
           className="hidden md:flex"
           style={{
@@ -98,16 +90,15 @@ export function Navbar() {
         >
           {NAV_LINKS.map((link) => {
             const active = isActive(link.href);
-            const baseColor = active ? "#e8ff47" : "#8a8f98";
+            const baseColor = active ? "#f7f8f8" : "#8a8f98";
             return (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   style={{
-                    fontWeight: 510,
-                    fontSize: 13,
-                    letterSpacing: "-0.13px",
+                    fontWeight: 400,
+                    fontSize: 14,
                     color: baseColor,
                     textDecoration: "none",
                     transition: "color 200ms ease",
@@ -126,36 +117,31 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Right CTA — desktop only. Ghost button; lime reserved for in-page CTAs. */}
+        {/* Violet filled CTA — the single chromatic element in the nav. */}
         <Link
           href="/contact"
           className="hidden md:inline-flex"
           style={{
             alignItems: "center",
-            backgroundColor: "rgba(255,255,255,0.02)",
-            color: "#f7f8f8",
-            border: "1px solid rgba(255,255,255,0.08)",
-            padding: "8px 14px",
+            backgroundColor: "#8B5CF6",
+            color: "#ffffff",
+            padding: "8px 18px",
             borderRadius: 6,
-            fontWeight: 510,
+            fontWeight: 500,
             fontSize: 13,
-            letterSpacing: "-0.13px",
             textDecoration: "none",
-            transition: "border-color 200ms ease, background-color 200ms ease",
+            transition: "background-color 200ms ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = "rgba(255,255,255,0.16)";
-            e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)";
+            e.currentTarget.style.backgroundColor = "#7C3AED";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-            e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
+            e.currentTarget.style.backgroundColor = "#8B5CF6";
           }}
         >
           Start a Project →
         </Link>
 
-        {/* Mobile hamburger */}
         <div className="md:hidden">
           <MobileNav
             links={[

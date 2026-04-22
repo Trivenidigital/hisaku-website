@@ -17,7 +17,7 @@ export function TrustStrip() {
     <section
       aria-label="Trust signals"
       style={{
-        backgroundColor: "#0f1011",
+        backgroundColor: "#111118",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
         padding: "20px 24px",
@@ -42,7 +42,7 @@ export function TrustStrip() {
             key={item}
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <span style={{ color: "#e8ff47", marginRight: 10 }}>✦</span>
+            <span style={{ color: "#8B5CF6", marginRight: 10 }}>✦</span>
             {item}
             {i < items.length - 1 ? (
               <span

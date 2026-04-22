@@ -45,8 +45,9 @@ export default function AboutPage() {
       {/* Section 1 — Statement */}
       <section
         style={{
-          backgroundColor: colors.surface,
-          padding: "80px 48px",
+          backgroundColor: colors.bg,
+          padding: "100px 48px",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
         }}
       >
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
@@ -85,7 +86,11 @@ export default function AboutPage() {
 
       {/* Section 2 — Values */}
       <section
-        style={{ backgroundColor: colors.bg, padding: "80px 48px" }}
+        style={{
+          backgroundColor: colors.bg,
+          padding: "100px 48px",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+        }}
       >
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <h2
@@ -123,9 +128,10 @@ export default function AboutPage() {
       {/* Section 3 — Location */}
       <section
         style={{
-          backgroundColor: colors.surface,
-          padding: "80px 48px",
+          backgroundColor: colors.bg,
+          padding: "100px 48px",
           textAlign: "center",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
         }}
       >
         <p

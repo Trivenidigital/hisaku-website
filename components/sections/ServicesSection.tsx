@@ -3,11 +3,8 @@
 import Link from "next/link";
 
 /**
- * ServicesSection — static 2x2 card grid.
- *
- * Per user spec: no motion wrappers. Plain divs with inline styles
- * and onMouseEnter/Leave for the hover state. Cards wrapped in Link
- * so clicking still routes to the service detail page.
+ * ServicesSection — 2x2 card grid, Superhuman-restrained.
+ * Single bg #0a0a0f. Numbers are muted grey, not violet.
  */
 
 const SERVICES = [
@@ -41,17 +38,20 @@ export function ServicesSection() {
   return (
     <section
       aria-label="What we do"
-      style={{ backgroundColor: "#0f1011", padding: "120px 48px" }}
+      style={{
+        backgroundColor: "#0a0a0f",
+        padding: "100px 48px",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+      }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <p
           style={{
-            color: "#8a8f98",
+            color: "#62666d",
             fontSize: 13,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            marginBottom: 64,
-            fontWeight: 510,
+            fontWeight: 500,
             margin: "0 0 64px",
           }}
         >
@@ -61,7 +61,7 @@ export function ServicesSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: 24,
           }}
         >
@@ -71,29 +71,26 @@ export function ServicesSection() {
               href={`/services/${s.slug}`}
               style={{
                 display: "block",
-                backgroundColor: "#08090a",
+                backgroundColor: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.06)",
-                borderRadius: 12,
+                borderRadius: 8,
                 padding: 32,
                 cursor: "pointer",
                 textDecoration: "none",
-                transition: "all 300ms ease",
+                transition: "background-color 300ms ease, border-color 300ms ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(232,255,71,0.4)";
-                e.currentTarget.style.transform = "translateY(-6px)";
-                e.currentTarget.style.boxShadow =
-                  "0 20px 40px rgba(0,0,0,0.4)";
+                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
               }}
               onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
                 e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
               }}
             >
               <p
                 style={{
-                  color: "#e8ff47",
+                  color: "#62666d",
                   fontSize: 12,
                   fontWeight: 500,
                   letterSpacing: "0.08em",
@@ -115,7 +112,7 @@ export function ServicesSection() {
               </h3>
               <p
                 style={{
-                  color: "rgba(255,255,255,0.5)",
+                  color: "#8a8f98",
                   fontSize: 14,
                   lineHeight: 1.6,
                   margin: 0,
@@ -125,13 +122,13 @@ export function ServicesSection() {
               </p>
               <p
                 style={{
-                  color: "rgba(255,255,255,0.3)",
-                  fontSize: 18,
-                  marginTop: 16,
+                  color: "#62666d",
+                  fontSize: 14,
+                  marginTop: 24,
                   marginBottom: 0,
                 }}
               >
-                →
+                Learn more →
               </p>
             </Link>
           ))}

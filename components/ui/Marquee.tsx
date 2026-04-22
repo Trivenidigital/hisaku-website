@@ -21,7 +21,7 @@ export function Marquee({
   return (
     <div
       className={cn("group relative overflow-hidden", className)}
-      style={{ background: "#0f1011" }}
+      style={{ background: "#111118" }}
     >
       <div
         className={cn(
@@ -40,7 +40,7 @@ export function Marquee({
         className="pointer-events-none absolute inset-y-0 left-0 w-24"
         style={{
           background:
-            "linear-gradient(to right, #0f1011, rgba(15,16,17,0))",
+            "linear-gradient(to right, #111118, rgba(15,16,17,0))",
         }}
       />
       <div
@@ -48,7 +48,7 @@ export function Marquee({
         className="pointer-events-none absolute inset-y-0 right-0 w-24"
         style={{
           background:
-            "linear-gradient(to left, #0f1011, rgba(15,16,17,0))",
+            "linear-gradient(to left, #111118, rgba(15,16,17,0))",
         }}
       />
     </div>

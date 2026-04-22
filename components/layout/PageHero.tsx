@@ -2,19 +2,19 @@ import type { ReactNode } from "react";
 import { colors, fonts } from "@/lib/design";
 
 interface PageHeroProps {
-  /** Small uppercase label above the title, rendered in lime. */
+  /** Small uppercase label above the title, rendered muted. */
   label: string;
-  /** The main title. The `accentWord` portion gets highlighted. */
+  /** The main title. The `accentWord` portion gets italic emphasis. */
   title: string;
   /** Optional second-line subtitle below the title. */
   subtitle?: string;
   /**
-   * A substring of `title` to render in lime. Match is exact and
+   * A substring of `title` to render in italic. Match is exact and
    * appended to the end of the title output.
    *
    * Example:
    *   title="Things we've"  accentWord="built."
-   *   → "Things we've [built.]" where [built.] is lime.
+   *   → "Things we've [built.]" where [built.] is italic.
    */
   accentWord?: string;
   /** Optional supplementary children rendered below the subtitle. */
@@ -64,7 +64,7 @@ export default function PageHero({
       style={{
         backgroundColor: colors.bg,
         minHeight,
-        paddingTop: 160,
+        paddingTop: 140,
         paddingBottom: 80,
         paddingLeft: 48,
         paddingRight: 48,
@@ -73,18 +73,19 @@ export default function PageHero({
         justifyContent: "center",
         alignItems: "stretch",
         textAlign: "left",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%" }}>
       <p
         style={{
           fontFamily: fonts.body,
-          fontWeight: 510,
-          fontSize: 12,
-          letterSpacing: "0.15em",
+          fontWeight: 500,
+          fontSize: 13,
+          letterSpacing: "0.1em",
           textTransform: "uppercase",
-          color: colors.muted,
-          margin: "0 0 24px",
+          color: colors.dim,
+          margin: "0 0 32px",
         }}
       >
         {label}
@@ -95,8 +96,8 @@ export default function PageHero({
           fontFamily: fonts.display,
           fontWeight: 510,
           fontSize: "clamp(52px, 7vw, 96px)",
-          letterSpacing: "-0.02em",
-          lineHeight: 1.05,
+          letterSpacing: "-0.03em",
+          lineHeight: 0.98,
           color: colors.white,
           margin: 0,
           maxWidth: 1100,
@@ -106,7 +107,9 @@ export default function PageHero({
         {accent ? (
           <>
             {prefix ? " " : ""}
-            <span style={{ color: colors.accent }}>{accent}</span>
+            <span style={{ fontStyle: "italic", fontWeight: 400 }}>
+              {accent}
+            </span>
           </>
         ) : null}
       </h1>

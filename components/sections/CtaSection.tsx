@@ -3,77 +3,69 @@
 import Link from "next/link";
 
 /**
- * CtaSection — gradient card. Static render (no motion wrapper).
- * Button keeps the shimmer-btn class and hover scale.
+ * CtaSection — full-width, no inner card, no gradient.
+ * Just large typography and a single violet CTA.
  */
 export function CtaSection() {
   return (
     <section
       aria-label="Call to action"
       style={{
-        backgroundColor: "#08090a",
+        backgroundColor: "#0a0a0f",
         color: "#f7f8f8",
-        padding: "0 48px 120px",
+        padding: "120px 48px",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        textAlign: "left",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          background: "linear-gradient(135deg, #0a1a0a 0%, #08090a 100%)",
-          border: "1px solid rgba(232,255,71,0.15)",
-          borderRadius: 16,
-          padding: "80px 48px",
-          textAlign: "center",
-        }}
-      >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <h2
           style={{
             fontWeight: 510,
-            fontSize: "clamp(40px, 6vw, 72px)",
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
+            fontSize: "clamp(44px, 7vw, 88px)",
+            letterSpacing: "-0.03em",
+            lineHeight: 0.98,
             color: "#f7f8f8",
-            margin: "0 0 40px",
-            textAlign: "center",
+            margin: 0,
+            maxWidth: 900,
           }}
         >
           Ready to build
           <br />
-          <span style={{ color: "#e8ff47" }}>something great?</span>
+          something great?
         </h2>
         <p
           style={{
             fontWeight: 400,
-            fontSize: 17,
-            color: "rgba(255,255,255,0.55)",
-            margin: "0 0 40px",
+            fontSize: 18,
+            lineHeight: 1.6,
+            color: "#8a8f98",
+            margin: "32px 0 0",
+            maxWidth: 560,
           }}
         >
           Let&apos;s talk about your project.
         </p>
         <Link
           href="/contact"
-          className="shimmer-btn"
           style={{
             display: "inline-flex",
             alignItems: "center",
-            backgroundColor: "#e8ff47",
-            color: "#08090a",
+            marginTop: 48,
+            backgroundColor: "#8B5CF6",
+            color: "#ffffff",
             padding: "14px 28px",
-            borderRadius: 6,
+            borderRadius: 8,
             fontWeight: 510,
             fontSize: 15,
             textDecoration: "none",
-            transition: "all 200ms ease",
+            transition: "background-color 200ms ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#f0ff6e";
-            e.currentTarget.style.transform = "scale(1.02)";
+            e.currentTarget.style.backgroundColor = "#7C3AED";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#e8ff47";
-            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.backgroundColor = "#8B5CF6";
           }}
         >
           Start a Project →

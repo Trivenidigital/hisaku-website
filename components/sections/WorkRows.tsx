@@ -67,7 +67,9 @@ function Row({
         minHeight: 480,
         overflow: "hidden",
         borderBottom: "1px solid rgba(255,255,255,0.07)",
-        borderLeft: hover ? "3px solid #e8ff47" : "3px solid transparent",
+        borderLeft: hover
+          ? "3px solid rgba(255,255,255,0.3)"
+          : "3px solid transparent",
         transition: "border-left-color 300ms ease",
       }}
     >
@@ -99,7 +101,7 @@ function Row({
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: hover ? "rgba(8,9,10,0.35)" : "rgba(8,9,10,0.5)",
+          backgroundColor: hover ? "rgba(10,10,15,0.35)" : "rgba(10,10,15,0.5)",
           transition: "background-color 400ms ease",
         }}
       />
@@ -122,7 +124,7 @@ function Row({
             style={{
               fontWeight: 500,
               fontSize: 13,
-              color: "#e8ff47",
+              color: "#8a8f98",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               marginBottom: 16,
@@ -164,7 +166,7 @@ function Row({
                   fontSize: 48,
                   letterSpacing: "-0.02em",
                   lineHeight: 1,
-                  color: "#e8ff47",
+                  color: "#f7f8f8",
                   margin: 0,
                 }}
               >
@@ -189,7 +191,7 @@ function Row({
             style={{
               fontWeight: 400,
               fontSize: 14,
-              color: "#e8ff47",
+              color: "#f7f8f8",
               whiteSpace: "nowrap",
               opacity: hover ? 1 : 0,
               transform: hover ? "translateY(0)" : "translateY(20px)",

@@ -24,7 +24,7 @@ const TOKEN = {
   base: "#0a0a0a",
   textPrimary: "#ffffff",
   textSecondary: "#a0a0a0",
-  accent: "#e8ff47",
+  accent: "#8B5CF6",
 };
 
 export function OgLayout({

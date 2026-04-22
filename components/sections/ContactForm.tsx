@@ -29,11 +29,11 @@ export function ContactSideMark() {
           cy="36"
           r="34"
           fill="none"
-          stroke="rgba(232,255,71,0.35)"
+          stroke="rgba(139,92,246,0.35)"
           strokeWidth="1"
           strokeDasharray="4 6"
         />
-        <circle cx="36" cy="36" r="3" fill="#e8ff47" />
+        <circle cx="36" cy="36" r="3" fill="#8B5CF6" />
       </svg>
       <p
         style={{
@@ -120,7 +120,7 @@ export function ContactForm() {
   }
 
   function handleFocus(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    e.currentTarget.style.borderBottomColor = "#e8ff47";
+    e.currentTarget.style.borderBottomColor = "#8B5CF6";
   }
   function handleBlur(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.12)";
@@ -185,8 +185,8 @@ export function ContactForm() {
           padding: "18px 48px",
           border: "none",
           borderRadius: 6,
-          backgroundColor: sent ? "#f0ff6e" : "#e8ff47",
-          color: "#08090a",
+          backgroundColor: sent ? "#7C3AED" : "#8B5CF6",
+          color: "#0a0a0f",
           fontFamily: "var(--font-jakarta, sans-serif)",
           fontWeight: 510,
           fontSize: 15,
@@ -197,13 +197,13 @@ export function ContactForm() {
         }}
         onMouseEnter={(e) => {
           if (sent) return;
-          e.currentTarget.style.backgroundColor = "#f0ff6e";
+          e.currentTarget.style.backgroundColor = "#7C3AED";
           e.currentTarget.style.transform = "scale(1.02)";
           e.currentTarget.style.filter = "brightness(1.05)";
         }}
         onMouseLeave={(e) => {
           if (sent) return;
-          e.currentTarget.style.backgroundColor = "#e8ff47";
+          e.currentTarget.style.backgroundColor = "#8B5CF6";
           e.currentTarget.style.transform = "scale(1)";
           e.currentTarget.style.filter = "none";
         }}

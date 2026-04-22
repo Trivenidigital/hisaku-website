@@ -1,30 +1,31 @@
 @import "tailwindcss";
 
 /* ============================================================================
- * Hisaku design system — Linear-inspired, lime accent override.
+ * Hisaku design system — Superhuman-inspired, dark-mode adaptation.
  *
  * Dark-mode-native. Inter Variable with cv01 + ss03 applied globally.
- * Primary text #f7f8f8 (never #ffffff). Surfaces on rgba(255,255,255,0.02).
- * Lime #e8ff47 replaces Linear's purple #5e6ad2 as the single chromatic
- * accent — used only on CTAs, metrics, active states, and the tracing beam.
+ * Primary text #f7f8f8. Single bg #0a0a0f; sections separated by
+ * rgba borders, never by colour alternation.
  *
- * Legacy font tokens (--font-syne, --font-sans, --font-display, --font-body)
- * alias to Inter so older pages still render cleanly.
+ * Violet #8B5CF6 is the SOLE chromatic accent — restricted to primary
+ * CTAs, form focus, and the /work/[slug] TracingBeam. Nothing else.
+ * Metrics, numbers, category eyebrows, section labels are all white
+ * or grey.
  * ============================================================================ */
 
 @theme {
   /* Backgrounds */
-  --color-bg-dark: #08090a;
-  --color-bg-surface: #0f1011;
-  --color-bg-elevated: #191a1b;
+  --color-bg-dark: #0a0a0f;
+  --color-bg-surface: #111118;
+  --color-bg-elevated: #1a1a24;
   --color-bg-white: #ffffff;
   --color-bg-cream: #f8f6f0;
 
   /* Legacy aliases (kept so older page styles don't break). */
-  --color-base: #08090a;
-  --color-elevated: #191a1b;
-  --color-bg-mid: #0f1011;
-  --color-bg-teal: #08090a;
+  --color-base: #0a0a0f;
+  --color-elevated: #1a1a24;
+  --color-bg-mid: #111118;
+  --color-bg-teal: #0a0a0f;
   --color-hairline: rgba(255, 255, 255, 0.08);
   --color-hairline-subtle: rgba(255, 255, 255, 0.05);
 
@@ -36,8 +37,8 @@
   --color-text-secondary: #8a8f98;
 
   /* Accent — lime replaces Linear's purple. */
-  --color-accent-primary: #e8ff47;
-  --color-accent-hover: #f0ff6e;
+  --color-accent-primary: #8B5CF6;
+  --color-accent-hover: #7C3AED;
   --color-accent-secondary: #7c6af7;
 
   /* Ghost surfaces */
@@ -60,7 +61,7 @@
 
 /* Light theme inversion for sections that opt in. */
 [data-theme="light"] {
-  --color-text-primary: #08090a;
+  --color-text-primary: #0a0a0f;
   --color-text-secondary: rgba(8, 9, 10, 0.55);
   --color-hairline: rgba(8, 9, 10, 0.1);
 }
@@ -75,14 +76,14 @@
 }
 
 html {
-  background: #08090a;
+  background: #0a0a0f;
   color: #f7f8f8;
   color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #08090a;
+  background-color: #0a0a0f;
   color: #f7f8f8;
   font-family: var(--font-inter), "SF Pro Display", -apple-system, system-ui,
     sans-serif;
@@ -96,12 +97,12 @@ body {
 }
 
 ::selection {
-  background: #e8ff47;
-  color: #08090a;
+  background: #8B5CF6;
+  color: #0a0a0f;
 }
 
 :focus-visible {
-  outline: 2px solid #e8ff47;
+  outline: 2px solid #8B5CF6;
   outline-offset: 2px;
 }
 
@@ -110,8 +111,8 @@ body {
   left: -9999px;
   top: 0;
   padding: 0.75rem 1rem;
-  background: #e8ff47;
-  color: #08090a;
+  background: #8B5CF6;
+  color: #0a0a0f;
   font-weight: 510;
   z-index: 9997;
   text-decoration: none;
@@ -189,40 +190,6 @@ body {
   }
 }
 
-/* Legacy dot-grid — kept for any older surface still using it. */
-.hero-dotgrid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(232, 255, 71, 0.12) 1px,
-    transparent 1.3px
-  );
-  background-size: 52px 52px;
-  mask-image: radial-gradient(ellipse at center, #000 50%, transparent 85%);
-  -webkit-mask-image: radial-gradient(
-    ellipse at center,
-    #000 50%,
-    transparent 85%
-  );
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-dotgrid {
-    animation: dotGridDrift 60s linear infinite;
-  }
-}
-
-@keyframes dotGridDrift {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 52px 52px;
-  }
-}
-
 /* Shimmer button */
 .shimmer-btn {
   position: relative;
@@ -280,64 +247,6 @@ body {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-/* Conic-gradient hover glow — lime beam traces card border on hover. */
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.conic-glow {
-  position: relative;
-}
-
-.conic-glow::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 0deg,
-    rgba(232, 255, 71, 0.6) 90deg,
-    transparent 180deg,
-    rgba(232, 255, 71, 0.3) 270deg,
-    transparent 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 280ms ease;
-  pointer-events: none;
-  z-index: 2;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .conic-glow:hover::before {
-    opacity: 1;
-    animation: rotateAngle 3s linear infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .conic-glow:hover::before {
-    opacity: 1;
-  }
-}
-
-@keyframes rotateAngle {
-  to {
-    --angle: 360deg;
   }
 }
 

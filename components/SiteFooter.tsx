@@ -17,9 +17,9 @@ import Link from "next/link";
  */
 
 const linkStyle: React.CSSProperties = {
-  fontWeight: 300,
+  fontWeight: 400,
   fontSize: 14,
-  color: "#f7f8f8",
+  color: "#8a8f98",
   textDecoration: "none",
   display: "inline-block",
   lineHeight: 2,
@@ -46,9 +46,9 @@ function FooterLink({
 }) {
   const handlers = {
     onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) =>
-      (e.currentTarget.style.color = "#e8ff47"),
-    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) =>
       (e.currentTarget.style.color = "#f7f8f8"),
+    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) =>
+      (e.currentTarget.style.color = "#8a8f98"),
   };
   if (external) {
     return (
@@ -75,7 +75,7 @@ export function SiteFooter() {
   return (
     <footer
       style={{
-        backgroundColor: "#08090a",
+        backgroundColor: "#0a0a0f",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         padding: "64px 48px 40px",
       }}

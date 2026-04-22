@@ -28,10 +28,10 @@ export function MarqueeSection() {
         style={{
           display: "flex",
           alignItems: "center",
-          height: 48,
+          height: 44,
           width: "100%",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
         {TOKENS.map((item, i) => (
@@ -44,17 +44,17 @@ export function MarqueeSection() {
               textTransform: "uppercase",
               fontFamily: "var(--font-inter), sans-serif",
               fontFeatureSettings: '"cv01", "ss03"',
-              fontWeight: 510,
+              fontWeight: 500,
               fontSize: 11,
               letterSpacing: "0.18em",
-              color: "#8a8f98",
+              color: "#62666d",
               whiteSpace: "nowrap",
             }}
           >
             {item}
             <span
               aria-hidden
-              style={{ marginLeft: 28, color: "#e8ff47" }}
+              style={{ marginLeft: 28, color: "#8a8f98" }}
             >
               ·
             </span>

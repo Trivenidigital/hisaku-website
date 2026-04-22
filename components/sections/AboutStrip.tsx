@@ -1,9 +1,8 @@
 import { SpringCounter } from "@/components/ui/SpringCounter";
 
 /**
- * AboutStrip — 2-col about + 3 stats. Static layout.
- * The stats use SpringCounter which has its own safety timer so the
- * final value always renders even if the viewport trigger never fires.
+ * AboutStrip — 2-col about + 3 stats. Single dark bg.
+ * Stat numbers are PURE WHITE (not violet) per Superhuman restraint.
  */
 
 const STATS: { value: number; label: string }[] = [
@@ -17,9 +16,10 @@ export function AboutStrip() {
     <section
       aria-label="About"
       style={{
-        backgroundColor: "#0f1011",
+        backgroundColor: "#0a0a0f",
         color: "#f7f8f8",
-        padding: "120px 48px",
+        padding: "100px 48px",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div
@@ -35,9 +35,9 @@ export function AboutStrip() {
         <div>
           <p
             style={{
-              fontWeight: 510,
+              fontWeight: 500,
               fontSize: 13,
-              color: "#8a8f98",
+              color: "#62666d",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               margin: "0 0 24px",
@@ -50,7 +50,7 @@ export function AboutStrip() {
               fontWeight: 510,
               fontSize: "clamp(36px, 5vw, 56px)",
               letterSpacing: "-0.02em",
-              lineHeight: 1.1,
+              lineHeight: 1.05,
               color: "#f7f8f8",
               margin: 0,
             }}
@@ -67,7 +67,7 @@ export function AboutStrip() {
               fontWeight: 400,
               fontSize: 17,
               lineHeight: 1.75,
-              color: "rgba(255,255,255,0.65)",
+              color: "#8a8f98",
               margin: "0 0 48px",
             }}
           >
@@ -89,8 +89,8 @@ export function AboutStrip() {
                 <dt
                   style={{
                     fontWeight: 510,
-                    fontSize: 36,
-                    color: "#e8ff47",
+                    fontSize: 48,
+                    color: "#f7f8f8",
                     margin: 0,
                     letterSpacing: "-0.02em",
                     lineHeight: 1,
@@ -100,10 +100,12 @@ export function AboutStrip() {
                 </dt>
                 <dd
                   style={{
-                    margin: "8px 0 0",
+                    margin: "12px 0 0",
                     fontWeight: 400,
                     fontSize: 13,
-                    color: "rgba(255,255,255,0.5)",
+                    color: "#8a8f98",
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase",
                   }}
                 >
                   {s.label}

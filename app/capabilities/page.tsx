@@ -37,8 +37,8 @@ const CAPABILITIES: Capability[] = [
       "UI/UX for web applications",
       "Design systems and style guides",
     ],
-    textBg: "#08090a",
-    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
+    textBg: "#0a0a0f",
+    gradient: "transparent",
   },
   {
     number: "02",
@@ -54,8 +54,8 @@ const CAPABILITIES: Capability[] = [
       "API design and third-party integrations",
       "Performance optimisation",
     ],
-    textBg: "#0f1011",
-    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
+    textBg: "#0a0a0f",
+    gradient: "transparent",
   },
   {
     number: "03",
@@ -73,8 +73,8 @@ const CAPABILITIES: Capability[] = [
       "Paid advertising (Google Ads, Meta Ads)",
       "Analytics setup and monthly reporting",
     ],
-    textBg: "#08090a",
-    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
+    textBg: "#0a0a0f",
+    gradient: "transparent",
   },
   {
     number: "04",
@@ -90,8 +90,8 @@ const CAPABILITIES: Capability[] = [
       "Internal reporting and digest automation",
       "Custom AI integrations for your tools",
     ],
-    textBg: "#0f1011",
-    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
+    textBg: "#0a0a0f",
+    gradient: "transparent",
   },
 ];
 
@@ -116,55 +116,46 @@ export default function CapabilitiesPage() {
         />
       ))}
 
-      {/* Inline CTA card — matches homepage style. Kept inline (not the
-       * shared CtaSection) so the headline can be customized for this
-       * page without polluting the homepage component. */}
+      {/* Full-width CTA — no inner card, no gradient. */}
       <section
         style={{
           backgroundColor: colors.bg,
-          padding: "0 48px 120px",
+          padding: "120px 48px",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: "0 auto",
-            backgroundColor: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 16,
-            padding: 80,
-            textAlign: "center",
-          }}
-        >
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <h2
             style={{
               fontFamily: fonts.display,
               fontWeight: 510,
-              fontSize: "clamp(40px, 6vw, 64px)",
-              letterSpacing: "-0.022em",
-              lineHeight: 1.0,
+              fontSize: "clamp(44px, 7vw, 88px)",
+              letterSpacing: "-0.03em",
+              lineHeight: 0.98,
               color: "#f7f8f8",
-              margin: "0 0 40px",
+              margin: 0,
+              maxWidth: 900,
             }}
           >
             Ready to start?
             <br />
-            <span style={{ color: "#e8ff47" }}>Let&apos;s talk.</span>
+            <span style={{ fontStyle: "italic", fontWeight: 400 }}>
+              Let&apos;s talk.
+            </span>
           </h2>
           <Link
             href="/contact"
-            className="shimmer-btn"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              backgroundColor: "#e8ff47",
-              color: "#08090a",
+              marginTop: 48,
+              backgroundColor: "#8B5CF6",
+              color: "#ffffff",
               padding: "14px 28px",
-              borderRadius: 6,
+              borderRadius: 8,
               fontFamily: fonts.body,
               fontWeight: 510,
               fontSize: 15,
-              letterSpacing: "-0.165px",
               textDecoration: "none",
             }}
           >
@@ -191,17 +182,15 @@ function CapabilitySection({
         gridTemplateColumns: "1fr 1fr",
         alignItems: "stretch",
         borderTop: `1px solid ${colors.border}`,
-        // RTL trick to swap visual order without changing JSX order.
+        backgroundColor: "#0a0a0f",
         direction: textOnLeft ? "ltr" : "rtl",
       }}
     >
-      {/* Text side */}
       <div
         style={{
           direction: "ltr",
-          backgroundColor: capability.textBg,
           color: "#f7f8f8",
-          padding: "80px 60px",
+          padding: "100px 60px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -214,7 +203,7 @@ function CapabilitySection({
             fontSize: 12,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "#e8ff47",
+            color: "#62666d",
             margin: 0,
           }}
         >
@@ -225,11 +214,11 @@ function CapabilitySection({
             fontFamily: fonts.display,
             fontWeight: 510,
             fontSize: "clamp(40px, 5vw, 64px)",
-            letterSpacing: "-0.02em",
-            lineHeight: 1.05,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.0,
             color: "#f7f8f8",
             WebkitTextFillColor: "#f7f8f8",
-            margin: "16px 0 8px",
+            margin: "16px 0 12px",
           }}
         >
           {capability.name}
@@ -240,7 +229,7 @@ function CapabilitySection({
             fontWeight: 400,
             fontStyle: "italic",
             fontSize: 16,
-            color: "rgba(255,255,255,0.5)",
+            color: "#8a8f98",
             margin: "0 0 24px",
           }}
         >
@@ -252,7 +241,7 @@ function CapabilitySection({
             fontWeight: 400,
             fontSize: 17,
             lineHeight: 1.75,
-            color: "rgba(255,255,255,0.7)",
+            color: "#8a8f98",
             margin: "0 0 32px",
             maxWidth: 480,
           }}
@@ -267,8 +256,8 @@ function CapabilitySection({
                 fontFamily: fonts.body,
                 fontWeight: 400,
                 fontSize: 15,
-                color: "rgba(255,255,255,0.75)",
-                paddingLeft: 28,
+                color: "#d0d6e0",
+                paddingLeft: 24,
                 position: "relative",
                 lineHeight: 2,
               }}
@@ -278,8 +267,8 @@ function CapabilitySection({
                 style={{
                   position: "absolute",
                   left: 0,
-                  color: "#e8ff47",
-                  fontWeight: 510,
+                  color: "#62666d",
+                  fontWeight: 400,
                 }}
               >
                 →
@@ -291,27 +280,32 @@ function CapabilitySection({
         <Link
           href="/contact"
           style={{
-            display: "block",
-            marginTop: 32,
+            display: "inline-block",
+            marginTop: 40,
             fontFamily: fonts.body,
-            fontWeight: 500,
-            fontSize: 14,
-            color: "#e8ff47",
+            fontWeight: 510,
+            fontSize: 13,
+            color: "#f7f8f8",
             textDecoration: "none",
+            borderBottom: "1px solid rgba(255,255,255,0.3)",
+            paddingBottom: 2,
           }}
         >
           Start a Project →
         </Link>
       </div>
 
-      {/* Visual side — gradient pulse */}
+      {/* Visual side — ghost panel with subtle grid */}
       <div
         aria-hidden="true"
-        className="gradient-pulse"
         style={{
           direction: "ltr",
-          background: capability.gradient,
           minHeight: "60vh",
+          backgroundColor: "rgba(255,255,255,0.02)",
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+          borderLeft: "1px solid rgba(255,255,255,0.06)",
         }}
       />
     </section>

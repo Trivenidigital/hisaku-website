@@ -3,15 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { CaseStudy } from "@/lib/content/case-studies";
-import { GlowCard } from "@/components/ui/GlowCard";
 
 /**
- * WorkSection — 3-column card grid.
+ * WorkSection — 3-column card grid, Superhuman-restrained.
  *
- * Cards are static in the DOM — no framer-motion opacity/y initial
- * state. All motion is CSS: hover lift, hover shadow, conic-glow
- * border on hover. Content is visible the moment it paints, no
- * whileInView trigger dependency.
+ * Ghost cards on the main dark bg. Metric is PURE WHITE (not violet)
+ * because violet is reserved for CTAs and focus. No GlowCard, no
+ * conic-glow — a subtle border-color hover shift carries the weight.
  */
 
 interface WorkSectionProps {
@@ -50,19 +48,19 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
     <section
       aria-label="Selected work"
       style={{
-        backgroundColor: "#08090a",
+        backgroundColor: "#0a0a0f",
         color: "#f7f8f8",
-        padding: "120px 0",
+        padding: "100px 48px",
       }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <p
           style={{
-            fontWeight: 510,
+            fontWeight: 500,
             fontSize: 13,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "#8a8f98",
+            color: "#62666d",
             margin: "0 0 64px",
           }}
         >
@@ -93,29 +91,30 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
   const primary = fm.results[0];
 
   return (
-    <GlowCard
-      className="conic-glow"
+    <Link
+      href={`/work/${fm.slug}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: "block",
+        textDecoration: "none",
+        color: "inherit",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: hover
+          ? "1px solid rgba(255,255,255,0.14)"
+          : "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 8,
+        overflow: "hidden",
+        transition: "transform 300ms ease, border-color 300ms ease",
+        transform: hover ? "translateY(-3px)" : "translateY(0)",
+      }}
     >
-      <Link
-        href={`/work/${fm.slug}`}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        style={{
-          display: "block",
-          textDecoration: "none",
-          color: "inherit",
-          transition: "transform 300ms ease, box-shadow 300ms ease",
-          transform: hover ? "translateY(-6px)" : "translateY(0)",
-          boxShadow: hover ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
-        }}
-      >
-      {/* Video thumbnail */}
       <div
         style={{
-          height: 240,
+          height: 220,
           overflow: "hidden",
           position: "relative",
-          backgroundColor: "#08090a",
+          backgroundColor: "#0a0a0f",
         }}
       >
         {video ? (
@@ -137,15 +136,14 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
         ) : null}
       </div>
 
-      {/* Card body */}
-      <div style={{ padding: 24 }}>
+      <div style={{ padding: 28 }}>
         <p
           style={{
-            fontWeight: 400,
+            fontWeight: 500,
             fontSize: 11,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "#e8ff47",
+            color: "#8a8f98",
             margin: 0,
           }}
         >
@@ -155,13 +153,10 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
         <h3
           style={{
             fontWeight: 510,
-            fontSize: 24,
+            fontSize: 22,
             color: "#f7f8f8",
-            // Belt + braces: some browsers inherit -webkit-text-fill-color
-            // from a parent or from accent gradient text, leaving the h3
-            // looking teal/blue. Force-override explicitly.
             WebkitTextFillColor: "#f7f8f8",
-            margin: "8px 0 12px",
+            margin: "10px 0 16px",
             letterSpacing: "-0.01em",
           }}
         >
@@ -173,8 +168,8 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
             style={{
               fontWeight: 510,
               fontSize: 36,
-              color: "#e8ff47",
-              margin: "0 0 12px",
+              color: "#f7f8f8",
+              margin: "0 0 14px",
               letterSpacing: "-0.02em",
               lineHeight: 1,
             }}
@@ -184,7 +179,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
               style={{
                 fontSize: 11,
                 fontWeight: 400,
-                color: "rgba(255,255,255,0.5)",
+                color: "#8a8f98",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 marginLeft: 12,
@@ -200,7 +195,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
           style={{
             fontWeight: 400,
             fontSize: 14,
-            color: "rgba(255,255,255,0.65)",
+            color: "#8a8f98",
             lineHeight: 1.6,
             margin: 0,
           }}
@@ -210,17 +205,16 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
 
         <p
           style={{
-            margin: "16px 0 0",
+            margin: "20px 0 0",
             fontWeight: 500,
             fontSize: 13,
-            color: hover ? "#e8ff47" : "rgba(255,255,255,0.4)",
+            color: hover ? "#f7f8f8" : "#62666d",
             transition: "color 200ms ease",
           }}
         >
           View Case Study →
         </p>
       </div>
-      </Link>
-    </GlowCard>
+    </Link>
   );
 }

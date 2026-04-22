@@ -1,27 +1,27 @@
 /**
- * Hisaku design tokens — Linear-inspired, lime accent override.
+ * Hisaku design tokens — Superhuman-inspired, dark-mode adaptation.
  *
- * Color system: grayscale on near-black; single chromatic accent is
- * lime (#e8ff47) where Linear uses indigo (#5e6ad2). Everything else
- * tracks Linear's dark-mode-native system exactly.
+ * Single bg #0a0a0f; sections separated by rgba borders. Violet
+ * #8B5CF6 is the sole chromatic accent — reserved for primary CTAs,
+ * form focus, and TracingBeam. Metrics, numbers, and eyebrow labels
+ * are white or grey.
  *
- * Typography: Inter Variable with cv01 + ss03 globally. Signature
- * weight 510 for emphasis. Aggressive negative letter-spacing at
- * display sizes.
+ * Typography: Inter Variable with cv01 + ss03 globally. Weight 510
+ * for emphasis. Tight negative letter-spacing at display sizes.
  */
 
 export const colors = {
-  bg: "#08090a",
-  surface: "#0f1011",
-  elevated: "#191a1b",
+  bg: "#0a0a0f",
+  surface: "#111118",
+  elevated: "#1a1a24",
   white: "#f7f8f8",
   silver: "#d0d6e0",
   muted: "#8a8f98",
   muted2: "#8a8f98",
   dim: "#62666d",
   dim3: "#62666d",
-  accent: "#e8ff47",
-  accentHover: "#f0ff6e",
+  accent: "#8B5CF6",
+  accentHover: "#7C3AED",
   border: "rgba(255,255,255,0.08)",
   borderSubtle: "rgba(255,255,255,0.05)",
   ghostBg: "rgba(255,255,255,0.02)",

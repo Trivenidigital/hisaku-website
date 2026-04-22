@@ -1,40 +1,52 @@
 /**
- * TestimonialSection — static 5-star centered. No motion wrappers.
+ * TestimonialSection — Superhuman-restrained: no card, no stars,
+ * just a large ghost quote mark and italic body.
  */
 export function TestimonialSection() {
   return (
     <section
       aria-label="Testimonial"
       style={{
-        backgroundColor: "#0f1011",
+        backgroundColor: "#0a0a0f",
         color: "#f7f8f8",
         padding: "100px 48px",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div
-        style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}
+        style={{
+          maxWidth: 900,
+          margin: "0 auto",
+          position: "relative",
+        }}
       >
-        <p
-          aria-label="5 out of 5 stars"
+        <span
+          aria-hidden="true"
           style={{
-            color: "#e8ff47",
-            fontSize: 18,
-            letterSpacing: "0.3em",
-            margin: 0,
+            position: "absolute",
+            top: -40,
+            left: -8,
+            fontSize: 120,
+            fontWeight: 510,
+            color: "#1a1a24",
+            lineHeight: 1,
+            pointerEvents: "none",
+            userSelect: "none",
           }}
         >
-          ★★★★★
-        </p>
+          “
+        </span>
 
-        <blockquote style={{ margin: "24px 0", padding: 0 }}>
+        <blockquote style={{ margin: 0, padding: 0, position: "relative" }}>
           <p
             style={{
               fontWeight: 400,
               fontStyle: "italic",
               fontSize: 22,
-              lineHeight: 1.75,
-              color: "rgba(255,255,255,0.85)",
+              lineHeight: 1.6,
+              color: "#d0d6e0",
               margin: 0,
+              letterSpacing: "-0.01em",
             }}
           >
             Hisaku understood our business from day one. They didn&apos;t just
@@ -46,9 +58,10 @@ export function TestimonialSection() {
         <p
           style={{
             fontWeight: 500,
-            fontSize: 14,
-            color: "rgba(255,255,255,0.45)",
-            margin: 0,
+            fontSize: 13,
+            color: "#62666d",
+            letterSpacing: "0.04em",
+            margin: "32px 0 0",
           }}
         >
           — Owner, Hello2India · Herndon, Virginia

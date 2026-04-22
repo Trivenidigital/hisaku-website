@@ -49,18 +49,18 @@ export function TracingBeam({
       <div className="absolute top-0 -left-4 hidden md:block">
         <motion.div
           transition={{ duration: 0.2, delay: 0.5 }}
-          animate={{ boxShadow: "rgba(232,255,71,0.5) 0px 0px 16px 2px" }}
+          animate={{ boxShadow: "rgba(139,92,246,0.5) 0px 0px 16px 2px" }}
           className="ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm"
           style={{
             borderColor: "rgba(255,255,255,0.12)",
-            background: "#08090a",
+            background: "#0a0a0f",
           }}
         >
           <div
             className="h-2 w-2 rounded-full border"
             style={{
               borderColor: "rgba(255,255,255,0.24)",
-              background: "#e8ff47",
+              background: "#8B5CF6",
             }}
           />
         </motion.div>
@@ -94,10 +94,10 @@ export function TracingBeam({
               y1={y1}
               y2={y2}
             >
-              <stop stopColor="#e8ff47" stopOpacity="0" />
-              <stop stopColor="#e8ff47" />
-              <stop offset="0.325" stopColor="#f0ff6e" />
-              <stop offset="1" stopColor="#e8ff47" stopOpacity="0" />
+              <stop stopColor="#8B5CF6" stopOpacity="0" />
+              <stop stopColor="#8B5CF6" />
+              <stop offset="0.325" stopColor="#7C3AED" />
+              <stop offset="1" stopColor="#8B5CF6" stopOpacity="0" />
             </motion.linearGradient>
           </defs>
         </svg>
