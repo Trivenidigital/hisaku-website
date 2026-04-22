@@ -19,7 +19,7 @@ import Link from "next/link";
 const linkStyle: React.CSSProperties = {
   fontWeight: 300,
   fontSize: 14,
-  color: "#ffffff",
+  color: "#f7f8f8",
   textDecoration: "none",
   display: "inline-block",
   lineHeight: 2,
@@ -48,7 +48,7 @@ function FooterLink({
     onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) =>
       (e.currentTarget.style.color = "#e8ff47"),
     onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) =>
-      (e.currentTarget.style.color = "#ffffff"),
+      (e.currentTarget.style.color = "#f7f8f8"),
   };
   if (external) {
     return (
@@ -75,7 +75,7 @@ export function SiteFooter() {
   return (
     <footer
       style={{
-        backgroundColor: "#0a0a0a",
+        backgroundColor: "#08090a",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         padding: "64px 48px 40px",
       }}
@@ -101,9 +101,9 @@ export function SiteFooter() {
               href="/"
               aria-label="Hisaku home"
               style={{
-                fontWeight: 700,
+                fontWeight: 510,
                 fontSize: 24,
-                color: "#ffffff",
+                color: "#f7f8f8",
                 letterSpacing: "0.05em",
                 textDecoration: "none",
                 display: "inline-block",

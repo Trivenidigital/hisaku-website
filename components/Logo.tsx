@@ -44,7 +44,7 @@ export function LogoText({ className }: { className?: string }) {
       className={className}
       style={{
         fontFamily: "var(--font-syne)",
-        fontWeight: 800,
+        fontWeight: 510,
         fontSize: "20px",
         color: "#e8ff47",
         letterSpacing: "-0.02em",

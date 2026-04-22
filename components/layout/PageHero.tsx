@@ -92,7 +92,7 @@ export default function PageHero({
       <h1
         style={{
           fontFamily: fonts.display,
-          fontWeight: 800,
+          fontWeight: 510,
           fontSize: "clamp(52px, 7vw, 96px)",
           letterSpacing: "-0.02em",
           lineHeight: 1.05,

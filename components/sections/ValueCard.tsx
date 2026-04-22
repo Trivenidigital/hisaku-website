@@ -21,7 +21,7 @@ export function ValueCard({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        backgroundColor: "#111111",
+        backgroundColor: "#0f1011",
         border: `1px solid ${hover ? "rgba(232,255,71,0.4)" : "rgba(255,255,255,0.06)"}`,
         borderRadius: 12,
         padding: 32,
@@ -43,10 +43,10 @@ export function ValueCard({
       </p>
       <h3
         style={{
-          fontWeight: 700,
+          fontWeight: 510,
           fontSize: 24,
           letterSpacing: "-0.01em",
-          color: "#ffffff",
+          color: "#f7f8f8",
           margin: "12px 0 12px",
         }}
       >

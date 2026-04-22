@@ -49,15 +49,15 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
     <section
       aria-label="Selected work"
       style={{
-        backgroundColor: "#0a0a0a",
-        color: "#ffffff",
+        backgroundColor: "#08090a",
+        color: "#f7f8f8",
         padding: "120px 0",
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 48px" }}>
         <p
           style={{
-            fontWeight: 600,
+            fontWeight: 510,
             fontSize: 13,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
@@ -99,7 +99,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
       className="conic-glow"
       style={{
         display: "block",
-        backgroundColor: "#111111",
+        backgroundColor: "#0f1011",
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: 12,
         overflow: "hidden",
@@ -116,7 +116,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
           height: 240,
           overflow: "hidden",
           position: "relative",
-          backgroundColor: "#0a0a0a",
+          backgroundColor: "#08090a",
         }}
       >
         {video ? (
@@ -155,13 +155,13 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
 
         <h3
           style={{
-            fontWeight: 700,
+            fontWeight: 510,
             fontSize: 24,
-            color: "#ffffff",
+            color: "#f7f8f8",
             // Belt + braces: some browsers inherit -webkit-text-fill-color
             // from a parent or from accent gradient text, leaving the h3
             // looking teal/blue. Force-override explicitly.
-            WebkitTextFillColor: "#ffffff",
+            WebkitTextFillColor: "#f7f8f8",
             margin: "8px 0 12px",
             letterSpacing: "-0.01em",
           }}
@@ -172,7 +172,7 @@ function WorkCard({ caseStudy }: { caseStudy: CaseStudy }) {
         {primary ? (
           <p
             style={{
-              fontWeight: 700,
+              fontWeight: 510,
               fontSize: 36,
               color: "#e8ff47",
               margin: "0 0 12px",

@@ -41,7 +41,7 @@ export function ServicesSection() {
   return (
     <section
       aria-label="What we do"
-      style={{ backgroundColor: "#111111", padding: "120px 48px" }}
+      style={{ backgroundColor: "#0f1011", padding: "120px 48px" }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <p
@@ -71,7 +71,7 @@ export function ServicesSection() {
               href={`/services/${s.slug}`}
               style={{
                 display: "block",
-                backgroundColor: "#0a0a0a",
+                backgroundColor: "#08090a",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 12,
                 padding: 32,
@@ -104,9 +104,9 @@ export function ServicesSection() {
               </p>
               <h3
                 style={{
-                  color: "#ffffff",
+                  color: "#f7f8f8",
                   fontSize: 22,
-                  fontWeight: 700,
+                  fontWeight: 510,
                   margin: "12px 0 8px",
                   letterSpacing: "-0.01em",
                 }}

@@ -34,7 +34,7 @@ export default function AboutPage() {
   return (
     <main
       id="main"
-      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+      style={{ backgroundColor: colors.bg, color: "#f7f8f8" }}
     >
       <PageHero
         label="About Hisaku"
@@ -53,7 +53,7 @@ export default function AboutPage() {
           <h2
             style={{
               fontFamily: fonts.display,
-              fontWeight: 800,
+              fontWeight: 510,
               fontSize: "clamp(32px, 4vw, 52px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.2,
@@ -91,7 +91,7 @@ export default function AboutPage() {
           <h2
             style={{
               fontFamily: fonts.display,
-              fontWeight: 800,
+              fontWeight: 510,
               fontSize: 40,
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
@@ -142,7 +142,7 @@ export default function AboutPage() {
         <h2
           style={{
             fontFamily: fonts.display,
-            fontWeight: 800,
+            fontWeight: 510,
             fontSize: "clamp(32px, 4vw, 52px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.1,

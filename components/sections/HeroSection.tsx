@@ -43,7 +43,7 @@ export function HeroSection() {
       style={{
         position: "relative",
         minHeight: "100vh",
-        backgroundColor: "#0a0a0a",
+        backgroundColor: "#08090a",
         overflow: "hidden",
       }}
     >
@@ -72,7 +72,7 @@ export function HeroSection() {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(10,10,10,0.7)",
+          backgroundColor: "rgba(8,9,10,0.72)",
           zIndex: 1,
         }}
       />
@@ -123,13 +123,14 @@ export function HeroSection() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              border: "1px solid rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(255,255,255,0.02)",
               borderRadius: 20,
               padding: "6px 16px",
-              fontWeight: 400,
-              fontSize: 12,
-              letterSpacing: "0.05em",
-              color: "rgba(255,255,255,0.6)",
+              fontWeight: 510,
+              fontSize: 13,
+              letterSpacing: "-0.13px",
+              color: "#8a8f98",
             }}
           >
             <span style={{ color: "#e8ff47", marginRight: 8 }}>✦</span>
@@ -143,11 +144,11 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
           style={{
-            fontWeight: 700,
-            fontSize: "clamp(52px, 7vw, 96px)",
-            letterSpacing: "-0.02em",
-            lineHeight: 1.05,
-            color: "#ffffff",
+            fontWeight: 510,
+            fontSize: "clamp(48px, 7vw, 88px)",
+            letterSpacing: "-0.022em",
+            lineHeight: 1.0,
+            color: "#f7f8f8",
             margin: 0,
           }}
         >
@@ -165,8 +166,9 @@ export function HeroSection() {
           style={{
             fontWeight: 400,
             fontSize: 18,
-            lineHeight: 1.7,
-            color: "rgba(255,255,255,0.55)",
+            lineHeight: 1.6,
+            letterSpacing: "-0.165px",
+            color: "#8a8f98",
             maxWidth: 560,
             margin: "24px auto 0",
           }}
@@ -194,16 +196,17 @@ export function HeroSection() {
               display: "inline-flex",
               alignItems: "center",
               backgroundColor: "#e8ff47",
-              color: "#0a0a0a",
-              padding: "14px 28px",
-              borderRadius: 6,
-              fontWeight: 600,
+              color: "#08090a",
+              padding: "12px 22px",
+              borderRadius: 8,
+              fontWeight: 510,
               fontSize: 15,
+              letterSpacing: "-0.165px",
               textDecoration: "none",
               transition: "background-color 200ms ease",
             }}
             onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = "#ffffff")
+              (e.currentTarget.style.backgroundColor = "#f0ff6e")
             }
             onMouseLeave={(e) =>
               (e.currentTarget.style.backgroundColor = "#e8ff47")
@@ -217,23 +220,24 @@ export function HeroSection() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              backgroundColor: "transparent",
-              border: "1px solid rgba(255,255,255,0.25)",
-              color: "#ffffff",
-              padding: "14px 28px",
-              borderRadius: 6,
-              fontWeight: 500,
+              backgroundColor: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "#f7f8f8",
+              padding: "12px 22px",
+              borderRadius: 8,
+              fontWeight: 510,
               fontSize: 15,
+              letterSpacing: "-0.165px",
               textDecoration: "none",
               transition: "border-color 200ms ease, color 200ms ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#e8ff47";
-              e.currentTarget.style.color = "#e8ff47";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+              e.currentTarget.style.color = "#f7f8f8";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
-              e.currentTarget.style.color = "#ffffff";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+              e.currentTarget.style.color = "#f7f8f8";
             }}
           >
             Start a Project →
@@ -260,11 +264,11 @@ export function HeroSection() {
       >
         <span
           style={{
-            fontWeight: 300,
+            fontWeight: 510,
             fontSize: 11,
             letterSpacing: "0.15em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.4)",
+            color: "#62666d",
           }}
         >
           scroll
@@ -273,7 +277,7 @@ export function HeroSection() {
           style={{
             width: 1,
             height: 32,
-            backgroundColor: "rgba(255,255,255,0.25)",
+            backgroundColor: "rgba(255,255,255,0.15)",
           }}
         />
       </div>

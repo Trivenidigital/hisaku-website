@@ -12,7 +12,10 @@
       "Bash(npm run *)",
       "Bash(rm content/case-studies/example-project.mdx public/work/example-project/hero.svg)",
       "Bash(rmdir public/work/example-project)",
-      "Bash(xargs -I{} grep -L \"use client\" {})"
+      "Bash(xargs -I{} grep -L \"use client\" {})",
+      "Bash(xargs sed *)",
+      "Bash(grep -v \":0$\")",
+      "Bash(python -c ' *)"
     ]
   }
 }

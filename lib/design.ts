@@ -1,69 +1,110 @@
 /**
- * Hisaku design tokens — single source of truth for colors, fonts,
- * text scale, and section layout. Every page/component imports from
- * here so the site stays visually unified.
+ * Hisaku design tokens — Linear-inspired, lime accent override.
  *
- * Tokens are plain objects (not CSS variables) so they can be spread
- * into inline styles directly:
+ * Color system: grayscale on near-black; single chromatic accent is
+ * lime (#e8ff47) where Linear uses indigo (#5e6ad2). Everything else
+ * tracks Linear's dark-mode-native system exactly.
  *
- *   <h2 style={{ ...text.display, color: colors.white }}>
+ * Typography: Inter Variable with cv01 + ss03 globally. Signature
+ * weight 510 for emphasis. Aggressive negative letter-spacing at
+ * display sizes.
  */
 
 export const colors = {
-  bg: "#0a0a0a",
-  surface: "#111111",
-  border: "rgba(255,255,255,0.08)",
+  bg: "#08090a",
+  surface: "#0f1011",
+  elevated: "#191a1b",
+  white: "#f7f8f8",
+  silver: "#d0d6e0",
+  muted: "#8a8f98",
+  muted2: "#8a8f98",
+  dim: "#62666d",
+  dim3: "#62666d",
   accent: "#e8ff47",
-  accentDim: "rgba(232,255,71,0.2)",
-  white: "#ffffff",
-  muted: "rgba(255,255,255,0.5)",
-  muted2: "rgba(255,255,255,0.65)",
-  muted3: "rgba(255,255,255,0.7)",
-  dim: "rgba(255,255,255,0.25)",
-  dim2: "rgba(255,255,255,0.4)",
-  dim3: "rgba(255,255,255,0.3)",
+  accentHover: "#f0ff6e",
+  border: "rgba(255,255,255,0.08)",
+  borderSubtle: "rgba(255,255,255,0.05)",
+  ghostBg: "rgba(255,255,255,0.02)",
+  ghostBg2: "rgba(255,255,255,0.04)",
 } as const;
 
 export const fonts = {
-  display: "var(--font-jakarta), sans-serif",
-  body: "var(--font-jakarta), sans-serif",
-  mono: "ui-monospace, 'SF Mono', Menlo, monospace",
+  sans: "var(--font-inter), SF Pro Display, -apple-system, system-ui, sans-serif",
+  display: "var(--font-inter), SF Pro Display, -apple-system, system-ui, sans-serif",
+  body: "var(--font-inter), SF Pro Display, -apple-system, system-ui, sans-serif",
+  syne: "var(--font-inter), SF Pro Display, -apple-system, system-ui, sans-serif",
+  mono: "Berkeley Mono, ui-monospace, SF Mono, Menlo, monospace",
 } as const;
 
 export const text = {
-  hero: {
-    fontSize: "clamp(52px, 7vw, 96px)",
-    fontWeight: 800,
-    letterSpacing: "-0.02em",
-    lineHeight: 1.05,
+  displayXL: {
+    fontSize: "72px",
+    fontWeight: 510,
+    lineHeight: 1.0,
+    letterSpacing: "-1.584px",
   },
   display: {
-    fontSize: "clamp(36px, 5vw, 64px)",
-    fontWeight: 800,
-    letterSpacing: "-0.02em",
-    lineHeight: 1.1,
+    fontSize: "48px",
+    fontWeight: 510,
+    lineHeight: 1.0,
+    letterSpacing: "-1.056px",
   },
-  title: {
-    fontSize: "clamp(24px, 3vw, 36px)",
-    fontWeight: 700,
-    letterSpacing: "-0.01em",
-    lineHeight: 1.2,
-  },
-  body: {
-    fontSize: "17px",
+  h1: {
+    fontSize: "32px",
     fontWeight: 400,
-    lineHeight: 1.7,
+    lineHeight: 1.13,
+    letterSpacing: "-0.704px",
   },
-  small: {
-    fontSize: "14px",
+  h2: {
+    fontSize: "24px",
+    fontWeight: 400,
+    lineHeight: 1.33,
+    letterSpacing: "-0.288px",
+  },
+  h3: {
+    fontSize: "20px",
+    fontWeight: 590,
+    lineHeight: 1.33,
+    letterSpacing: "-0.24px",
+  },
+  bodyLg: {
+    fontSize: "18px",
     fontWeight: 400,
     lineHeight: 1.6,
+    letterSpacing: "-0.165px",
+  },
+  body: {
+    fontSize: "16px",
+    fontWeight: 400,
+    lineHeight: 1.5,
+  },
+  bodyMed: {
+    fontSize: "16px",
+    fontWeight: 510,
+    lineHeight: 1.5,
+  },
+  small: {
+    fontSize: "15px",
+    fontWeight: 400,
+    lineHeight: 1.6,
+    letterSpacing: "-0.165px",
+  },
+  caption: {
+    fontSize: "13px",
+    fontWeight: 510,
+    lineHeight: 1.5,
+    letterSpacing: "-0.13px",
   },
   label: {
     fontSize: "12px",
-    fontWeight: 500,
-    letterSpacing: "0.08em",
-    textTransform: "uppercase" as const,
+    fontWeight: 510,
+    lineHeight: 1.4,
+  },
+  nav: {
+    fontSize: "13px",
+    fontWeight: 510,
+    lineHeight: 1.5,
+    letterSpacing: "-0.13px",
   },
 } as const;
 

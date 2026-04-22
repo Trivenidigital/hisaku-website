@@ -86,7 +86,7 @@ const fieldStyle = {
   fontFamily: "var(--font-jakarta, sans-serif)",
   fontWeight: 400,
   fontSize: 16,
-  color: "#ffffff",
+  color: "#f7f8f8",
   outline: "none",
   transition: "border-color 200ms ease",
 } as const;
@@ -185,10 +185,10 @@ export function ContactForm() {
           padding: "18px 48px",
           border: "none",
           borderRadius: 6,
-          backgroundColor: sent ? "#ffffff" : "#e8ff47",
-          color: "#0a0a0a",
+          backgroundColor: sent ? "#f0ff6e" : "#e8ff47",
+          color: "#08090a",
           fontFamily: "var(--font-jakarta, sans-serif)",
-          fontWeight: 600,
+          fontWeight: 510,
           fontSize: 15,
           letterSpacing: "0.05em",
           textTransform: "uppercase",
@@ -197,7 +197,7 @@ export function ContactForm() {
         }}
         onMouseEnter={(e) => {
           if (sent) return;
-          e.currentTarget.style.backgroundColor = "#ffffff";
+          e.currentTarget.style.backgroundColor = "#f0ff6e";
           e.currentTarget.style.transform = "scale(1.02)";
           e.currentTarget.style.filter = "brightness(1.05)";
         }}

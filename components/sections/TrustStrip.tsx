@@ -17,7 +17,7 @@ export function TrustStrip() {
     <section
       aria-label="Trust signals"
       style={{
-        backgroundColor: "#111111",
+        backgroundColor: "#0f1011",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
         padding: "20px 24px",

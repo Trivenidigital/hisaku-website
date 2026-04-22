@@ -6,8 +6,8 @@ export function TestimonialSection() {
     <section
       aria-label="Testimonial"
       style={{
-        backgroundColor: "#111111",
-        color: "#ffffff",
+        backgroundColor: "#0f1011",
+        color: "#f7f8f8",
         padding: "100px 48px",
       }}
     >

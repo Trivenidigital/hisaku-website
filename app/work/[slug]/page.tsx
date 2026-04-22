@@ -125,7 +125,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   return (
     <main
       id="main"
-      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+      style={{ backgroundColor: colors.bg, color: "#f7f8f8" }}
     >
       <script
         type="application/ld+json"
@@ -213,7 +213,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <h1
             style={{
               fontFamily: fonts.display,
-              fontWeight: 800,
+              fontWeight: 510,
               fontSize: "clamp(64px, 9vw, 120px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.02,
@@ -228,7 +228,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               style={{
                 marginTop: 32,
                 fontFamily: fonts.display,
-                fontWeight: 800,
+                fontWeight: 510,
                 fontSize: "clamp(40px, 6vw, 72px)",
                 letterSpacing: "-0.02em",
                 lineHeight: 1,
@@ -318,7 +318,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <h2
             style={{
               fontFamily: fonts.display,
-              fontWeight: 700,
+              fontWeight: 510,
               fontSize: 32,
               letterSpacing: "-0.02em",
               lineHeight: 1.2,
@@ -353,7 +353,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 <div
                   style={{
                     fontFamily: fonts.display,
-                    fontWeight: 800,
+                    fontWeight: 510,
                     fontSize: 56,
                     letterSpacing: "-0.02em",
                     lineHeight: 1,
@@ -413,7 +413,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               href={`/work/${next.frontmatter.slug}`}
               style={{
                 fontFamily: fonts.display,
-                fontWeight: 700,
+                fontWeight: 510,
                 fontSize: "clamp(28px, 4vw, 44px)",
                 letterSpacing: "-0.02em",
                 color: colors.white,
@@ -461,7 +461,7 @@ function ContentSection({
         <h2
           style={{
             fontFamily: fonts.display,
-            fontWeight: 700,
+            fontWeight: 510,
             fontSize: 32,
             letterSpacing: "-0.02em",
             lineHeight: 1.2,

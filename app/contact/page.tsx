@@ -64,7 +64,7 @@ export default function ContactPage() {
           <h1
             style={{
               fontFamily: fonts.display,
-              fontWeight: 800,
+              fontWeight: 510,
               fontSize: "clamp(36px, 5vw, 64px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
@@ -120,7 +120,7 @@ export default function ContactPage() {
                 padding: "12px 28px",
                 borderRadius: 6,
                 fontFamily: fonts.body,
-                fontWeight: 600,
+                fontWeight: 510,
                 fontSize: 14,
                 textDecoration: "none",
               }}

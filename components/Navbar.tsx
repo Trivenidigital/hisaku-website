@@ -49,7 +49,7 @@ export function Navbar() {
         right: 0,
         height: 64,
         zIndex: 100,
-        backgroundColor: "rgba(10,10,10,0.8)",
+        backgroundColor: "rgba(8,9,10,0.85)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: scrolled
@@ -75,10 +75,10 @@ export function Navbar() {
           href="/"
           aria-label="Hisaku home"
           style={{
-            fontWeight: 700,
-            fontSize: 18,
-            color: "#ffffff",
-            letterSpacing: "0.05em",
+            fontWeight: 590,
+            fontSize: 15,
+            color: "#f7f8f8",
+            letterSpacing: "0.04em",
             textDecoration: "none",
           }}
         >
@@ -98,21 +98,22 @@ export function Navbar() {
         >
           {NAV_LINKS.map((link) => {
             const active = isActive(link.href);
-            const baseColor = active ? "#e8ff47" : "rgba(255,255,255,0.7)";
+            const baseColor = active ? "#e8ff47" : "#8a8f98";
             return (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   style={{
-                    fontWeight: active ? 500 : 400,
-                    fontSize: 14,
+                    fontWeight: 510,
+                    fontSize: 13,
+                    letterSpacing: "-0.13px",
                     color: baseColor,
                     textDecoration: "none",
                     transition: "color 200ms ease",
                   }}
                   onMouseEnter={(e) => {
-                    if (!active) e.currentTarget.style.color = "#ffffff";
+                    if (!active) e.currentTarget.style.color = "#f7f8f8";
                   }}
                   onMouseLeave={(e) => {
                     if (!active) e.currentTarget.style.color = baseColor;
@@ -132,16 +133,17 @@ export function Navbar() {
           style={{
             alignItems: "center",
             backgroundColor: "#e8ff47",
-            color: "#0a0a0a",
-            padding: "10px 20px",
+            color: "#08090a",
+            padding: "8px 14px",
             borderRadius: 6,
-            fontWeight: 600,
+            fontWeight: 510,
             fontSize: 13,
+            letterSpacing: "-0.13px",
             textDecoration: "none",
             transition: "background-color 200ms ease",
           }}
           onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#ffffff")
+            (e.currentTarget.style.backgroundColor = "#f0ff6e")
           }
           onMouseLeave={(e) =>
             (e.currentTarget.style.backgroundColor = "#e8ff47")

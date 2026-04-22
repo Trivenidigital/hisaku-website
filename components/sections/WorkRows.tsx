@@ -99,7 +99,7 @@ function Row({
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: hover ? "rgba(10,10,10,0.35)" : "rgba(10,10,10,0.5)",
+          backgroundColor: hover ? "rgba(8,9,10,0.35)" : "rgba(8,9,10,0.5)",
           transition: "background-color 400ms ease",
         }}
       />
@@ -133,11 +133,11 @@ function Row({
           </p>
           <h2
             style={{
-              fontWeight: 800,
+              fontWeight: 510,
               fontSize: "clamp(56px, 8vw, 96px)",
               letterSpacing: "-0.02em",
               lineHeight: 0.95,
-              color: "#ffffff",
+              color: "#f7f8f8",
               margin: 0,
             }}
           >
@@ -160,7 +160,7 @@ function Row({
             <div>
               <p
                 style={{
-                  fontWeight: 700,
+                  fontWeight: 510,
                   fontSize: 48,
                   letterSpacing: "-0.02em",
                   lineHeight: 1,

@@ -25,7 +25,7 @@ export function MarqueeSection() {
     <section
       aria-hidden="true"
       style={{
-        backgroundColor: "#111111",
+        backgroundColor: "#0f1011",
         overflow: "hidden",
         width: "100%",
         display: "block",

@@ -17,8 +17,8 @@ export function AboutStrip() {
     <section
       aria-label="About"
       style={{
-        backgroundColor: "#111111",
-        color: "#ffffff",
+        backgroundColor: "#0f1011",
+        color: "#f7f8f8",
         padding: "120px 48px",
       }}
     >
@@ -35,7 +35,7 @@ export function AboutStrip() {
         <div>
           <p
             style={{
-              fontWeight: 600,
+              fontWeight: 510,
               fontSize: 13,
               color: "#e8ff47",
               letterSpacing: "0.1em",
@@ -47,11 +47,11 @@ export function AboutStrip() {
           </p>
           <h2
             style={{
-              fontWeight: 700,
+              fontWeight: 510,
               fontSize: "clamp(36px, 5vw, 56px)",
               letterSpacing: "-0.02em",
               lineHeight: 1.1,
-              color: "#ffffff",
+              color: "#f7f8f8",
               margin: 0,
             }}
           >
@@ -88,7 +88,7 @@ export function AboutStrip() {
               <div key={s.label}>
                 <dt
                   style={{
-                    fontWeight: 700,
+                    fontWeight: 510,
                     fontSize: 36,
                     color: "#e8ff47",
                     margin: 0,

@@ -37,8 +37,8 @@ const CAPABILITIES: Capability[] = [
       "UI/UX for web applications",
       "Design systems and style guides",
     ],
-    textBg: "#0a0a0a",
-    gradient: "linear-gradient(135deg, #0a1a0a 0%, #0d2518 50%, #061006 100%)",
+    textBg: "#08090a",
+    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
   },
   {
     number: "02",
@@ -54,8 +54,8 @@ const CAPABILITIES: Capability[] = [
       "API design and third-party integrations",
       "Performance optimisation",
     ],
-    textBg: "#111111",
-    gradient: "linear-gradient(135deg, #0a0d1a 0%, #0d1025 50%, #080a14 100%)",
+    textBg: "#0f1011",
+    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
   },
   {
     number: "03",
@@ -73,8 +73,8 @@ const CAPABILITIES: Capability[] = [
       "Paid advertising (Google Ads, Meta Ads)",
       "Analytics setup and monthly reporting",
     ],
-    textBg: "#0a0a0a",
-    gradient: "linear-gradient(135deg, #150a1a 0%, #1e0d28 50%, #100814 100%)",
+    textBg: "#08090a",
+    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
   },
   {
     number: "04",
@@ -90,8 +90,8 @@ const CAPABILITIES: Capability[] = [
       "Internal reporting and digest automation",
       "Custom AI integrations for your tools",
     ],
-    textBg: "#111111",
-    gradient: "linear-gradient(135deg, #0a1518 0%, #0d2020 50%, #081010 100%)",
+    textBg: "#0f1011",
+    gradient: "linear-gradient(135deg, #0f1011 0%, #191a1b 50%, #08090a 100%)",
   },
 ];
 
@@ -99,7 +99,7 @@ export default function CapabilitiesPage() {
   return (
     <main
       id="main"
-      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+      style={{ backgroundColor: colors.bg, color: "#f7f8f8" }}
     >
       <PageHero
         label="Capabilities"
@@ -129,8 +129,8 @@ export default function CapabilitiesPage() {
           style={{
             maxWidth: 1200,
             margin: "0 auto",
-            backgroundColor: "#0d1f0d",
-            border: "1px solid rgba(232,255,71,0.2)",
+            backgroundColor: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 16,
             padding: 80,
             textAlign: "center",
@@ -139,11 +139,11 @@ export default function CapabilitiesPage() {
           <h2
             style={{
               fontFamily: fonts.display,
-              fontWeight: 700,
-              fontSize: "clamp(40px, 6vw, 72px)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
-              color: "#ffffff",
+              fontWeight: 510,
+              fontSize: "clamp(40px, 6vw, 64px)",
+              letterSpacing: "-0.022em",
+              lineHeight: 1.0,
+              color: "#f7f8f8",
               margin: "0 0 40px",
             }}
           >
@@ -158,12 +158,13 @@ export default function CapabilitiesPage() {
               display: "inline-flex",
               alignItems: "center",
               backgroundColor: "#e8ff47",
-              color: "#0a0a0a",
+              color: "#08090a",
               padding: "14px 28px",
               borderRadius: 6,
               fontFamily: fonts.body,
-              fontWeight: 600,
+              fontWeight: 510,
               fontSize: 15,
+              letterSpacing: "-0.165px",
               textDecoration: "none",
             }}
           >
@@ -199,7 +200,7 @@ function CapabilitySection({
         style={{
           direction: "ltr",
           backgroundColor: capability.textBg,
-          color: "#ffffff",
+          color: "#f7f8f8",
           padding: "80px 60px",
           display: "flex",
           flexDirection: "column",
@@ -222,12 +223,12 @@ function CapabilitySection({
         <h2
           style={{
             fontFamily: fonts.display,
-            fontWeight: 800,
+            fontWeight: 510,
             fontSize: "clamp(40px, 5vw, 64px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.05,
-            color: "#ffffff",
-            WebkitTextFillColor: "#ffffff",
+            color: "#f7f8f8",
+            WebkitTextFillColor: "#f7f8f8",
             margin: "16px 0 8px",
           }}
         >
@@ -278,7 +279,7 @@ function CapabilitySection({
                   position: "absolute",
                   left: 0,
                   color: "#e8ff47",
-                  fontWeight: 600,
+                  fontWeight: 510,
                 }}
               >
                 →

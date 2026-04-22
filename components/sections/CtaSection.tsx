@@ -11,8 +11,8 @@ export function CtaSection() {
     <section
       aria-label="Call to action"
       style={{
-        backgroundColor: "#0a0a0a",
-        color: "#ffffff",
+        backgroundColor: "#08090a",
+        color: "#f7f8f8",
         padding: "0 48px 120px",
       }}
     >
@@ -20,7 +20,7 @@ export function CtaSection() {
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          background: "linear-gradient(135deg, #0a1a0a 0%, #0a0a0a 100%)",
+          background: "linear-gradient(135deg, #0a1a0a 0%, #08090a 100%)",
           border: "1px solid rgba(232,255,71,0.15)",
           borderRadius: 16,
           padding: "80px 48px",
@@ -29,11 +29,11 @@ export function CtaSection() {
       >
         <h2
           style={{
-            fontWeight: 700,
+            fontWeight: 510,
             fontSize: "clamp(40px, 6vw, 72px)",
             letterSpacing: "-0.02em",
             lineHeight: 1.1,
-            color: "#ffffff",
+            color: "#f7f8f8",
             margin: "0 0 40px",
             textAlign: "center",
           }}
@@ -59,16 +59,16 @@ export function CtaSection() {
             display: "inline-flex",
             alignItems: "center",
             backgroundColor: "#e8ff47",
-            color: "#0a0a0a",
+            color: "#08090a",
             padding: "14px 28px",
             borderRadius: 6,
-            fontWeight: 600,
+            fontWeight: 510,
             fontSize: 15,
             textDecoration: "none",
             transition: "all 200ms ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#ffffff";
+            e.currentTarget.style.backgroundColor = "#f0ff6e";
             e.currentTarget.style.transform = "scale(1.02)";
           }}
           onMouseLeave={(e) => {

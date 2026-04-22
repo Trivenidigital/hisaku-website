@@ -1,76 +1,103 @@
 @import "tailwindcss";
 
 /* ============================================================================
- * Hisaku design system — premium agency reset.
+ * Hisaku design system — Linear-inspired, lime accent override.
  *
- * Single font (Plus Jakarta Sans), clean colors, soft corners (6-12px).
- * No brutalist rules. No forced border-radius: 0. No grain. No custom
- * cursor. One lime accent per section, used intentionally.
+ * Dark-mode-native. Inter Variable with cv01 + ss03 applied globally.
+ * Primary text #f7f8f8 (never #ffffff). Surfaces on rgba(255,255,255,0.02).
+ * Lime #e8ff47 replaces Linear's purple #5e6ad2 as the single chromatic
+ * accent — used only on CTAs, metrics, active states, and the tracing beam.
  *
  * Legacy font tokens (--font-syne, --font-sans, --font-display, --font-body)
- * are aliased to Jakarta so older pages that still reference them render
- * cleanly without edits.
+ * alias to Inter so older pages still render cleanly.
  * ============================================================================ */
 
 @theme {
   /* Backgrounds */
-  --color-bg-dark: #0a0a0a;
-  --color-bg-surface: #111111;
+  --color-bg-dark: #08090a;
+  --color-bg-surface: #0f1011;
+  --color-bg-elevated: #191a1b;
   --color-bg-white: #ffffff;
   --color-bg-cream: #f8f6f0;
 
   /* Legacy aliases (kept so older page styles don't break). */
-  --color-base: #0a0a0a;
-  --color-elevated: #111111;
-  --color-bg-mid: #111111;
-  --color-bg-teal: #0a1a0a;
+  --color-base: #08090a;
+  --color-elevated: #191a1b;
+  --color-bg-mid: #0f1011;
+  --color-bg-teal: #08090a;
   --color-hairline: rgba(255, 255, 255, 0.08);
+  --color-hairline-subtle: rgba(255, 255, 255, 0.05);
 
   /* Text */
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.5);
+  --color-text-primary: #f7f8f8;
+  --color-text-silver: #d0d6e0;
+  --color-text-muted: #8a8f98;
+  --color-text-dim: #62666d;
+  --color-text-secondary: #8a8f98;
 
-  /* Accent */
+  /* Accent — lime replaces Linear's purple. */
   --color-accent-primary: #e8ff47;
+  --color-accent-hover: #f0ff6e;
   --color-accent-secondary: #7c6af7;
 
-  /* Fonts — everything routes to Plus Jakarta Sans. */
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-syne: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-syne-src: var(--font-jakarta);
-  --font-dm-sans-src: var(--font-jakarta);
+  /* Ghost surfaces */
+  --color-ghost-1: rgba(255, 255, 255, 0.02);
+  --color-ghost-2: rgba(255, 255, 255, 0.04);
+
+  /* Fonts — everything routes to Inter Variable. */
+  --font-sans: var(--font-inter), "SF Pro Display", -apple-system, system-ui,
+    sans-serif;
+  --font-syne: var(--font-inter), "SF Pro Display", -apple-system, system-ui,
+    sans-serif;
+  --font-display: var(--font-inter), "SF Pro Display", -apple-system, system-ui,
+    sans-serif;
+  --font-body: var(--font-inter), "SF Pro Display", -apple-system, system-ui,
+    sans-serif;
+  --font-syne-src: var(--font-inter);
+  --font-dm-sans-src: var(--font-inter);
+  --font-mono: "Berkeley Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 /* Light theme inversion for sections that opt in. */
 [data-theme="light"] {
-  --color-text-primary: #0a0a0a;
-  --color-text-secondary: rgba(10, 10, 10, 0.55);
-  --color-hairline: rgba(10, 10, 10, 0.1);
+  --color-text-primary: #08090a;
+  --color-text-secondary: rgba(8, 9, 10, 0.55);
+  --color-hairline: rgba(8, 9, 10, 0.1);
+}
+
+/* Apply Inter OpenType features globally — cv01 gives the single-storey `a`
+ * / straight-leg `l`, ss03 gives the rounder `t` / `f` terminals. These are
+ * what make Inter look "Linear". */
+*,
+*::before,
+*::after {
+  font-feature-settings: "cv01", "ss03";
 }
 
 html {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #08090a;
+  color: #f7f8f8;
   color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #ffffff;
-  font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  background-color: #08090a;
+  color: #f7f8f8;
+  font-family: var(--font-inter), "SF Pro Display", -apple-system, system-ui,
+    sans-serif;
+  font-feature-settings: "cv01", "ss03";
   font-weight: 400;
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
   background: #e8ff47;
-  color: #0a0a0a;
+  color: #08090a;
 }
 
 :focus-visible {
@@ -84,8 +111,8 @@ body {
   top: 0;
   padding: 0.75rem 1rem;
   background: #e8ff47;
-  color: #0a0a0a;
-  font-weight: 600;
+  color: #08090a;
+  font-weight: 510;
   z-index: 9997;
   text-decoration: none;
   border-radius: 6px;
@@ -108,8 +135,7 @@ body {
 
 /* ============================================================================
  * Keyframes retained for section-level animations (marquee, gradient pulse,
- * scroll indicator bounce). The dot-grid keyframe is kept for any legacy
- * surface that still references it.
+ * scroll indicator bounce, conic glow).
  * ============================================================================ */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -197,14 +223,7 @@ body {
   }
 }
 
-/* ============================================================================
- * Shimmer button — a bright band sweeps across on a 3s loop.
- *
- * Drop-in: add `shimmer-btn` alongside whatever styles the button has.
- * The ::before pseudo-element is absolutely positioned inside an
- * overflow:hidden wrapper and translates from -100% to 200% of the
- * button width.
- * ============================================================================ */
+/* Shimmer button */
 .shimmer-btn {
   position: relative;
   overflow: hidden;
@@ -245,7 +264,6 @@ body {
   }
 }
 
-/* Float — subtle 6px y-bob for badges / pills / small marks. */
 @keyframes float {
   0%,
   100% {
@@ -256,7 +274,6 @@ body {
   }
 }
 
-/* Spin — continuous rotation for loaders / dashed circles. */
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -266,14 +283,7 @@ body {
   }
 }
 
-/* ============================================================================
- * Conic-gradient hover glow — traces a rotating lime beam around the
- * card border on hover. Uses the @property --angle trick so the
- * conic-gradient can actually animate.
- *
- * Usage: wrap a card in a div with class "conic-glow". The card
- * itself should have a solid dark bg and sit inside that wrapper.
- * ============================================================================ */
+/* Conic-gradient hover glow — lime beam traces card border on hover. */
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;

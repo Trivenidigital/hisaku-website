@@ -26,7 +26,7 @@ export default function HomePage() {
   return (
     <main
       id="main"
-      style={{ backgroundColor: colors.bg, color: "#ffffff" }}
+      style={{ backgroundColor: colors.bg, color: "#f7f8f8" }}
     >
       <HeroSection />
       <MarqueeSection />
