@@ -46,12 +46,12 @@ export function ServicesSection() {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <p
           style={{
-            color: "#e8ff47",
+            color: "#8a8f98",
             fontSize: 13,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
             marginBottom: 64,
-            fontWeight: 500,
+            fontWeight: 510,
             margin: "0 0 64px",
           }}
         >

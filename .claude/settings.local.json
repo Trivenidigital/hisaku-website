@@ -15,7 +15,9 @@
       "Bash(xargs -I{} grep -L \"use client\" {})",
       "Bash(xargs sed *)",
       "Bash(grep -v \":0$\")",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "WebFetch(domain:getdesign.md)",
+      "WebFetch(domain:vercel.com)"
     ]
   }
 }

@@ -62,7 +62,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
             fontSize: 13,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "#e8ff47",
+            color: "#8a8f98",
             margin: "0 0 64px",
           }}
         >

@@ -126,28 +126,31 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Right CTA — desktop only */}
+        {/* Right CTA — desktop only. Ghost button; lime reserved for in-page CTAs. */}
         <Link
           href="/contact"
-          className="hidden md:inline-flex shimmer-btn"
+          className="hidden md:inline-flex"
           style={{
             alignItems: "center",
-            backgroundColor: "#e8ff47",
-            color: "#08090a",
+            backgroundColor: "rgba(255,255,255,0.02)",
+            color: "#f7f8f8",
+            border: "1px solid rgba(255,255,255,0.08)",
             padding: "8px 14px",
             borderRadius: 6,
             fontWeight: 510,
             fontSize: 13,
             letterSpacing: "-0.13px",
             textDecoration: "none",
-            transition: "background-color 200ms ease",
+            transition: "border-color 200ms ease, background-color 200ms ease",
           }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#f0ff6e")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "#e8ff47")
-          }
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.16)";
+            e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+            e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
+          }}
         >
           Start a Project →
         </Link>

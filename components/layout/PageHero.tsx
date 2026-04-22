@@ -66,23 +66,24 @@ export default function PageHero({
         minHeight,
         paddingTop: 160,
         paddingBottom: 80,
-        paddingLeft: 24,
-        paddingRight: 24,
+        paddingLeft: 48,
+        paddingRight: 48,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
+        alignItems: "stretch",
+        textAlign: "left",
       }}
     >
+      <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%" }}>
       <p
         style={{
           fontFamily: fonts.body,
-          fontWeight: 500,
+          fontWeight: 510,
           fontSize: 12,
           letterSpacing: "0.15em",
           textTransform: "uppercase",
-          color: colors.accent,
+          color: colors.muted,
           margin: "0 0 24px",
         }}
       >
@@ -127,6 +128,7 @@ export default function PageHero({
       ) : null}
 
       {children ? <div style={{ marginTop: 32 }}>{children}</div> : null}
+      </div>
     </section>
   );
 }

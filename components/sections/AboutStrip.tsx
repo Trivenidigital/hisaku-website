@@ -37,7 +37,7 @@ export function AboutStrip() {
             style={{
               fontWeight: 510,
               fontSize: 13,
-              color: "#e8ff47",
+              color: "#8a8f98",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               margin: "0 0 24px",

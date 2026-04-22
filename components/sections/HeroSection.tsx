@@ -74,55 +74,24 @@ export function HeroSection() {
         <Spotlight size={800} color="rgba(232,255,71,0.08)" />
       </div>
 
-      {/* Content — centered, anchored at ~45% from top */}
+      {/* Content — left-aligned editorial, anchored near bottom. */}
       <div
         style={{
           position: "absolute",
-          top: "45%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "100%",
-          maxWidth: 900,
-          padding: "0 24px",
-          textAlign: "center",
+          bottom: "15%",
+          left: 0,
+          right: 0,
+          padding: "0 48px",
           zIndex: 3,
         }}
       >
-        {/* Floating badge — opacity fade-in then gentle y-bob forever */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: EASE }}
+        <div
           style={{
-            display: "inline-flex",
-            marginBottom: 32,
+            maxWidth: 1200,
+            margin: "0 auto",
+            textAlign: "left",
           }}
         >
-          <motion.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.02)",
-              borderRadius: 20,
-              padding: "6px 16px",
-              fontWeight: 510,
-              fontSize: 13,
-              letterSpacing: "-0.13px",
-              color: "#8a8f98",
-            }}
-          >
-            <span style={{ color: "#e8ff47", marginRight: 8 }}>✦</span>
-            Web Design · Development · AI Automation
-          </motion.div>
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
@@ -155,7 +124,7 @@ export function HeroSection() {
             letterSpacing: "-0.165px",
             color: "#8a8f98",
             maxWidth: 560,
-            margin: "24px auto 0",
+            margin: "24px 0 0",
           }}
         >
           A Hyderabad studio building websites, marketing systems, and AI
@@ -172,7 +141,7 @@ export function HeroSection() {
             display: "flex",
             flexWrap: "wrap",
             gap: 16,
-            justifyContent: "center",
+            justifyContent: "flex-start",
           }}
         >
           <Link
@@ -228,6 +197,7 @@ export function HeroSection() {
             Start a Project →
           </Link>
         </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}
